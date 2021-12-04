@@ -19,14 +19,13 @@ export default class extends Vue {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .sidebar-main {
-  height: 100%;
   background-color: powderblue;
-}
 
-.links {
-  display: flex;
-  flex-direction: column;
+  .links {
+    display: flex;
+    flex-direction: column;
+  }
 }
 </style>
