@@ -24,16 +24,18 @@ export default class Home extends Vue {}
 <style scoped>
 .layout-container {
   height: 100%;
+  overflow: hidden;
   display: grid;
   grid-template-columns: 180px 1fr;
   grid-template-rows: 60px 1fr;
   grid-template-areas:
-    'sidebar header'
+    'sidebar navbar'
     'sidebar main';
 }
 
 .navbar {
-  grid-area: header;
+  grid-area: navbar;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
 }
 
 .sidebar {
@@ -42,6 +44,7 @@ export default class Home extends Vue {}
 }
 
 .main {
+  overflow: auto;
   height: 100%;
   grid-area: main;
 }
