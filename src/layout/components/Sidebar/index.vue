@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import router from '@/router/index'
+import router from '/@/router/index'
 
 @Options({
   name: 'Sidebar',
