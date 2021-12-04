@@ -4,8 +4,7 @@ import VuePlugin from '@vitejs/plugin-vue'
 
 const srcPath = path.resolve(__dirname, './src').replace(/\\/g, '/')
 
-// 仮
-const DEV_SERVER_PROXY_HOST = 'http://localhost:3000'
+const DEV_SERVER_PROXY_HOST = 'http://localhost:7070'
 
 export default defineConfig(() => ({
   resolve: {
