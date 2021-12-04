@@ -1,8 +1,12 @@
 <template>
   <div class="layout-container">
-    <navbar class="navbar" />
-    <sidebar class="sidebar" />
-    <router-view class="main" />
+    <navbar
+      class="navbar"
+      :class="{ 'hide-sidebar': !showSidebar }"
+      v-model:show-sidebar="showSidebar"
+    />
+    <sidebar v-if="showSidebar" class="sidebar" />
+    <router-view class="main" :class="{ 'hide-sidebar': !showSidebar }" />
   </div>
 </template>
 
@@ -18,7 +22,9 @@ import Sidebar from './components/Sidebar/index.vue'
     Sidebar,
   },
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+  showSidebar = true
+}
 </script>
 
 <style lang="scss" scoped>
@@ -33,6 +39,10 @@ export default class Home extends Vue {}
     grid-column: 2;
     grid-row: 1;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+
+    &.hide-sidebar {
+      grid-column: 1 / 3;
+    }
   }
 
   .sidebar {
@@ -44,6 +54,10 @@ export default class Home extends Vue {}
     overflow: auto;
     grid-column: 2;
     grid-row: 2;
+
+    &.hide-sidebar {
+      grid-column: 1 / 3;
+    }
   }
 }
 </style>
