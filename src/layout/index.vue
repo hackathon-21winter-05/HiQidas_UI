@@ -1,6 +1,6 @@
 <template>
   <div class="layout-container">
-    <header class="header" />
+    <navbar class="navbar" />
     <sidebar class="sidebar" />
     <router-view class="main" />
   </div>
@@ -8,13 +8,13 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import Header from './components/Header/index.vue'
+import Navbar from './components/Navbar/index.vue'
 import Sidebar from './components/Sidebar/index.vue'
 
 @Options({
   name: 'Layout',
   components: {
-    Header,
+    Navbar,
     Sidebar,
   },
 })
@@ -32,7 +32,7 @@ export default class Home extends Vue {}
     'sidebar main';
 }
 
-.header {
+.navbar {
   grid-area: header;
 }
 

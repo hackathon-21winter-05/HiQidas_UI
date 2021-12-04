@@ -1,7 +1,9 @@
 <template>
   <div class="sidebar-main">
-    <router-link to="/"> home </router-link>
-    <router-link to="/about"> about </router-link>
+    <span class="links">
+      <router-link to="/"> home </router-link>
+      <router-link to="/about"> about </router-link>
+    </span>
   </div>
 </template>
 
@@ -12,7 +14,7 @@ import router from '@/router/index'
 @Options({
   name: 'Sidebar',
 })
-export default class Home extends Vue {
+export default class extends Vue {
   routes = router
 }
 </script>
@@ -21,5 +23,10 @@ export default class Home extends Vue {
 .sidebar-main {
   height: 100%;
   background-color: powderblue;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
 }
 </style>

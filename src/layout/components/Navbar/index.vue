@@ -1,20 +1,18 @@
 <template>
-  <div class="header-main">
-    <router-link to="/"> HiQidas </router-link>
-  </div>
+  <div class="navbar-main"></div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 
 @Options({
-  name: 'Header',
+  name: 'Navbar',
 })
-export default class Home extends Vue {}
+export default class extends Vue {}
 </script>
 
 <style scoped>
-.header-main {
+.navbar-main {
   background-color: pink;
 }
 </style>
