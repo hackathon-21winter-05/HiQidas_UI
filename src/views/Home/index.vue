@@ -5,7 +5,7 @@
       <el-input v-model="searchText" placeholder="名前で検索">
         <template #suffix>
           <el-icon class="el-input__icon">
-            <search />
+            <span class="material-icons"> search </span>
           </el-icon>
         </template>
       </el-input>
@@ -18,14 +18,12 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { Search } from '@element-plus/icons'
 import HelloWorld from '/@/components/HelloWorld.vue' // @ is an alias to /src
 
 export default defineComponent({
   name: 'Home',
   components: {
     HelloWorld,
-    Search,
   },
   setup() {
     return { searchText: ref('') }
