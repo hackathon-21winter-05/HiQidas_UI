@@ -2,7 +2,11 @@
   <div class="home">
     <div class="sidebar">
       <h1 class="title">HiQidas</h1>
-      <el-input v-model="searchText" placeholder="名前で検索">
+      <el-input
+        v-model="searchText"
+        placeholder="名前で検索"
+        class="heya-search-input"
+      >
         <template #suffix>
           <el-icon class="el-input__icon">
             <span class="material-icons"> search </span>
@@ -36,12 +40,16 @@ export default defineComponent({
   height: 100%;
   overflow: hidden;
   display: grid;
-  grid-template-columns: 194px 1fr;
+  grid-template-columns: 220px 1fr;
 
   .sidebar {
     grid-column: 1;
     grid-row: 1;
     background-color: #e9b9d0;
+
+    .heya-search-input {
+      width: 90%;
+    }
   }
 
   .main {

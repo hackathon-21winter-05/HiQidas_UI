@@ -6,7 +6,9 @@
     </div>
     <div class="main">
       <h1>This is a heya page</h1>
-      <textarea id="md-text-area" />
+      <div class="md-text-box">
+        <textarea id="md-text-area" />
+      </div>
     </div>
   </div>
 </template>
@@ -83,9 +85,13 @@ export default defineComponent({
     grid-column: 1;
     grid-row: 2;
 
-    #md-text-area {
-      height: 167px;
-      width: 360px;
+    .md-text-box {
+      height: 150px;
+      width: 315px;
+
+      #md-text-area {
+        border: none;
+      }
     }
   }
 }
