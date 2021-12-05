@@ -6,7 +6,7 @@
     </div>
     <div class="main">
       <h1>This is a heya page</h1>
-      <textarea id="sample-text-area" />
+      <textarea id="md-text-area" />
     </div>
   </div>
 </template>
@@ -21,7 +21,7 @@ export default defineComponent({
     const editor: Ref<null | EasyMDE> = ref(null)
 
     const makeEasyMDE = () => {
-      const element = document.getElementById('sample-text-area')
+      const element = document.getElementById('md-text-area')
       if (!element) {
         return
       }
@@ -82,6 +82,11 @@ export default defineComponent({
     overflow: auto;
     grid-column: 1;
     grid-row: 2;
+
+    #md-text-area {
+      height: 167px;
+      width: 360px;
+    }
   }
 }
 </style>
