@@ -2,6 +2,13 @@
   <div class="home">
     <div class="sidebar">
       <h1 class="title">HiQidas</h1>
+      <el-input v-model="searchText" placeholder="名前で検索">
+        <template #suffix>
+          <el-icon class="el-input__icon">
+            <search />
+          </el-icon>
+        </template>
+      </el-input>
     </div>
     <div class="main">
       <hello-world msg="Welcome" />
@@ -10,13 +17,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
+import { Search } from '@element-plus/icons'
 import HelloWorld from '/@/components/HelloWorld.vue' // @ is an alias to /src
 
 export default defineComponent({
   name: 'Home',
   components: {
     HelloWorld,
+    Search,
+  },
+  setup() {
+    return { searchText: ref('') }
   },
 })
 </script>

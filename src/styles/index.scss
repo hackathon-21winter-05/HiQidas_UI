@@ -17,3 +17,12 @@ body {
   padding: 0;
   height: 100%;
 }
+
+// Element Plus Style
+.el-input__inner {
+  border-radius: 50px;
+
+  &:focus {
+    border-color: #e9b9d0;
+  }
+}
