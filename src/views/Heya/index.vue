@@ -1,19 +1,52 @@
 <template>
   <div class="about">
     <div class="navbar">
-      <h1 class="title">HiQidas</h1>
+      <router-link to="/" class="title"><h1>HiQidas</h1></router-link>
+      <span class="heya-name">Heya Name</span>
     </div>
     <div class="main">
       <h1>This is a heya page</h1>
+      <textarea id="sample-text-area" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted, Ref, ref } from 'vue'
+import EasyMDE from 'easymde'
 
 export default defineComponent({
   name: 'Heya',
+  setup() {
+    const editor: Ref<null | EasyMDE> = ref(null)
+
+    const makeEasyMDE = () => {
+      const element = document.getElementById('sample-text-area')
+      if (!element) {
+        return
+      }
+
+      editor.value = new EasyMDE({
+        element: element,
+        toolbar: [
+          'bold',
+          'italic',
+          'heading',
+          '|',
+          'quote',
+          'unordered-list',
+          'ordered-list',
+          '|',
+          'link',
+          'preview',
+        ],
+      })
+    }
+
+    onMounted(makeEasyMDE)
+
+    return { editor }
+  },
 })
 </script>
 
@@ -25,15 +58,23 @@ export default defineComponent({
   grid-template-rows: 60px 1fr;
 
   .navbar {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     grid-column: 1;
     grid-row: 1;
     background-color: #e9b9d0;
 
     .title {
+      text-decoration: none;
+      float: left;
       margin-left: 10px;
-      margin-right: auto;
+    }
+
+    .heya-name {
+      font-size: 24px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
     }
   }
 
