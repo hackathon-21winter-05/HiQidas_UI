@@ -26,14 +26,18 @@ body {
 
 // EasyMDE Style
 .EasyMDEContainer {
+  height: 100%;
+
   .editor-toolbar {
     border: none;
     border-bottom: thin solid #d8d8d8;
+    background-color: #ffffff;
   }
 
   .CodeMirror {
     border: none;
     text-align: left;
+    height: 75%;
   }
 }
 
