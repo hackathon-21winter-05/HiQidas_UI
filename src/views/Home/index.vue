@@ -44,10 +44,6 @@ export default defineComponent({
     grid-column: 1;
     grid-row: 1;
     background-color: #e9b9d0;
-
-    .title {
-      color: #2087ff;
-    }
   }
 
   .main {

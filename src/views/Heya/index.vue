@@ -32,9 +32,8 @@ export default defineComponent({
     background-color: #e9b9d0;
 
     .title {
-      margin-left: 5px;
+      margin-left: 10px;
       margin-right: auto;
-      color: #2087ff;
     }
   }
 
