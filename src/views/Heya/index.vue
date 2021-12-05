@@ -4,7 +4,7 @@
       <h1 class="title">HiQidas</h1>
     </div>
     <div class="main">
-      <h1>This is an about page</h1>
+      <h1>This is a heya page</h1>
     </div>
   </div>
 </template>
@@ -13,7 +13,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'About',
+  name: 'Heya',
 })
 </script>
 

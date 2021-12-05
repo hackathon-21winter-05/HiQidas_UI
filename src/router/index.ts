@@ -9,7 +9,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/heya',
-    name: 'About',
+    name: 'Heya',
     component: () =>
       import(/* webpackChunkName: "about" */ '/@/views/Heya/index.vue'),
   },
