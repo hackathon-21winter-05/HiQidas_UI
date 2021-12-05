@@ -1,5 +1,5 @@
 <template>
-  <div class="hi-qidashi" :class="{ 'is-expanded': isExpanded }">
+  <div class="hiqidashi" :class="{ 'is-expanded': isExpanded }">
     <span class="top-menu">
       <span
         class="material-icons left-button"
@@ -7,7 +7,7 @@
       >
         {{ isExpanded ? 'expand_less' : 'expand_more' }}
       </span>
-      <h3>{{ hiqidashi.title }}</h3>
+      <h3 class="hiqidashi-title">{{ hiqidashi.title }}</h3>
       <span class="material-icons right-button"> more_horiz </span>
     </span>
     <span v-show="isExpanded" class="md-text-box">
@@ -64,7 +64,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.hi-qidashi {
+.hiqidashi {
+  display: block;
   height: 50px;
   width: 300px;
   background-color: #ffffff;
@@ -80,16 +81,20 @@ export default defineComponent({
   .top-menu {
     width: 300px;
     height: 50px;
+    padding: 0 10px;
     display: inline-flex;
     align-items: center;
 
+    .hiqidashi-title {
+      width: 232px;
+      text-align: left;
+    }
+
     .left-button {
-      margin-left: 10px;
       float: left;
     }
 
     .right-button {
-      margin-right: 10px;
       float: right;
     }
   }

@@ -49,6 +49,7 @@ export default defineComponent({
 
     .heya-name {
       font-size: 24px;
+      color: #ffffff;
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
@@ -59,11 +60,6 @@ export default defineComponent({
     overflow: auto;
     grid-column: 1;
     grid-row: 2;
-
-    .md-text-box {
-      height: 150px;
-      width: 315px;
-    }
   }
 }
 </style>
