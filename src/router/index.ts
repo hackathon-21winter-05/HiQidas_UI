@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Layout from '@/layout/index.vue'
+import Layout from '/@/layout/index.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -10,7 +10,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '',
         name: 'Home',
         component: () =>
-          import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
+          import(/* webpackChunkName: "home" */ '/@/views/Home.vue'),
       },
     ],
   },
@@ -22,14 +22,14 @@ const routes: Array<RouteRecordRaw> = [
         path: '',
         name: 'About',
         component: () =>
-          import(/* webpackChunkName: "about" */ '@/views/About.vue'),
+          import(/* webpackChunkName: "about" */ '/@/views/About.vue'),
       },
     ],
   },
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 })
 
