@@ -4,18 +4,32 @@ module.exports = {
     node: true,
   },
   extends: [
-    'plugin:vue/vue3-essential',
     'eslint:recommended',
-    '@vue/typescript/recommended',
+    './eslint-vue-ts-recommended.js',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:vue/vue3-recommended',
     'plugin:prettier/recommended',
   ],
   parserOptions: {
-    ecmaVersion: 2020,
+    parser: '@typescript-eslint/parser',
   },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'no-empty': ['error', { allowEmptyCatch: true }],
+    eqeqeq: 'error',
+    'vue/eqeqeq': 'error',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
     'vue/multi-word-component-names': 'off',
+    'vue/block-lang': [
+      'error',
+      {
+        script: { lang: 'ts' },
+        style: { lang: 'scss' },
+      },
+    ],
+    'vue/component-api-style': ['error', ['composition']],
+    'vue/component-name-in-template-casing': ['error', 'kebab-case'],
     'prettier/prettier': [
       'warn',
       {
