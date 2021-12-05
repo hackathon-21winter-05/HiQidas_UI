@@ -10,5 +10,5 @@ import { Options, Vue } from 'vue-class-component'
 @Options({
   name: 'About',
 })
-export default class extends Vue {}
+export default class About extends Vue {}
 </script>

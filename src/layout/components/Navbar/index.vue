@@ -8,7 +8,7 @@ import { Options, Vue } from 'vue-class-component'
 @Options({
   name: 'Navbar',
 })
-export default class extends Vue {}
+export default class Navbar extends Vue {}
 </script>
 
 <style lang="scss" scoped>

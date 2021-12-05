@@ -9,12 +9,12 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import router from '@/router/index'
+import router from '/@/router/index'
 
 @Options({
   name: 'Sidebar',
 })
-export default class extends Vue {
+export default class Slidebar extends Vue {
   routes = router
 }
 </script>
