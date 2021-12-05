@@ -45,7 +45,7 @@ export default defineComponent({
   .sidebar {
     grid-column: 1;
     grid-row: 1;
-    background-color: #e9b9d0;
+    background-color: #c87b7b;
 
     .heya-search-input {
       width: 90%;
