@@ -7,18 +7,17 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { defineComponent } from 'vue'
 import Navbar from './components/Navbar/index.vue'
 import Sidebar from './components/Sidebar/index.vue'
 
-@Options({
+export default defineComponent({
   name: 'Layout',
   components: {
     Navbar,
     Sidebar,
   },
 })
-export default class Home extends Vue {}
 </script>
 
 <style lang="scss" scoped>

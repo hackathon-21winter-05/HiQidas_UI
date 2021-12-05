@@ -8,15 +8,11 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
-import router from '/@/router/index'
+import { defineComponent } from 'vue'
 
-@Options({
+export default defineComponent({
   name: 'Sidebar',
 })
-export default class Slidebar extends Vue {
-  routes = router
-}
 </script>
 
 <style lang="scss" scoped>

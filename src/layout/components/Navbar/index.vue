@@ -3,12 +3,11 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { defineComponent } from 'vue'
 
-@Options({
+export default defineComponent({
   name: 'Navbar',
 })
-export default class Navbar extends Vue {}
 </script>
 
 <style lang="scss" scoped>
