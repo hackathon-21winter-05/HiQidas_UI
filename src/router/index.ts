@@ -3,15 +3,15 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'Home',
+    name: 'HomePage',
     component: () =>
-      import(/* webpackChunkName: "home" */ '/@/views/Home/index.vue'),
+      import(/* webpackChunkName: "home" */ '/@/views/HomePage/index.vue'),
   },
   {
     path: '/heya',
-    name: 'Heya',
+    name: 'HeyaPage',
     component: () =>
-      import(/* webpackChunkName: "about" */ '/@/views/Heya/index.vue'),
+      import(/* webpackChunkName: "about" */ '/@/views/HeyaPage/index.vue'),
   },
 ]
 

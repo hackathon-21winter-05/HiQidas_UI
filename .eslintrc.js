@@ -20,7 +20,6 @@ module.exports = {
     eqeqeq: 'error',
     'vue/eqeqeq': 'error',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
-    'vue/multi-word-component-names': 'off',
     'vue/block-lang': [
       'error',
       {
