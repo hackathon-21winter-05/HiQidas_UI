@@ -1,6 +1,6 @@
 <template>
   <div class="hiqidashi" :class="{ 'is-expanded': isExpanded }">
-    <span class="top-menu">
+    <div class="top-menu">
       <span
         class="material-icons left-button"
         @click="isExpanded = !isExpanded"
@@ -9,10 +9,10 @@
       </span>
       <h3 class="hiqidashi-title">{{ hiqidashi.title }}</h3>
       <span class="material-icons right-button"> more_horiz </span>
-    </span>
-    <span v-show="isExpanded" class="md-text-box">
-      <textarea id="md-text-area" />
-    </span>
+    </div>
+    <div v-show="isExpanded" class="md-text-box">
+      <textarea :id="hiqidashi.id" />
+    </div>
   </div>
 </template>
 
@@ -29,12 +29,13 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const isExpanded = true
+    const isExpanded = ref(true) // テキストの初期値をセットする為最初は true
 
     const editor: Ref<null | EasyMDE> = ref(null)
 
     const makeEasyMDE = () => {
-      const element = document.getElementById('md-text-area')
+      const element = document.getElementById(props.hiqidashi.id)
+      isExpanded.value = false
       if (!element) {
         return
       }
@@ -101,7 +102,6 @@ export default defineComponent({
 
   .md-text-box {
     height: 100%;
-    overflow: auto;
   }
 }
 </style>

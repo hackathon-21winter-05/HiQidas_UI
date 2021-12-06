@@ -21,7 +21,7 @@ export default defineComponent({
     HiQidashi,
   },
   setup() {
-    const hiqidashiData = { title: 'タイトル', description: '説明' }
+    const hiqidashiData = { id: 'abcd', title: 'タイトル', description: '説明' }
     return { hiqidashiData }
   },
 })
