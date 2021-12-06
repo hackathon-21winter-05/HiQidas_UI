@@ -11,7 +11,7 @@
       <span class="material-icons right-button"> more_horiz </span>
     </div>
     <div v-show="isExpanded">
-      <textarea :id="hiqidashi.id" />
+      <textarea ref="mdElement" />
     </div>
   </div>
 </template>
@@ -32,16 +32,16 @@ export default defineComponent({
     const isExpanded = ref(true) // テキストの初期値をセットする為最初は true
 
     const editor: Ref<null | EasyMDE> = ref(null)
+    const mdElement = ref<HTMLElement>()
 
     const makeEasyMDE = () => {
-      const element = document.getElementById(props.hiqidashi.id)
       isExpanded.value = false
-      if (!element) {
+      if (mdElement.value === undefined) {
         return
       }
 
       editor.value = new EasyMDE({
-        element: element,
+        element: mdElement.value,
         toolbar: [
           'bold',
           'italic',
@@ -59,7 +59,7 @@ export default defineComponent({
     }
 
     onMounted(makeEasyMDE)
-    return { ...props, isExpanded, editor }
+    return { ...props, isExpanded, editor, mdElement }
   },
 })
 </script>

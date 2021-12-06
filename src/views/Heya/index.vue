@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, reactive } from 'vue'
 import HiQidashi from './components/HiQidashi.vue'
 
 export default defineComponent({
@@ -21,7 +21,11 @@ export default defineComponent({
     HiQidashi,
   },
   setup() {
-    const hiqidashiData = { id: 'abcd', title: 'タイトル', description: '説明' }
+    const hiqidashiData = reactive({
+      id: 'abcd',
+      title: 'タイトル',
+      description: '説明',
+    })
     return { hiqidashiData }
   },
 })
