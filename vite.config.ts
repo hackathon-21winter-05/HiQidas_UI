@@ -22,8 +22,5 @@ export default defineConfig(() => ({
       },
     },
   },
-  plugins: [VuePlugin()],
-  externals: {
-    easymde: 'EasyMDE',
-  },
+  plugins: [VuePlugin()]
 }))
