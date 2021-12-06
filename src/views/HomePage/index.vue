@@ -15,22 +15,28 @@
       </el-input>
     </div>
     <div class="main">
-      <hello-world msg="Welcome" />
+      <heya-card :heya-data="heyaData" :is-stared="isStared" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import HelloWorld from '/@/components/HelloWorld.vue' // @ is an alias to /src
-
+import { defineComponent, ref, reactive } from 'vue'
+import HeyaCard from './components/HeyaCard.vue'
 export default defineComponent({
   name: 'HomePage',
   components: {
-    HelloWorld,
+    HeyaCard,
   },
   setup() {
-    return { searchText: ref('') }
+    const heyaData = reactive({
+      title: 'タイトル',
+      creatorName: 'hoge',
+      createdAt: '2022/01/01',
+      updatedAt: '2022/02/02',
+    })
+    const isStared = ref(true)
+    return { heyaData, isStared }
   },
 })
 </script>
