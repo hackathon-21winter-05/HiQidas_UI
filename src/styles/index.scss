@@ -26,8 +26,6 @@ body {
 
 // EasyMDE Style
 .EasyMDEContainer {
-  height: 100%;
-
   .editor-toolbar {
     display: inline-block;
     border: none;
@@ -38,7 +36,6 @@ body {
   .CodeMirror {
     border: none;
     text-align: left;
-    height: 75%;
   }
 }
 

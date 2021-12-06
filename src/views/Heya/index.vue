@@ -37,7 +37,6 @@ export default defineComponent({
   .navbar {
     display: inline-flex;
     align-items: center;
-    grid-column: 1;
     grid-row: 1;
     background-color: #c87b7b;
 
@@ -58,7 +57,6 @@ export default defineComponent({
 
   .main {
     overflow: auto;
-    grid-column: 1;
     grid-row: 2;
   }
 }

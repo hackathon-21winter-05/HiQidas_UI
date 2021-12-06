@@ -10,7 +10,7 @@
       <h3 class="hiqidashi-title">{{ hiqidashi.title }}</h3>
       <span class="material-icons right-button"> more_horiz </span>
     </div>
-    <div v-show="isExpanded" class="md-text-box">
+    <div v-show="isExpanded">
       <textarea :id="hiqidashi.id" />
     </div>
   </div>
@@ -75,7 +75,7 @@ export default defineComponent({
   transition: 0.3s height ease-in-out;
 
   &.is-expanded {
-    height: 100%;
+    height: auto;
     border: medium solid #e9b9d0;
   }
 
@@ -98,10 +98,6 @@ export default defineComponent({
     .right-button {
       float: right;
     }
-  }
-
-  .md-text-box {
-    height: 100%;
   }
 }
 </style>
