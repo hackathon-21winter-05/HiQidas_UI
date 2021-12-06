@@ -1,11 +1,13 @@
 /* global scss */
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'M PLUS 1p', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  font-size: 16px;
   height: 100%;
+  background-color: #f3e5d8;
 }
 
 html {
@@ -16,4 +18,32 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
+}
+
+.title {
+  color: #9b3131;
+}
+
+// EasyMDE Style
+.EasyMDEContainer {
+  .editor-toolbar {
+    display: inline-block;
+    border: none;
+    border-bottom: thin solid #d8d8d8;
+    background-color: #ffffff;
+  }
+
+  .CodeMirror {
+    border: none;
+    text-align: left;
+  }
+}
+
+// Element Plus Style
+.el-input__inner {
+  border-radius: 50px;
+
+  &:focus {
+    border-color: #ff1787;
+  }
 }
