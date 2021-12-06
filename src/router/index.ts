@@ -5,13 +5,13 @@ const routes: Array<RouteRecordRaw> = [
     path: '/',
     name: 'Home',
     component: () =>
-      import(/* webpackChunkName: "home" */ '/@/views/Home/index.vue'),
+      import(/* webpackChunkName: "home" */ '/@/views/HomePage/index.vue'),
   },
   {
     path: '/heya',
     name: 'Heya',
     component: () =>
-      import(/* webpackChunkName: "about" */ '/@/views/Heya/index.vue'),
+      import(/* webpackChunkName: "about" */ '/@/views/HeyaPage/index.vue'),
   },
 ]
 

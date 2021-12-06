@@ -16,7 +16,7 @@ import { defineComponent, reactive } from 'vue'
 import HiQidashi from './components/HiQidashi.vue'
 
 export default defineComponent({
-  name: 'Heya',
+  name: 'HeyaPage',
   components: {
     HiQidashi,
   },
