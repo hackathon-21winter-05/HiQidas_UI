@@ -112,7 +112,7 @@ export default defineComponent({
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding: 10px;
+    padding: 10px 0;
     grid-column: 2;
     grid-row: 1;
 
@@ -120,15 +120,15 @@ export default defineComponent({
       width: 370px;
       height: 220px;
       margin: 10px 20px;
-      vertical-align: middle;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       border: none;
       background-color: #f3f3f3;
       color: #626262;
 
       .add-icon {
         font-size: 48px;
-        width: fit-content;
-        height: fit-content;
       }
     }
   }
