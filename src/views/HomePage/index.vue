@@ -14,29 +14,78 @@
         </template>
       </el-input>
     </div>
-    <div class="main">
-      <heya-card :heya-data="heyaData" :is-stared="isStared" />
+    <div class="home-main">
+      <el-card shadow="never" class="create-new-heya" @click="createNewHeya">
+        <span class="material-icons add-icon"> add </span>
+        <div class="add-text">新しいヘヤを作成する</div>
+      </el-card>
+      <heya-card
+        v-for="heyaData in heyasData"
+        :key="heyaData.id"
+        :heya-data="heyaData"
+        :is-stared="isStared"
+        @click="goToHeyaPage(heyaData.id)"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive } from 'vue'
+import { defineComponent, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import HeyaCard from './components/HeyaCard.vue'
+
 export default defineComponent({
   name: 'HomePage',
   components: {
     HeyaCard,
   },
   setup() {
-    const heyaData = reactive({
-      title: 'タイトル',
-      creatorName: 'hoge',
-      createdAt: '2022/01/01',
-      updatedAt: '2022/02/02',
-    })
+    const searchText = ref('')
+
+    const heyasData = ref([
+      {
+        id: 'abcs',
+        title: 'タイトル',
+        creatorName: 'hoge',
+        createdAt: '2022/01/01',
+        updatedAt: '2022/02/02',
+      },
+      {
+        id: 'uajs',
+        title: 'タイトル2',
+        creatorName: 'hoge2',
+        createdAt: '2022/01/01',
+        updatedAt: '2022/02/02',
+      },
+      {
+        id: 'uajass',
+        title: 'タイトル3',
+        creatorName: 'hoge3',
+        createdAt: '2022/01/01',
+        updatedAt: '2022/02/02',
+      },
+      {
+        id: 'uajsddk',
+        title: 'タイトル5',
+        creatorName: 'hoge5',
+        createdAt: '2022/01/01',
+        updatedAt: '2022/02/02',
+      },
+    ])
     const isStared = ref(true)
-    return { heyaData, isStared }
+
+    const router = useRouter()
+    const goToHeyaPage = (heyaId: string) => {
+      console.log(heyaId)
+      router.push({ name: 'HeyaPage', params: { id: heyaId } })
+    }
+
+    const createNewHeya = () => {
+      // TODO
+    }
+
+    return { searchText, heyasData, isStared, goToHeyaPage, createNewHeya }
   },
 })
 </script>
@@ -58,10 +107,30 @@ export default defineComponent({
     }
   }
 
-  .main {
+  .home-main {
     overflow: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px;
     grid-column: 2;
     grid-row: 1;
+
+    .create-new-heya {
+      width: 370px;
+      height: 220px;
+      margin: 10px 20px;
+      vertical-align: middle;
+      border: none;
+      background-color: #f3f3f3;
+      color: #626262;
+
+      .add-icon {
+        font-size: 48px;
+        width: fit-content;
+        height: fit-content;
+      }
+    }
   }
 }
 </style>

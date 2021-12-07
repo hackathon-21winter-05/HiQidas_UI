@@ -1,5 +1,5 @@
 <template>
-  <div class="heya-card">
+  <el-card shadow="never" class="heya-card">
     <div class="card-navbar">
       <span class="left-content">owner: @{{ heyaData.creatorName }}</span>
       <span class="material-icons right-content"> more_horiz </span>
@@ -18,7 +18,7 @@
       <span class="left-content">更新日時</span>
       <span class="right-content">{{ heyaData.updatedAt }}</span>
     </div>
-  </div>
+  </el-card>
 </template>
 
 <script lang="ts">
@@ -45,10 +45,11 @@ export default defineComponent({
 <style lang="scss" scoped>
 .heya-card {
   width: 370px;
-  padding: 16px;
-  border-radius: 10px;
+  height: 220px;
+  margin: 10px 20px;
+  border: none;
   background-color: #f3f3f3;
-  color: #a7a7a7;
+  color: #626262;
 
   .card-navbar {
     height: 24px;
