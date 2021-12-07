@@ -50,6 +50,15 @@ export default defineComponent({
   },
   setup(props) {
     const showDialog = ref(false)
+    document.addEventListener('click', (event) => {
+      if (!event || !event.target) {
+        return
+      }
+
+      if(!event.target.closest('.heya-dialog')) {
+        showDialog.value = false
+      }
+    })
 
     const router = useRouter()
     const goToHeyaPage = (heyaId: string) => {

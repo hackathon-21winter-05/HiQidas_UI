@@ -75,7 +75,7 @@ export default defineComponent({
     const isStared = ref(true) // TODO: 表示分フィルター時に部屋ごとに値設定
 
     const createNewHeya = () => {
-      // TODO: api 叩いて新しいヘヤ作成
+      // TODO: 新しいヘヤ作成
     }
 
     return { searchText, heyasData, isStared, createNewHeya }
