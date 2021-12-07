@@ -1,5 +1,10 @@
 <template>
   <el-card shadow="never" class="heya-card">
+    <el-card v-show="showDialog" class="heya-dialog">
+      <div class="dialog-text" @click="deleteHeya">このヘヤを削除</div>
+      <div class="dialog-text" @click="editHeyaTitle">ヘヤの名前を変更</div>
+    </el-card>
+
     <div class="card-navbar">
       <span class="left-content">owner: @{{ heyaData.creatorName }}</span>
       <span class="material-icons right-content" @click="showDialog = true">
@@ -10,8 +15,6 @@
       </span>
       <span v-else class="material-icons right-content"> star_outline </span>
     </div>
-
-    <el-dialog v-model="showDialog" width="112px" />
 
     <span @click="goToHeyaPage(heyaData.id)">
       <h2 class="heya-data-title">{{ heyaData.title }}</h2>
@@ -52,10 +55,28 @@ export default defineComponent({
       router.push({ name: 'HeyaPage', params: { id: heyaId } })
     }
 
-    return { ...props, showDialog, goToHeyaPage }
+    const deleteHeya = () => {
+      // TODO: ヘヤの削除
+      console.log('delete')
+    }
+
+    const editHeyaTitle = () => {
+      // TODO: ヘヤのタイトル変更
+      console.log('edit')
+    }
+
+    return { ...props, showDialog, goToHeyaPage, deleteHeya, editHeyaTitle }
   },
 })
 </script>
+
+<style lang="scss">
+.heya-dialog {
+  .el-card__body {
+    padding: 10px;
+  }
+}
+</style>
 
 <style lang="scss" scoped>
 .heya-card {
@@ -65,6 +86,19 @@ export default defineComponent({
   border: none;
   background-color: #f3f3f3;
   color: #626262;
+  position: relative;
+  overflow: visible;
+
+  .heya-dialog {
+    position: absolute;
+    z-index: 1;
+    margin-left: 240px;
+    width: 150px;
+
+    .dialog-text {
+      text-align: left;
+    }
+  }
 
   .card-navbar {
     height: 24px;

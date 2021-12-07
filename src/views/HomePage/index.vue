@@ -45,7 +45,7 @@ export default defineComponent({
     const heyasData = ref([
       {
         id: 'abcs',
-        title: 'タイトル',
+        title: 'タイトル長いよながい長いながいTitle',
         creatorName: 'hoge',
         createdAt: '2022/01/01',
         updatedAt: '2022/02/02',
