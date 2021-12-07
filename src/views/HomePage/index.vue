@@ -24,7 +24,6 @@
         :key="heyaData.id"
         :heya-data="heyaData"
         :is-stared="isStared"
-        @click="goToHeyaPage(heyaData.id)"
       />
     </div>
   </div>
@@ -32,7 +31,6 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { useRouter } from 'vue-router'
 import HeyaCard from './components/HeyaCard.vue'
 
 export default defineComponent({
@@ -43,6 +41,7 @@ export default defineComponent({
   setup() {
     const searchText = ref('')
 
+    // TODO: api 叩いて取得する・表示する分フィルターかける
     const heyasData = ref([
       {
         id: 'abcs',
@@ -73,19 +72,13 @@ export default defineComponent({
         updatedAt: '2022/02/02',
       },
     ])
-    const isStared = ref(true)
-
-    const router = useRouter()
-    const goToHeyaPage = (heyaId: string) => {
-      console.log(heyaId)
-      router.push({ name: 'HeyaPage', params: { id: heyaId } })
-    }
+    const isStared = ref(true) // TODO: 表示分フィルター時に部屋ごとに値設定
 
     const createNewHeya = () => {
-      // TODO
+      // TODO: api 叩いて新しいヘヤ作成
     }
 
-    return { searchText, heyasData, isStared, goToHeyaPage, createNewHeya }
+    return { searchText, heyasData, isStared, createNewHeya }
   },
 })
 </script>

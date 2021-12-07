@@ -2,27 +2,34 @@
   <el-card shadow="never" class="heya-card">
     <div class="card-navbar">
       <span class="left-content">owner: @{{ heyaData.creatorName }}</span>
-      <span class="material-icons right-content"> more_horiz </span>
+      <span class="material-icons right-content" @click="showDialog = true">
+        more_horiz
+      </span>
       <span v-if="isStared" class="material-icons star-fill right-content">
         star
       </span>
       <span v-else class="material-icons right-content"> star_outline </span>
     </div>
 
-    <h2 class="heya-data-title">{{ heyaData.title }}</h2>
+    <el-dialog v-model="showDialog" width="112px" />
 
-    <div class="card-footer">
-      <span class="left-content">作成日時</span>
-      <span class="right-content">{{ heyaData.createdAt }}</span>
-      <br />
-      <span class="left-content">更新日時</span>
-      <span class="right-content">{{ heyaData.updatedAt }}</span>
-    </div>
+    <span @click="goToHeyaPage(heyaData.id)">
+      <h2 class="heya-data-title">{{ heyaData.title }}</h2>
+
+      <div class="card-footer">
+        <span class="left-content">作成日時</span>
+        <span class="right-content">{{ heyaData.createdAt }}</span>
+        <br />
+        <span class="left-content">更新日時</span>
+        <span class="right-content">{{ heyaData.updatedAt }}</span>
+      </div>
+    </span>
   </el-card>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'HeyaCard',
@@ -37,7 +44,15 @@ export default defineComponent({
     },
   },
   setup(props) {
-    return { ...props }
+    const showDialog = ref(false)
+
+    const router = useRouter()
+    const goToHeyaPage = (heyaId: string) => {
+      console.log(heyaId)
+      router.push({ name: 'HeyaPage', params: { id: heyaId } })
+    }
+
+    return { ...props, showDialog, goToHeyaPage }
   },
 })
 </script>
