@@ -6,7 +6,9 @@
     </el-card>
 
     <div class="card-navbar">
-      <span class="left-content">owner: @{{ heyaData.creatorName }}</span>
+      <span class="left-content owner-data">
+        owner: @{{ heyaData.creatorName }}
+      </span>
       <span class="material-icons right-content" @click="showDialog = true">
         more_horiz
       </span>
@@ -56,8 +58,9 @@ export default defineComponent({
     }
 
     const deleteHeya = () => {
-      // TODO: ヘヤの削除
-      console.log('delete')
+      if (window.confirm(`ヘヤ: "${props.heyaData.title}" を削除します。`)) {
+        // TODO: ヘヤの削除
+      }
     }
 
     const editHeyaTitle = () => {
@@ -102,7 +105,11 @@ export default defineComponent({
 
   .card-navbar {
     height: 24px;
-    align-items: center;
+
+    .owner-data {
+      position: absolute;
+      text-align: left;
+    }
 
     .star-fill {
       color: #ffe974;
