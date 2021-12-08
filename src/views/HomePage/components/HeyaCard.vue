@@ -68,12 +68,9 @@ export default defineComponent({
         return
       }
 
-      // console.log('et', event.target)
-      // console.log('hel', dialog.value)
-
-      /* if (event.target !== dialog.value) {
+      if (!(event.target as HTMLElement).closest('.heya-card')) {
         showDialog.value = false
-      } */
+      }
     })
 
     const router = useRouter()
