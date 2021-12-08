@@ -4,6 +4,7 @@ client
 ## 開発
 
 ```
+npm run gen-pb
 npm run dev
 ```
 
