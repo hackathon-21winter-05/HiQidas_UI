@@ -12,10 +12,20 @@
       <span class="material-icons right-content" @click="showDialog = true">
         more_horiz
       </span>
-      <span v-if="isStared" class="material-icons star-fill right-content">
+      <span
+        v-if="isStaredRef"
+        class="material-icons star-fill right-content"
+        @click="emitStarChanged"
+      >
         star
       </span>
-      <span v-else class="material-icons right-content"> star_outline </span>
+      <span
+        v-else
+        class="material-icons right-content"
+        @click="emitStarChanged"
+      >
+        star_outline
+      </span>
     </div>
 
     <span @click="goToHeyaPage(heyaData.id)">
@@ -48,16 +58,21 @@ export default defineComponent({
       default: false,
     },
   },
-  setup(props) {
+  setup(props, context) {
+    const isStaredRef = ref(props.isStared) // ref にしないと値変更時に再描画されない
+
     const showDialog = ref(false)
     document.addEventListener('click', (event) => {
       if (!event || !event.target) {
         return
       }
 
-      if(!event.target.closest('.heya-dialog')) {
+      // console.log('et', event.target)
+      // console.log('hel', dialog.value)
+
+      /* if (event.target !== dialog.value) {
         showDialog.value = false
-      }
+      } */
     })
 
     const router = useRouter()
@@ -77,7 +92,20 @@ export default defineComponent({
       console.log('edit')
     }
 
-    return { ...props, showDialog, goToHeyaPage, deleteHeya, editHeyaTitle }
+    const emitStarChanged = () => {
+      isStaredRef.value = !isStaredRef.value
+      context.emit('starChanged', !props.isStared, props.heyaData.id)
+    }
+
+    return {
+      ...props,
+      isStaredRef,
+      showDialog,
+      goToHeyaPage,
+      deleteHeya,
+      editHeyaTitle,
+      emitStarChanged,
+    }
   },
 })
 </script>
@@ -127,7 +155,9 @@ export default defineComponent({
 
   .heya-data-title {
     font-size: 36px;
+    display: flex;
     text-align: left;
+    align-items: center;
     margin: 0;
     line-height: 1.5em;
     height: 3em;

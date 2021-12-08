@@ -45,7 +45,8 @@
           v-for="heyaData in heyasData"
           :key="heyaData.id"
           :heya-data="heyaData"
-          :is-stared="isStared"
+          :is-stared="favoriteHeyas.has(heyaData.id)"
+          @star-changed="changeStar"
         />
       </div>
     </div>
@@ -71,6 +72,7 @@ export default defineComponent({
       () => displayHeyasFlag.value,
       () => {
         console.log(displayHeyasFlag.value)
+        // TODO: フラグ変更を監視して表示データをフィルター
       }
     )
 
@@ -105,14 +107,33 @@ export default defineComponent({
         updatedAt: '2022/02/02',
       },
     ])
-    const isStared = ref(true) // TODO: 表示分フィルター時に部屋ごとに値設定
+    const favoriteHeyas = ref(new Set(['uajass', 'uajs'])) // お気に入りのヘヤの id を持つ set
+
+    const changeStar = (isStared: boolean, heyaId: string) => {
+      if (isStared) {
+        favoriteHeyas.value.add(heyaId)
+        console.log(heyaId, ' stared!', favoriteHeyas.value)
+        // TODO: お気に入り追加の api 叩く
+      } else {
+        favoriteHeyas.value.delete(heyaId)
+        console.log(heyaId, ' unstared!', favoriteHeyas.value)
+        // TODO: お気に入り削除の api 叩く
+      }
+    }
 
     const createNewHeya = () => {
       // TODO: 新しいヘヤ作成
       console.log('create')
     }
 
-    return { searchText, displayHeyasFlag, heyasData, isStared, createNewHeya }
+    return {
+      searchText,
+      displayHeyasFlag,
+      heyasData,
+      favoriteHeyas,
+      changeStar,
+      createNewHeya,
+    }
   },
 })
 </script>
