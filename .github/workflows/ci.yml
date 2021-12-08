@@ -20,6 +20,25 @@ jobs:
       - name: npm ci
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
+  gen-pb:
+    name: Generate code from Protocol Buffer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          cache: npm
+      - name: Setup npm
+        run: npm install -g npm@7
+      - run: npm ci
+      - run: npm run gen-pb
+      - uses: actions/upload-artifact@v2
+        with:
+          name: pb
+          path: |
+            ./src/lib/apis/pb
+            ./src/types/pb
   build:
     name: Build
     runs-on: ubuntu-latest
@@ -35,6 +54,12 @@ jobs:
       - name: npm ci
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
+      - uses: actions/download-artifact@v2
+        with:
+          name: pb
+          path: |
+            ./src/lib/apis/pb
+            ./src/types/pb
       - name: run build
         run: npm run build
         env:
@@ -54,6 +79,12 @@ jobs:
       - name: npm ci
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
+      - uses: actions/download-artifact@v2
+        with:
+          name: pb
+          path: |
+            ./src/lib/apis/pb
+            ./src/types/pb
       - name: run lint
         run: npm run lint -- --no-fix
   typeCheck:
@@ -71,5 +102,11 @@ jobs:
       - name: npm ci
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
+      - uses: actions/download-artifact@v2
+        with:
+          name: pb
+          path: |
+            ./src/lib/apis/pb
+            ./src/types/pb
       - name: run type-check
         run: npm run type-check
