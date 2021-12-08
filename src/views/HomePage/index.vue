@@ -13,6 +13,26 @@
           </el-icon>
         </template>
       </el-input>
+
+      <div class="sidebar-button-container">
+        <button class="sidebar-button" />
+      </div>
+
+      <div class="sidebar-text-button" @click="displayHeyasFlag = 'all'">
+        すべてのヘヤ
+      </div>
+      <div class="sidebar-text-button" @click="displayHeyasFlag = 'active'">
+        アクティブなヘヤ
+      </div>
+      <div class="sidebar-text-button" @click="displayHeyasFlag = 'favorite'">
+        お気に入りのヘヤ
+      </div>
+      <div class="sidebar-text-button" @click="displayHeyasFlag = 'owner'">
+        管理人のヘヤ
+      </div>
+      <div class="sidebar-text-button" @click="displayHeyasFlag = 'recent'">
+        最近訪れたヘヤ
+      </div>
     </div>
 
     <div class="home-main">
@@ -33,7 +53,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, Ref, ref, watch } from 'vue'
 import HeyaCard from './components/HeyaCard.vue'
 
 export default defineComponent({
@@ -43,6 +63,16 @@ export default defineComponent({
   },
   setup() {
     const searchText = ref('')
+
+    const displayHeyasFlag: Ref<
+      'all' | 'isActive' | 'favorite' | 'owner' | 'recent'
+    > = ref('all')
+    watch(
+      () => displayHeyasFlag.value,
+      () => {
+        console.log(displayHeyasFlag.value)
+      }
+    )
 
     // TODO: api 叩いて取得する・表示する分フィルターかける
     const heyasData = ref([
@@ -82,7 +112,7 @@ export default defineComponent({
       console.log('create')
     }
 
-    return { searchText, heyasData, isStared, createNewHeya }
+    return { searchText, displayHeyasFlag, heyasData, isStared, createNewHeya }
   },
 })
 </script>
@@ -101,6 +131,17 @@ export default defineComponent({
 
     .heya-search-input {
       width: 90%;
+    }
+
+    .sidebar-text-button {
+      width: 180px;
+      padding: 0 10px;
+      margin: 0 auto;
+      border-bottom: thin solid #ffffff;
+      text-align: left;
+      font-size: 12px;
+      line-height: 3rem;
+      color: #ffffff;
     }
   }
 
