@@ -14,17 +14,20 @@
         </template>
       </el-input>
     </div>
+
     <div class="home-main">
-      <el-card shadow="never" class="create-new-heya" @click="createNewHeya">
-        <span class="material-icons add-icon"> add </span>
-        <div class="add-text">新しいヘヤを作成する</div>
-      </el-card>
-      <heya-card
-        v-for="heyaData in heyasData"
-        :key="heyaData.id"
-        :heya-data="heyaData"
-        :is-stared="isStared"
-      />
+      <div class="heya-cards">
+        <el-card shadow="never" class="create-new-heya" @click="createNewHeya">
+          <span class="material-icons add-icon"> add </span>
+          <div class="add-text">新しいヘヤを作成する</div>
+        </el-card>
+        <heya-card
+          v-for="heyaData in heyasData"
+          :key="heyaData.id"
+          :heya-data="heyaData"
+          :is-stared="isStared"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -76,6 +79,7 @@ export default defineComponent({
 
     const createNewHeya = () => {
       // TODO: 新しいヘヤ作成
+      console.log('create')
     }
 
     return { searchText, heyasData, isStared, createNewHeya }
@@ -101,27 +105,30 @@ export default defineComponent({
   }
 
   .home-main {
-    overflow: auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 10px 0;
     grid-column: 2;
     grid-row: 1;
+    overflow: auto;
+    text-align: center;
+    padding: 10px 0;
 
-    .create-new-heya {
-      width: 370px;
-      height: 220px;
-      margin: 10px 20px;
+    .heya-cards {
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      border: none;
-      background-color: #f3f3f3;
-      color: #626262;
+      flex-wrap: wrap;
 
-      .add-icon {
-        font-size: 48px;
+      .create-new-heya {
+        width: 370px;
+        height: 220px;
+        margin: 10px 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border: none;
+        background-color: #f3f3f3;
+        color: #626262;
+
+        .add-icon {
+          font-size: 48px;
+        }
       }
     }
   }
