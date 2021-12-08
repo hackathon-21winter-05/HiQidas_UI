@@ -94,7 +94,7 @@ export default defineComponent({
 
     const emitStarChanged = () => {
       isStaredRef.value = !isStaredRef.value
-      context.emit('starChanged', !props.isStared, props.heyaData.id)
+      context.emit('star-changed', !props.isStared, props.heyaData.id)
     }
 
     return {
