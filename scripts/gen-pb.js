@@ -52,12 +52,10 @@ const makeDir = async (path) => {
 
 const protoDir = path.resolve(__dirname, '../', 'protobuf')
 const jsDir = path.resolve(__dirname, '../', 'src/lib/apis/pb')
-const tsDir = path.resolve(__dirname, '../', 'src/types/pb')
 
 ;(async () => {
   await makeDir(`${jsDir}/rest`)
   await makeDir(`${jsDir}/ws`)
-  await makeDir(tsDir)
   await makeDir(`${protoDir}/rest`)
   await makeDir(`${protoDir}/ws`)
 
@@ -86,14 +84,13 @@ const tsDir = path.resolve(__dirname, '../', 'src/types/pb')
     pbts.main(
       [
         '-o',
-        `${tsDir}/${getFileName(url)}.d.ts`,
+        `${jsDir}/${getRestOrWs(url)}/${getFileName(url)}.d.ts`,
         `${jsDir}/${getRestOrWs(url)}/${getFileName(url)}.js`,
       ],
       (err) => {
         if (err) throw err
       }
     )
-
-    await fs.rm(protoDir, { recursive: true })
   }
+  await fs.rm(protoDir, { recursive: true })
 })()
