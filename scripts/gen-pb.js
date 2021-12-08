@@ -33,8 +33,10 @@ const getRestOrWs = (url) => {
 const downloadFile = async (url) => {
   const res = await axios.get(url)
 
+  // importがなんかうまくいかないのでreplace
+  // 時間があったらどうにかする
   const re = /import "protobuf\/.*?\/([^/]+)";/g
-  const replaced = res.data.replaceAll(re, (_, p1) => `import "${p1}";`)
+  const replaced = res.data.replaceAll(re, (_, p) => `import "${p}";`)
 
   await fs.writeFile(
     `${protoDir}/${getRestOrWs(url)}/${getFileName(url)}.proto`,
@@ -42,32 +44,29 @@ const downloadFile = async (url) => {
   )
 }
 
+const makeDir = async (path) => {
+  await fs.mkdir(path, {
+    recursive: true,
+  })
+}
+
 const protoDir = path.resolve(__dirname, '../', 'protobuf')
 const jsDir = path.resolve(__dirname, '../', 'src/lib/apis/pb')
 const tsDir = path.resolve(__dirname, '../', 'src/types/pb')
 
 ;(async () => {
-  await fs.mkdir(`${jsDir}/rest`, {
-    recursive: true,
-  })
-  await fs.mkdir(`${jsDir}/ws`, {
-    recursive: true,
-  })
-  await fs.mkdir(tsDir, {
-    recursive: true,
-  })
-  await fs.mkdir(`${protoDir}/rest`, {
-    recursive: true,
-  })
-  await fs.mkdir(`${protoDir}/ws`, {
-    recursive: true,
-  })
+  await makeDir(`${jsDir}/rest`)
+  await makeDir(`${jsDir}/ws`)
+  await makeDir(tsDir)
+  await makeDir(`${protoDir}/rest`)
+  await makeDir(`${protoDir}/ws`)
 
   for (const url of PROTO_PATH) {
     await downloadFile(url)
   }
 
   for (const url of PROTO_PATH) {
+    // .js の生成
     pbjs.main(
       [
         '-t',
@@ -78,26 +77,23 @@ const tsDir = path.resolve(__dirname, '../', 'src/types/pb')
         `${jsDir}/${getRestOrWs(url)}/${getFileName(url)}.js`,
         `${protoDir}/${getRestOrWs(url)}/${getFileName(url)}.proto`,
       ],
-      function (err) {
+      (err) => {
         if (err) throw err
       }
     )
 
+    // .d.ts の生成
     pbts.main(
       [
         '-o',
         `${tsDir}/${getFileName(url)}.d.ts`,
         `${jsDir}/${getRestOrWs(url)}/${getFileName(url)}.js`,
       ],
-      function (err) {
+      (err) => {
         if (err) throw err
       }
     )
 
-    fs.rm(protoDir, { recursive: true }, (err) => {
-      if (err) {
-        throw err
-      }
-    })
+    await fs.rm(protoDir, { recursive: true })
   }
 })()
