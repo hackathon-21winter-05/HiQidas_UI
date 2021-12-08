@@ -58,6 +58,7 @@ export default defineComponent({
       default: false,
     },
   },
+  emits: ['star-changed'],
   setup(props, context) {
     const isStaredRef = ref(props.isStared) // ref にしないと値変更時に再描画されない
 
