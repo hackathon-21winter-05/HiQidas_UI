@@ -20,7 +20,8 @@ export const useMe = () => {
 
   if (me.id === '') {
     // TODO: ここでmeを取得→失敗したらredirect
-    // oauthRedirect()
+
+    oauthRedirect()
   }
 
   return { me }
