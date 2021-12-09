@@ -105,7 +105,7 @@ export default defineComponent({
       },
     ])
     const favoriteHeyas = ref(new Set(['uajass', 'uajs'])) // お気に入りのヘヤの id を持つ set
-    const displayHeyasData = heyasData // 実際に表示するデータ
+    const displayHeyasData = ref(heyasData.value) // 実際に表示するデータ
 
     const searchText = ref('')
     const search = () => {
@@ -164,12 +164,15 @@ export default defineComponent({
           displayHeyasData.value = heyasData.value.filter((heya) =>
             favoriteHeyas.value.has(heya.id)
           )
+          console.log(heyasData.value)
         } else if (displayHeyasFlag.value === 'owner') {
           displayHeyasData.value = heyasData.value.filter(
             (heya) => heya.creatorId === userMe.id
           )
+          console.log(displayHeyasData.value)
         } else {
           displayHeyasData.value = heyasData.value
+          console.log(displayHeyasData.value)
         }
       }
     )
