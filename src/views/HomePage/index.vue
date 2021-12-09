@@ -14,9 +14,12 @@
         </template>
       </el-input>
 
-      <div class="sidebar-button-container">
-        <button class="sidebar-button" />
-      </div>
+      <button class="sidebar-toggle-button" @click="changeSortKey">
+        {{ sortKey }}
+      </button>
+      <button class="sidebar-toggle-button" @click="changeSortOrder">
+        {{ sortOrder }}
+      </button>
 
       <div class="sidebar-text-button" @click="displayHeyasFlag = 'all'">
         すべてのヘヤ
@@ -63,19 +66,6 @@ export default defineComponent({
     HeyaCard,
   },
   setup() {
-    const searchText = ref('')
-
-    const displayHeyasFlag: Ref<
-      'all' | 'isActive' | 'favorite' | 'owner' | 'recent'
-    > = ref('all')
-    watch(
-      () => displayHeyasFlag.value,
-      () => {
-        console.log(displayHeyasFlag.value)
-        // TODO: フラグ変更を監視して表示データをフィルター
-      }
-    )
-
     // TODO: api 叩いて取得する・表示する分フィルターかける
     const heyasData = ref([
       {
@@ -109,6 +99,31 @@ export default defineComponent({
     ])
     const favoriteHeyas = ref(new Set(['uajass', 'uajs'])) // お気に入りのヘヤの id を持つ set
 
+    const searchText = ref('')
+
+    const sortKey: Ref<'更新日時順' | '作成日時順'> = ref('更新日時順')
+    const sortOrder: Ref<'降順' | '昇順'> = ref('降順')
+    const changeSortKey = () => {
+      sortKey.value =
+        sortKey.value === '更新日時順' ? '作成日時順' : '更新日時順'
+      console.log('change key!')
+    }
+    const changeSortOrder = () => {
+      sortOrder.value = sortOrder.value === '降順' ? '昇順' : '降順'
+      console.log('change order!')
+    }
+
+    const displayHeyasFlag: Ref<
+      'all' | 'isActive' | 'favorite' | 'owner' | 'recent'
+    > = ref('all')
+    watch(
+      () => displayHeyasFlag.value,
+      () => {
+        console.log(displayHeyasFlag.value)
+        // TODO: フラグ変更を監視して表示データをフィルター
+      }
+    )
+
     const changeStar = (isStared: boolean, heyaId: string) => {
       if (isStared) {
         favoriteHeyas.value.add(heyaId)
@@ -128,9 +143,13 @@ export default defineComponent({
 
     return {
       searchText,
+      sortKey,
+      sortOrder,
       displayHeyasFlag,
       heyasData,
       favoriteHeyas,
+      changeSortKey,
+      changeSortOrder,
       changeStar,
       createNewHeya,
     }
@@ -152,6 +171,16 @@ export default defineComponent({
 
     .heya-search-input {
       width: 90%;
+    }
+
+    .sidebar-toggle-button {
+      border: none;
+      border-radius: 10px;
+      background-color: #977b85;
+      color: #ffffff;
+      font-size: 12px;
+      padding: 3px 20px;
+      margin: 10px;
     }
 
     .sidebar-text-button {
@@ -176,7 +205,6 @@ export default defineComponent({
     .heya-cards {
       display: flex;
       flex-wrap: wrap;
-      margin: 0 auto;
 
       .create-new-heya {
         width: 370px;
