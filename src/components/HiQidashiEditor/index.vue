@@ -41,7 +41,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .content {
-  padding: 1.25rem 1rem;
+  padding: 0 16px 8px 16px;
   text-align: left;
   flex: 1 1 auto;
   overflow-x: hidden;

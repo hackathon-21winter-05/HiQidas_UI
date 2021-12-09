@@ -5,7 +5,6 @@
       <span class="heya-name">Heya Name</span>
     </div>
     <div class="main">
-      <h1>This is a heya page</h1>
       <hi-qidashi-tree
         :tree="hiqidashiTree"
         :create-new-hiqidashi="createNewHiqidashi"
@@ -68,8 +67,6 @@ export default defineComponent({
     }
 
     setHiqidashiMap(hiqidashiTree)
-
-    console.log(hiqidashiMap)
 
     const createNewHiqidashi = (parentId: string, hiqidashi: HiqidashiTree) => {
       const parent = hiqidashiMap.get(parentId)
