@@ -55,7 +55,7 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: run lint
-        run: npm run lint -- --no-fix
+        run: npm run lint -- --no-fix --max-warnings=0
   typeCheck:
     name: Type Check
     runs-on: ubuntu-latest
