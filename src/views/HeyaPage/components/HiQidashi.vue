@@ -11,17 +11,23 @@
       <span class="material-icons right-button"> more_horiz </span>
     </div>
     <div v-show="isExpanded">
-      <textarea ref="mdElement" />
+      <editor-content :editor="editor" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, Ref, ref, onMounted } from 'vue'
-import EasyMDE from 'easymde'
+import { defineComponent, ref } from 'vue'
+import { useEditor, EditorContent } from '@tiptap/vue-3'
+import StarterKit from '@tiptap/starter-kit'
+import Highlight from '@tiptap/extension-highlight'
+import Typography from '@tiptap/extension-typography'
 
 export default defineComponent({
   name: 'HiQidashi',
+  components: {
+    EditorContent,
+  },
   props: {
     hiqidashi: {
       type: Object,
@@ -29,37 +35,14 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const isExpanded = ref(true) // テキストの初期値をセットする為最初は true
+    const isExpanded = ref(false)
 
-    const editor: Ref<null | EasyMDE> = ref(null)
-    const mdElement = ref<HTMLElement>()
+    const editor = useEditor({
+      content: props.hiqidashi.description,
+      extensions: [StarterKit, Highlight, Typography],
+    })
 
-    const makeEasyMDE = () => {
-      isExpanded.value = false
-      if (mdElement.value === undefined) {
-        return
-      }
-
-      editor.value = new EasyMDE({
-        element: mdElement.value,
-        toolbar: [
-          'bold',
-          'italic',
-          'heading',
-          '|',
-          'quote',
-          'unordered-list',
-          'ordered-list',
-          '|',
-          'link',
-          'preview',
-        ],
-        initialValue: props.hiqidashi.description,
-      })
-    }
-
-    onMounted(makeEasyMDE)
-    return { ...props, isExpanded, editor, mdElement }
+    return { ...props, isExpanded, editor }
   },
 })
 </script>
