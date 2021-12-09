@@ -33,3 +33,11 @@ body {
 }
 
 
+// Element Plus Style
+.el-input__inner {
+  border-radius: 50px;
+
+  &:focus {
+    border-color: #ff1787;
+  }
+}
