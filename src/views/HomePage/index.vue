@@ -66,7 +66,7 @@ export default defineComponent({
     HeyaCard,
   },
   setup() {
-    // TODO: api 叩いて取得する・表示する分フィルターかける
+    // TODO: api 叩いて取得する・表示する分フィルターかける 表示分は getter にするのが良さそう？
     const heyasData = ref([
       {
         id: 'abcs',
@@ -106,11 +106,12 @@ export default defineComponent({
     const changeSortKey = () => {
       sortKey.value =
         sortKey.value === '更新日時順' ? '作成日時順' : '更新日時順'
+      // TODO: ソートのし直し
       console.log('change key!')
     }
     const changeSortOrder = () => {
+      heyasData.value.reverse()
       sortOrder.value = sortOrder.value === '降順' ? '昇順' : '降順'
-      console.log('change order!')
     }
 
     const displayHeyasFlag: Ref<
