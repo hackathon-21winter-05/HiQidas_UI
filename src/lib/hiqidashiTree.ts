@@ -1,7 +1,7 @@
 import { hiqidashi } from '/@/lib/apis/pb/ws/hiqidashi'
 
-export type hiqidashiTree = {
-  children: hiqidashiTree[]
+export type HiqidashiTree = {
+  children: HiqidashiTree[]
   title: string
   description: string
 }
@@ -19,7 +19,7 @@ export const constructHiqidashiTree = (hiqidashis: hiqidashi.Hiqidashi[]) => {
 
   const makeHiqidashiTreeRecursive = (
     root: hiqidashi.Hiqidashi
-  ): hiqidashiTree => {
+  ): HiqidashiTree => {
     const children = childrenMap.get(root.id) ?? []
 
     return {
