@@ -12,12 +12,25 @@
         </div>
       </div>
       <div v-else class="arrow-container">
-        <div class="diamond" />
-        <div class="dotline" />
+        <div class="diamond" @click="toggleExpand" />
+        <div v-show="isExpanded" class="dotline" />
+        <div v-show="!isExpanded" class="array-body" />
+        <div v-show="!isExpanded" class="array-head" />
+        <div v-show="!isExpanded" class="children-count">
+          {{ tree.children.length }}
+        </div>
       </div>
     </div>
-    <div v-if="tree.children.length !== 0" class="vertical-line" />
-    <div v-if="tree.children.length !== 0" class="next-trees">
+    <div
+      v-if="tree.children.length !== 0"
+      v-show="isExpanded"
+      class="vertical-line"
+    />
+    <div
+      v-if="tree.children.length !== 0"
+      v-show="isExpanded"
+      class="next-trees"
+    >
       <div v-for="child in tree.children" :key="child.id" class="next-tree">
         <div class="array-body" />
         <div class="array-head" />
@@ -36,7 +49,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive } from 'vue'
+import { defineComponent, PropType, reactive, ref } from 'vue'
 import { HiqidashiTree } from '/@/lib/hiqidashiTree'
 import HiQidashi from './HiQidashi.vue'
 
@@ -58,6 +71,8 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const isExpanded = ref(true)
+
     const createChild = () => {
       props.createNewHiqidashi(
         props.tree.id,
@@ -70,9 +85,11 @@ export default defineComponent({
       )
     }
 
+    const toggleExpand = () => (isExpanded.value = !isExpanded.value)
+
     const color = '#e9b9d0'
 
-    return { ...props, createChild, color }
+    return { ...props, createChild, color, isExpanded, toggleExpand }
   },
 })
 </script>
@@ -136,6 +153,18 @@ export default defineComponent({
     .dotline {
       width: 24px;
       border-bottom: 4px dotted v-bind(color);
+    }
+
+    .children-count {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 4px solid v-bind(color);
+      background-color: white;
+      text-align: center;
+      line-height: 28px;
+      font-size: 20px;
+      color: v-bind(color);
     }
   }
   .vertical-line {
