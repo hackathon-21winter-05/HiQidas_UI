@@ -32,12 +32,6 @@ jobs:
       - name: Setup npm
         run: npm install -g npm@7
       - run: npm ci
-      - run: npm run gen-pb
-      - uses: actions/upload-artifact@v2
-        with:
-          name: pb
-          path: |
-            ./src/lib/apis/pb
   build:
     name: Build
     runs-on: ubuntu-latest
@@ -53,11 +47,6 @@ jobs:
       - name: npm ci
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
-      - uses: actions/download-artifact@v2
-        with:
-          name: pb
-          path: |
-            ./src/lib/apis/pb
       - name: run build
         run: npm run build
         env:
@@ -77,11 +66,6 @@ jobs:
       - name: npm ci
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
-      - uses: actions/download-artifact@v2
-        with:
-          name: pb
-          path: |
-            ./src/lib/apis/pb
       - name: run lint
         run: npm run lint -- --no-fix
   typeCheck:
@@ -99,10 +83,5 @@ jobs:
       - name: npm ci
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
-      - uses: actions/download-artifact@v2
-        with:
-          name: pb
-          path: |
-            ./src/lib/apis/pb
       - name: run type-check
         run: npm run type-check

@@ -3,9 +3,6 @@ node_modules
 /dist
 .eslintcache
 
-src/lib/apis/pb
-src/types/pb
-
 # local env files
 .env.local
 .env.*.local
