@@ -5,15 +5,12 @@
     :title="title"
     @click="action"
   >
-    <svg class="remix">
-      <use :xlink:href="`${remixiconUrl}#ri-${icon}`" />
-    </svg>
+    <span class="material-icons"> {{ icon }} </span>
   </button>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import remixiconUrl from 'remixicon/fonts/remixicon.symbol.svg'
 
 export default defineComponent({
   name: 'MenuItem',
@@ -36,7 +33,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    return { ...props, remixiconUrl }
+    return { ...props }
   },
 })
 </script>
@@ -51,12 +48,6 @@ export default defineComponent({
   border-radius: 0.4rem;
   padding: 0.25rem;
   margin-right: 0.25rem;
-
-  svg {
-    width: 100%;
-    height: 100%;
-    fill: currentColor;
-  }
 
   &.is-active,
   &:hover {

@@ -37,49 +37,42 @@ export default defineComponent({
   setup(props) {
     const items = [
       {
-        icon: 'bold',
+        icon: 'format_bold',
         title: 'Bold',
         action: () => props.editor.chain().focus().toggleBold().run(),
         isActive: () => props.editor.isActive('bold'),
       },
       {
-        icon: 'italic',
+        icon: 'format_italic',
         title: 'Italic',
         action: () => props.editor.chain().focus().toggleItalic().run(),
         isActive: () => props.editor.isActive('italic'),
       },
       {
-        icon: 'h-1',
+        icon: 'title',
         title: 'Heading 1',
         action: () =>
           props.editor.chain().focus().toggleHeading({ level: 1 }).run(),
         isActive: () => props.editor.isActive('heading', { level: 1 }),
       },
       {
-        icon: 'h-2',
-        title: 'Heading 2',
-        action: () =>
-          props.editor.chain().focus().toggleHeading({ level: 2 }).run(),
-        isActive: () => props.editor.isActive('heading', { level: 2 }),
-      },
-      {
         type: 'divider',
       },
       {
-        icon: 'double-quotes-l',
+        icon: 'format_quote',
         title: 'Blockquote',
         action: () => props.editor.chain().focus().toggleBlockquote().run(),
         isActive: () => props.editor.isActive('blockquote'),
       },
 
       {
-        icon: 'list-unordered',
+        icon: 'format_list_bulleted',
         title: 'Bullet List',
         action: () => props.editor.chain().focus().toggleBulletList().run(),
         isActive: () => props.editor.isActive('bulletList'),
       },
       {
-        icon: 'list-ordered',
+        icon: 'format_list_numbered',
         title: 'Ordered List',
         action: () => props.editor.chain().focus().toggleOrderedList().run(),
         isActive: () => props.editor.isActive('orderedList'),
