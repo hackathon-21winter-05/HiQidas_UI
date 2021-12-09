@@ -11,11 +11,13 @@
     "gen-pb": "node ./scripts/gen-pb.js"
   },
   "dependencies": {
+    "@tiptap/extension-highlight": "^2.0.0-beta.31",
+    "@tiptap/extension-typography": "^2.0.0-beta.19",
+    "@tiptap/starter-kit": "^2.0.0-beta.153",
+    "@tiptap/vue-3": "^2.0.0-beta.82",
     "core-js": "^3.19.2",
-    "easymde": "^2.15.0",
     "element-plus": "^1.2.0-beta.5",
     "vue": "^3.2.23",
-    "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.12"
   },
   "devDependencies": {
