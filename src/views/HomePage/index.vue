@@ -67,7 +67,7 @@ export default defineComponent({
     HeyaCard,
   },
   setup() {
-    const userMe = { id: 'hoe2', name: 'hoge2' }
+    const userMe = { id: 'hoge2', name: 'hoge2' }
 
     // TODO: api 叩いて取得する・表示する分フィルターかける 表示分は getter にするのが良さそう？
     const heyasData = ref([
@@ -164,15 +164,12 @@ export default defineComponent({
           displayHeyasData.value = heyasData.value.filter((heya) =>
             favoriteHeyas.value.has(heya.id)
           )
-          console.log(heyasData.value)
         } else if (displayHeyasFlag.value === 'owner') {
           displayHeyasData.value = heyasData.value.filter(
             (heya) => heya.creatorId === userMe.id
           )
-          console.log(displayHeyasData.value)
         } else {
           displayHeyasData.value = heyasData.value
-          console.log(displayHeyasData.value)
         }
       }
     )
