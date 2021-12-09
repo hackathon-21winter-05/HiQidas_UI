@@ -2,7 +2,10 @@
   <div class="tree-container">
     <div class="hiqidashi-content">
       <hi-qidashi :hiqidashi="tree" />
-      <div v-if="tree.children.length === 0">
+      <div v-if="tree.children.length === 0" class="no-child-container">
+        <div class="diamond" />
+        <div class="array-body" />
+        <div class="array-head" />
         <div class="add-button" @click="createChild">
           <div class="plus-vertical-line" />
           <div class="plus-horizonal-line" />
@@ -82,7 +85,17 @@ export default defineComponent({
   .hiqidashi-content {
     display: flex;
     align-items: center;
-
+    .no-child-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .diamond {
+        background-color: v-bind(color);
+        width: 9px;
+        height: 9px;
+        transform: rotate(45deg);
+      }
+    }
     .add-button {
       position: relative;
       background-color: v-bind(color);
