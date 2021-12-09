@@ -1,7 +1,7 @@
 <template>
   <div class="tree-container">
     <div class="hiqidashi-content">
-      <hi-qidashi :hiqidashi="tree" />
+      <hi-qidashi :hiqidashi="tree" :color="color" />
       <div v-if="tree.children.length === 0" class="no-child-container">
         <div class="diamond" />
         <div class="array-body" />
@@ -87,7 +87,7 @@ export default defineComponent({
 
     const toggleExpand = () => (isExpanded.value = !isExpanded.value)
 
-    const color = '#e9b9d0'
+    const color = '#' + Math.floor(Math.random() * 16777215).toString(16)
 
     return { ...props, createChild, color, isExpanded, toggleExpand }
   },
@@ -177,7 +177,7 @@ export default defineComponent({
     background-color: v-bind(color);
     height: 50px;
     width: 300px;
-    border: medium solid #e9b9d0;
+    border: medium solid v-bind(color);
     border-radius: 10px;
     margin: 8px 6px;
   }

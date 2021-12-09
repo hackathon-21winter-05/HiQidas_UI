@@ -30,6 +30,10 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    color: {
+      type: String,
+      required: true,
+    },
   },
   setup(props) {
     const isExpanded = ref(false)
@@ -45,14 +49,14 @@ export default defineComponent({
   height: 50px;
   width: 300px;
   background-color: #ffffff;
-  border: medium solid #e9b9d0;
+  border: medium solid v-bind(color);
   border-radius: 10px;
   transition: 0.3s height ease-in-out;
   margin: 8px 6px;
 
   &.is-expanded {
     height: auto;
-    border: medium solid #e9b9d0;
+    border: medium solid v-bind(color);
   }
 
   .top-menu {
