@@ -6,27 +6,59 @@
     </div>
     <div class="main">
       <h1>This is a heya page</h1>
-      <hi-qidashi :hiqidashi="hiqidashiData" />
+      <hi-qidashi-tree :tree="hiqidashiTree" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
-import HiQidashi from './components/HiQidashi.vue'
+import HiQidashiTree from './components/HiQidashiTree.vue'
+import { hiqidashi } from '/@/lib/apis/pb/ws/hiqidashi'
+import { constructHiqidashiTree } from '/@/lib/hiqidashiTree'
 
 export default defineComponent({
   name: 'HeyaPage',
   components: {
-    HiQidashi,
+    HiQidashiTree,
   },
   setup() {
-    const hiqidashiData = reactive({
-      id: 'abcd',
-      title: 'タイトル',
-      description: '説明',
-    })
-    return { hiqidashiData }
+    const hiqidashis = reactive([
+      new hiqidashi.Hiqidashi({
+        id: '1',
+        parentId: null,
+        title: 'title',
+        description: 'description',
+      }),
+      new hiqidashi.Hiqidashi({
+        id: '2',
+        parentId: '1',
+        title: 'title',
+        description: 'description',
+      }),
+      new hiqidashi.Hiqidashi({
+        id: '3',
+        parentId: '1',
+        title: 'title',
+        description: 'description',
+      }),
+      new hiqidashi.Hiqidashi({
+        id: '4',
+        parentId: '2',
+        title: 'title',
+        description: 'description',
+      }),
+      new hiqidashi.Hiqidashi({
+        id: '5',
+        parentId: '2',
+        title: 'title',
+        description: 'description',
+      }),
+    ])
+
+    const hiqidashiTree = constructHiqidashiTree(hiqidashis)
+
+    return { hiqidashiTree }
   },
 })
 </script>
