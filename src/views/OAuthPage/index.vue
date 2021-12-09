@@ -16,13 +16,9 @@ export default defineComponent({
     if (!code) {
       throw new Error('OAuth failed')
     }
-    postOAuthCode(code)
-      .then(() => {
-        router.push('/')
-      })
-      .catch((error) => {
-        console.error(error)
-      })
+    postOAuthCode(code).then(() => {
+      router.push('/')
+    })
   },
 })
 </script>
