@@ -50,13 +50,18 @@ export default defineComponent({
   width: 300px;
   background-color: #ffffff;
   border: medium solid v-bind(color);
-  border-radius: 10px;
+  border-radius: 6px;
   transition: 0.3s height ease-in-out;
   margin: 8px 6px;
 
   &.is-expanded {
     height: auto;
     border: medium solid v-bind(color);
+  }
+
+  &:focus-within
+ {
+    box-shadow: 0px 2px 4px;
   }
 
   .top-menu {

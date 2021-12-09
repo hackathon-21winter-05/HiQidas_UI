@@ -42,7 +42,10 @@
       <div class="next-tree">
         <div class="array-body" />
         <div class="array-head" />
-        <div class="add-button-long" @click="createChild" />
+        <div class="add-button-long" @click="createChild">
+          <div class="plus-vertical-line" />
+          <div class="plus-horizonal-line" />
+        </div>
       </div>
     </div>
   </div>
@@ -119,24 +122,6 @@ export default defineComponent({
       width: 36px;
       height: 36px;
       border-radius: 50%;
-
-      .plus-vertical-line {
-        position: absolute;
-        width: 10%;
-        height: 50%;
-        inset: 0;
-        margin: auto;
-        background-color: white;
-      }
-
-      .plus-horizonal-line {
-        position: absolute;
-        width: 50%;
-        height: 10%;
-        inset: 0;
-        margin: auto;
-        background-color: white;
-      }
     }
   }
   .arrow-container {
@@ -172,8 +157,26 @@ export default defineComponent({
     min-width: 3px;
     min-height: 100%;
   }
+  .plus-vertical-line {
+    position: absolute;
+    width: 4px;
+    height: 18px;
+    inset: 0;
+    margin: auto;
+    background-color: white;
+  }
+
+  .plus-horizonal-line {
+    position: absolute;
+    width: 18px;
+    height: 4px;
+    inset: 0;
+    margin: auto;
+    background-color: white;
+  }
 
   .add-button-long {
+    position: relative;
     background-color: v-bind(color);
     height: 50px;
     width: 300px;
