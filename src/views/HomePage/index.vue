@@ -180,7 +180,7 @@ export default defineComponent({
       background-color: #977b85;
       color: #ffffff;
       font-size: 12px;
-      padding: 3px 20px;
+      padding: 2px 20px;
       margin: 10px;
     }
 
