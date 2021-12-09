@@ -1,4 +1,5 @@
 import { inject, InjectionKey, provide, reactive } from 'vue'
+import { getOAuthCallback } from '/@/lib/apis/oauth'
 import { users } from '/@/lib/apis/pb/rest/users'
 
 type Me = users.User
@@ -17,5 +18,14 @@ export const useMe = () => {
     throw new Error('useMe() called without provider.')
   }
 
+  if (me.id === '') {
+    oauthRedirect()
+  }
+
   return { me }
+}
+
+const oauthRedirect = async () => {
+  const { uri } = await getOAuthCallback()
+  location.href = uri
 }

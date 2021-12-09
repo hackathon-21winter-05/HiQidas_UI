@@ -14,6 +14,7 @@
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
 import HiQidashi from './components/HiQidashi.vue'
+import { useMe } from '/@/providers/me'
 
 export default defineComponent({
   name: 'HeyaPage',
@@ -21,6 +22,8 @@ export default defineComponent({
     HiQidashi,
   },
   setup() {
+    const { me } = useMe()
+
     const hiqidashiData = reactive({
       id: 'abcd',
       title: 'タイトル',
