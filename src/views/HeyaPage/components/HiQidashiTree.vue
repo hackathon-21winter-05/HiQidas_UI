@@ -2,11 +2,12 @@
   <div class="tree-container">
     <div class="hiqidashi-content">
       <hi-qidashi :hiqidashi="tree" />
-      <div
-        v-if="tree.children.length === 0"
-        class="add-button"
-        @click="createChild"
-      />
+      <div v-if="tree.children.length === 0">
+        <div class="add-button" @click="createChild">
+          <div class="plus-vertical-line" />
+          <div class="plus-horizonal-line" />
+        </div>
+      </div>
       <div v-else class="arrow-container">
         <div class="diamond" />
         <div class="dotline" />
@@ -83,9 +84,29 @@ export default defineComponent({
     align-items: center;
 
     .add-button {
-      background-color: #fff;
-      width: 40px;
-      height: 40px;
+      position: relative;
+      background-color: v-bind(color);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+
+      .plus-vertical-line {
+        position: absolute;
+        width: 10%;
+        height: 50%;
+        inset: 0;
+        margin: auto;
+        background-color: white;
+      }
+
+      .plus-horizonal-line {
+        position: absolute;
+        width: 50%;
+        height: 10%;
+        inset: 0;
+        margin: auto;
+        background-color: white;
+      }
     }
   }
   .arrow-container {
