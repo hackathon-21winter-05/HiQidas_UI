@@ -8,3 +8,10 @@ export const getOAuthCallback = async () => {
 
 	return data
 }
+
+export const postOAuthCode = async (code: string) => { 
+	const req = oauth.PostOauthCodeRequest.create({ code })
+	const buffer = oauth.PostOauthCodeRequest.encode(req).finish()
+
+	await axios.post("/api/oauth/code", new Uint8Array(buffer))
+}

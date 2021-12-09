@@ -19,7 +19,8 @@ export const useMe = () => {
   }
 
   if (me.id === '') {
-    oauthRedirect()
+    // TODO: ここでmeを取得→失敗したらredirect
+    // oauthRedirect()
   }
 
   return { me }

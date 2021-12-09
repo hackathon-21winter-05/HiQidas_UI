@@ -13,6 +13,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () =>
       import(/* webpackChunkName: "about" */ '/@/views/HeyaPage/index.vue'),
   },
+  {
+    path: '/oauth',
+    name: 'OAuthPage',
+    component: () =>
+      import(/* webpackChunkName: "oauth" */ '/@/views/OAuthPage/index.vue'),
+  },
 ]
 
 const router = createRouter({
