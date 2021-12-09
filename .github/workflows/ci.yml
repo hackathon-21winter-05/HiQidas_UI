@@ -38,7 +38,6 @@ jobs:
           name: pb
           path: |
             ./src/lib/apis/pb
-            ./src/types/pb
   build:
     name: Build
     runs-on: ubuntu-latest
@@ -59,7 +58,6 @@ jobs:
           name: pb
           path: |
             ./src/lib/apis/pb
-            ./src/types/pb
       - name: run build
         run: npm run build
         env:
@@ -84,7 +82,6 @@ jobs:
           name: pb
           path: |
             ./src/lib/apis/pb
-            ./src/types/pb
       - name: run lint
         run: npm run lint -- --no-fix
   typeCheck:
@@ -107,6 +104,5 @@ jobs:
           name: pb
           path: |
             ./src/lib/apis/pb
-            ./src/types/pb
       - name: run type-check
         run: npm run type-check
