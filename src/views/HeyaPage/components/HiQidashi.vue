@@ -59,8 +59,7 @@ export default defineComponent({
     border: medium solid v-bind(color);
   }
 
-  &:focus-within
- {
+  &:focus-within {
     box-shadow: 0px 2px 4px;
   }
 
