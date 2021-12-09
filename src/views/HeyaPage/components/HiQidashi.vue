@@ -11,22 +11,19 @@
       <span class="material-icons right-button"> more_horiz </span>
     </div>
     <div v-show="isExpanded">
-      <editor-content :editor="editor" />
+      <hi-qidashi-editor :description="hiqidashi.description" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { useEditor, EditorContent } from '@tiptap/vue-3'
-import StarterKit from '@tiptap/starter-kit'
-import Highlight from '@tiptap/extension-highlight'
-import Typography from '@tiptap/extension-typography'
+import HiQidashiEditor from '/@/components/HiQidashiEditor/index.vue'
 
 export default defineComponent({
   name: 'HiQidashi',
   components: {
-    EditorContent,
+    HiQidashiEditor,
   },
   props: {
     hiqidashi: {
@@ -37,12 +34,7 @@ export default defineComponent({
   setup(props) {
     const isExpanded = ref(false)
 
-    const editor = useEditor({
-      content: props.hiqidashi.description,
-      extensions: [StarterKit, Highlight, Typography],
-    })
-
-    return { ...props, isExpanded, editor }
+    return { ...props, isExpanded }
   },
 })
 </script>
