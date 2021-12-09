@@ -176,6 +176,7 @@ export default defineComponent({
     .heya-cards {
       display: flex;
       flex-wrap: wrap;
+      margin: 0 auto;
 
       .create-new-heya {
         width: 370px;
