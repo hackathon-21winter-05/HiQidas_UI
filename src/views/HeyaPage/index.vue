@@ -6,7 +6,10 @@
     </div>
     <div class="main">
       <h1>This is a heya page</h1>
-      <hi-qidashi-tree :tree="hiqidashiTree" />
+      <hi-qidashi-tree
+        :tree="hiqidashiTree"
+        :create-new-hiqidashi="createNewHiqidashi"
+      />
     </div>
   </div>
 </template>
@@ -15,7 +18,7 @@
 import { defineComponent, reactive } from 'vue'
 import HiQidashiTree from './components/HiQidashiTree.vue'
 import { hiqidashi } from '/@/lib/apis/pb/ws/hiqidashi'
-import { constructHiqidashiTree } from '/@/lib/hiqidashiTree'
+import { constructHiqidashiTree, HiqidashiTree } from '/@/lib/hiqidashiTree'
 
 export default defineComponent({
   name: 'HeyaPage',
@@ -23,7 +26,7 @@ export default defineComponent({
     HiQidashiTree,
   },
   setup() {
-    const hiqidashis = reactive([
+    const hiqidashis = [
       new hiqidashi.Hiqidashi({
         id: '1',
         parentId: null,
@@ -54,11 +57,32 @@ export default defineComponent({
         title: 'title',
         description: 'description',
       }),
-    ])
+    ]
 
-    const hiqidashiTree = constructHiqidashiTree(hiqidashis)
+    const hiqidashiTree = reactive(constructHiqidashiTree(hiqidashis))
 
-    return { hiqidashiTree }
+    const hiqidashiMap = new Map<string, HiqidashiTree>()
+    const setHiqidashiMap = (tree: HiqidashiTree) => {
+      hiqidashiMap.set(tree.id, tree)
+      tree.children.forEach(setHiqidashiMap)
+    }
+
+    setHiqidashiMap(hiqidashiTree)
+
+    console.log(hiqidashiMap)
+
+    const createNewHiqidashi = (parentId: string, hiqidashi: HiqidashiTree) => {
+      const parent = hiqidashiMap.get(parentId)
+
+      if (!parent) {
+        throw new Error(`parentId ${parentId} not found.`)
+      }
+
+      parent.children.push(hiqidashi)
+      hiqidashiMap.set(hiqidashi.id, hiqidashi)
+    }
+
+    return { hiqidashiTree, createNewHiqidashi }
   },
 })
 </script>
