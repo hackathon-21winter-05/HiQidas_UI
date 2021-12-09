@@ -71,6 +71,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .tree-container {
   display: flex;
+  margin: 1px;
 
   .hiqidashi-content {
     display: flex;
@@ -88,19 +89,19 @@ export default defineComponent({
 
     .diamond {
       background-color: v-bind(color);
-      width: 20px;
-      height: 20px;
+      width: 16px;
+      height: 16px;
       transform: rotate(45deg);
     }
 
     .dotline {
       width: 24px;
-      border-bottom: 6px dotted v-bind(color);
+      border-bottom: 4px dotted v-bind(color);
     }
   }
   .vertical-line {
     background-color: v-bind(color);
-    min-width: 4px;
+    min-width: 3px;
     min-height: 100%;
   }
 
@@ -110,7 +111,7 @@ export default defineComponent({
   }
   .array-body {
     background-color: v-bind(color);
-    height: 4px;
+    height: 3px;
     min-width: 20px;
   }
 
@@ -118,8 +119,8 @@ export default defineComponent({
     width: 0;
     height: 0;
     border-left: 10px solid v-bind(color);
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
   }
 }
 </style>

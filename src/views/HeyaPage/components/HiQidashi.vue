@@ -48,7 +48,7 @@ export default defineComponent({
   border: medium solid #e9b9d0;
   border-radius: 10px;
   transition: 0.3s height ease-in-out;
-  margin: 8px;
+  margin: 8px 6px;
 
   &.is-expanded {
     height: auto;
