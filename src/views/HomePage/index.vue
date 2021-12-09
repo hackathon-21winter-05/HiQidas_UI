@@ -6,9 +6,10 @@
         v-model="searchText"
         placeholder="名前で検索"
         class="heya-search-input"
+        @keydown.enter.exact="search"
       >
         <template #suffix>
-          <el-icon class="el-input__icon">
+          <el-icon class="el-input__icon" @click="search">
             <span class="material-icons"> search </span>
           </el-icon>
         </template>
@@ -45,7 +46,7 @@
           <div class="add-text">新しいヘヤを作成する</div>
         </el-card>
         <heya-card
-          v-for="heyaData in heyasData"
+          v-for="heyaData in displayHeyasData"
           :key="heyaData.id"
           :heya-data="heyaData"
           :is-stared="favoriteHeyas.has(heyaData.id)"
@@ -66,11 +67,14 @@ export default defineComponent({
     HeyaCard,
   },
   setup() {
+    const userMe = { id: 'hoe2', name: 'hoge2' }
+
     // TODO: api 叩いて取得する・表示する分フィルターかける 表示分は getter にするのが良さそう？
     const heyasData = ref([
       {
         id: 'abcs',
         title: 'タイトル長いよながい長いながいTitle',
+        creatorId: 'nananananananananaganaganaganaga',
         creatorName: 'nananananananananaganaganaganaga',
         createdAt: '2022/01/01',
         updatedAt: '2022/02/02',
@@ -78,6 +82,7 @@ export default defineComponent({
       {
         id: 'uajs',
         title: 'タイトル2',
+        creatorId: 'hoge2',
         creatorName: 'hoge2',
         createdAt: '2022/01/01',
         updatedAt: '2022/02/02',
@@ -85,6 +90,7 @@ export default defineComponent({
       {
         id: 'uajass',
         title: 'タイトル3',
+        creatorId: 'hoge3',
         creatorName: 'hoge3',
         createdAt: '2022/01/01',
         updatedAt: '2022/02/02',
@@ -92,22 +98,56 @@ export default defineComponent({
       {
         id: 'uajsddk',
         title: 'タイトル5',
+        creatorId: 'hoge5',
         creatorName: 'hoge5',
-        createdAt: '2022/01/01',
-        updatedAt: '2022/02/02',
+        createdAt: '2022/01/03',
+        updatedAt: '2022/01/03',
       },
     ])
     const favoriteHeyas = ref(new Set(['uajass', 'uajs'])) // お気に入りのヘヤの id を持つ set
+    const displayHeyasData = heyasData // 実際に表示するデータ
 
     const searchText = ref('')
+    const search = () => {
+      if (searchText.value === '') {
+        displayHeyasData.value = heyasData.value
+        return
+      }
+
+      displayHeyasData.value = heyasData.value.filter((heya) => {
+        searchText.value
+          .split(/\s+/i)
+          .some((str) => heya.title.indexOf(str) >= 0)
+      })
+    }
 
     const sortKey: Ref<'更新日時順' | '作成日時順'> = ref('更新日時順')
     const sortOrder: Ref<'降順' | '昇順'> = ref('降順')
     const changeSortKey = () => {
       sortKey.value =
         sortKey.value === '更新日時順' ? '作成日時順' : '更新日時順'
-      // TODO: ソートのし直し
-      console.log('change key!')
+
+      if (sortKey.value === '更新日時順') {
+        heyasData.value.sort((a, b) => {
+          if (a.updatedAt < b.updatedAt) {
+            return -1
+          }
+          if (a.updatedAt > b.updatedAt) {
+            return 1
+          }
+          return 0
+        })
+      } else {
+        heyasData.value.sort((a, b) => {
+          if (a.createdAt < b.createdAt) {
+            return -1
+          }
+          if (a.createdAt > b.createdAt) {
+            return 1
+          }
+          return 0
+        })
+      }
     }
     const changeSortOrder = () => {
       heyasData.value.reverse()
@@ -120,8 +160,17 @@ export default defineComponent({
     watch(
       () => displayHeyasFlag.value,
       () => {
-        console.log(displayHeyasFlag.value)
-        // TODO: フラグ変更を監視して表示データをフィルター
+        if (displayHeyasFlag.value === 'favorite') {
+          displayHeyasData.value = heyasData.value.filter((heya) =>
+            favoriteHeyas.value.has(heya.id)
+          )
+        } else if (displayHeyasFlag.value === 'owner') {
+          displayHeyasData.value = heyasData.value.filter(
+            (heya) => heya.creatorId === userMe.id
+          )
+        } else {
+          displayHeyasData.value = heyasData.value
+        }
       }
     )
 
@@ -143,12 +192,13 @@ export default defineComponent({
     }
 
     return {
+      displayHeyasData,
+      favoriteHeyas,
       searchText,
       sortKey,
       sortOrder,
       displayHeyasFlag,
-      heyasData,
-      favoriteHeyas,
+      search,
       changeSortKey,
       changeSortOrder,
       changeStar,
