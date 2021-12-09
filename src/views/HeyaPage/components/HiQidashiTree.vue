@@ -13,7 +13,7 @@
       </div>
     </div>
     <div v-if="tree.children.length !== 0" class="vertical-line" />
-    <div>
+    <div v-if="tree.children.length !== 0" class="next-trees">
       <div v-for="child in tree.children" :key="child.id" class="next-tree">
         <div class="array-body" />
         <div class="array-head" />
@@ -21,6 +21,11 @@
           :tree="child"
           :create-new-hiqidashi="createNewHiqidashi"
         />
+      </div>
+      <div class="next-tree">
+        <div class="array-body" />
+        <div class="array-head" />
+        <div class="add-button-long" @click="createChild" />
       </div>
     </div>
   </div>
@@ -105,22 +110,35 @@ export default defineComponent({
     min-height: 100%;
   }
 
-  .next-tree {
-    display: flex;
-    align-items: center;
-  }
-  .array-body {
+  .add-button-long {
     background-color: v-bind(color);
-    height: 3px;
-    min-width: 20px;
+    height: 50px;
+    width: 300px;
+    border: medium solid #e9b9d0;
+    border-radius: 10px;
+    margin: 8px 6px;
   }
+  .next-trees {
+    display: flex;
+    flex-direction: column-reverse;
 
-  .array-head {
-    width: 0;
-    height: 0;
-    border-left: 10px solid v-bind(color);
-    border-top: 6px solid transparent;
-    border-bottom: 6px solid transparent;
+    .next-tree {
+      display: flex;
+      align-items: center;
+      .array-body {
+        background-color: v-bind(color);
+        height: 3px;
+        min-width: 20px;
+      }
+
+      .array-head {
+        width: 0;
+        height: 0;
+        border-left: 10px solid v-bind(color);
+        border-top: 6px solid transparent;
+        border-bottom: 6px solid transparent;
+      }
+    }
   }
 }
 </style>
