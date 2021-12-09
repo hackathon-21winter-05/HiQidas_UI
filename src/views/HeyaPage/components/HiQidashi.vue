@@ -64,6 +64,7 @@ export default defineComponent({
     .hiqidashi-title {
       width: 232px;
       text-align: left;
+      font-weight: 400;
     }
 
     .left-button {

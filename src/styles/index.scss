@@ -24,26 +24,12 @@ body {
   color: #9b3131;
 }
 
-// EasyMDE Style
-.EasyMDEContainer {
-  .editor-toolbar {
-    display: inline-block;
-    border: none;
-    border-bottom: thin solid #d8d8d8;
-    background-color: #ffffff;
-  }
+.ProseMirror {
+  outline: none;
 
-  .CodeMirror {
-    border: none;
-    text-align: left;
+  p {
+    margin: 0rem;
   }
 }
 
-// Element Plus Style
-.el-input__inner {
-  border-radius: 50px;
 
-  &:focus {
-    border-color: #ff1787;
-  }
-}

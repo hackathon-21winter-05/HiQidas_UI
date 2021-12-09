@@ -98,7 +98,7 @@ export default defineComponent({
   flex-wrap: wrap;
   margin: 0.25rem 1rem;
   padding: 0.5rem 0;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #d8d8d8;
 }
 
 .divider {
