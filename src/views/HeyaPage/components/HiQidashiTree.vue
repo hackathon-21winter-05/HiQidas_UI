@@ -191,20 +191,20 @@ export default defineComponent({
     .next-tree {
       display: flex;
       align-items: center;
-      .array-body {
-        background-color: v-bind(color);
-        height: 3px;
-        min-width: 20px;
-      }
-
-      .array-head {
-        width: 0;
-        height: 0;
-        border-left: 10px solid v-bind(color);
-        border-top: 6px solid transparent;
-        border-bottom: 6px solid transparent;
-      }
     }
+  }
+  .array-body {
+    background-color: v-bind(color);
+    height: 3px;
+    min-width: 20px;
+  }
+
+  .array-head {
+    width: 0;
+    height: 0;
+    border-left: 10px solid v-bind(color);
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
   }
 }
 </style>
