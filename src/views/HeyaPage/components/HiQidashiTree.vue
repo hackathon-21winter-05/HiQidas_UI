@@ -61,7 +61,9 @@ export default defineComponent({
       )
     }
 
-    return { ...props, createChild }
+    const color = '#e9b9d0'
+
+    return { ...props, createChild, color }
   },
 })
 </script>
@@ -85,7 +87,7 @@ export default defineComponent({
     align-items: center;
 
     .diamond {
-      background-color: #e9b9d0;
+      background-color: v-bind(color);
       width: 20px;
       height: 20px;
       transform: rotate(45deg);
@@ -93,11 +95,11 @@ export default defineComponent({
 
     .dotline {
       width: 24px;
-      border-bottom: 6px dotted #e9b9d0;
+      border-bottom: 6px dotted v-bind(color);
     }
   }
   .vertical-line {
-    background-color: #e9b9d0;
+    background-color: v-bind(color);
     min-width: 4px;
     min-height: 100%;
   }
@@ -107,7 +109,7 @@ export default defineComponent({
     align-items: center;
   }
   .array-body {
-    background-color: #e9b9d0;
+    background-color: v-bind(color);
     height: 4px;
     min-width: 20px;
   }
@@ -115,7 +117,7 @@ export default defineComponent({
   .array-head {
     width: 0;
     height: 0;
-    border-left: 10px solid #e9b9d0;
+    border-left: 10px solid v-bind(color);
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
   }
