@@ -28,6 +28,14 @@
     <div v-show="isExpanded">
       <hi-qidashi-editor :description="hiqidashi.description" />
     </div>
+    <div class="avatar-container">
+      <div v-for="(user, index) in users" :key="user" class="avatars">
+        <el-avatar size="medium" :style="`border: 2px solid ${colors[index]}`">
+          {{ user }}
+        </el-avatar>
+        <div class="diamond" :style="`background-color: ${colors[index]}`" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -35,6 +43,7 @@
 import { computed, defineComponent, onMounted, PropType, ref } from 'vue'
 import HiQidashiEditor from '/@/components/HiQidashiEditor/index.vue'
 import { HiqidashiTree } from '/@/lib/hiqidashiTree'
+import { getRandomColor } from '/@/lib/utils'
 import { useHeyaStore } from '/@/providers/heya'
 
 export default defineComponent({
@@ -87,6 +96,9 @@ export default defineComponent({
       () => props.hiqidashi.id === store.hiqidashiTree.id
     )
 
+    const users = ['1', '2', '3', '4'].reverse()
+    const colors = users.map(() => getRandomColor())
+
     return {
       ...props,
       changeToEditMode,
@@ -97,6 +109,8 @@ export default defineComponent({
       color,
       isRootHiqidashi,
       toggleExpanded,
+      users,
+      colors,
     }
   },
 })
@@ -104,6 +118,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .hiqidashi {
+  position: relative;
   display: block;
   height: 50px;
   width: 300px;
@@ -141,6 +156,31 @@ export default defineComponent({
 
     .right-button {
       float: right;
+    }
+  }
+  .avatar-container {
+    position: absolute;
+    top: -50px;
+    left: 250px;
+    display: flex;
+    flex-direction: row-reverse;
+  }
+  .avatars {
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-left: -22px;
+
+    .el-avatar {
+      z-index: 2;
+    }
+    .diamond {
+      width: 6px;
+      height: 6px;
+      transform: rotate(45deg);
+      margin-top: -3px;
+      z-index: 1;
     }
   }
 }
