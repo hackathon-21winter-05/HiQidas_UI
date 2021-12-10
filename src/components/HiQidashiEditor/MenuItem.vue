@@ -46,8 +46,10 @@ export default defineComponent({
   border: none;
   background-color: transparent;
   border-radius: 0.4rem;
-  padding: 0.25rem;
-  margin-right: 0.25rem;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   &.is-active,
   &:hover {
