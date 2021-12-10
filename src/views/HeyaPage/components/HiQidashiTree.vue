@@ -28,19 +28,31 @@
       </div>
     </div>
     <template v-if="tree.children.length !== 0">
-      <div v-show="isExpanded" class="vertical-line" />
       <div v-show="isExpanded" class="next-trees">
-        <div v-for="child in tree.children" :key="child.id" class="next-tree">
-          <div class="array-body" />
-          <div class="array-head" />
-          <hi-qidashi-tree :tree="child" />
+        <div
+          v-for="(child, i) in tree.children"
+          :key="child.id"
+          class="next-tree-container"
+        >
+          <div
+            v-show="isExpanded"
+            :class="i === 0 ? 'vertical-top-line' : 'vertical-line'"
+          />
+          <div class="next-tree">
+            <div class="array-body" />
+            <div class="array-head" />
+            <hi-qidashi-tree :tree="child" />
+          </div>
         </div>
-        <div class="next-tree">
-          <div class="array-body" />
-          <div class="array-head" />
-          <div class="add-button-long" @click="createChild">
-            <div class="plus-vertical-line" />
-            <div class="plus-horizonal-line" />
+        <div class="new-tree-container">
+          <div class="vertical-bottom-line" />
+          <div class="next-tree">
+            <div class="array-body" />
+            <div class="array-head" />
+            <div class="add-button-long" @click="createChild">
+              <div class="plus-vertical-line" />
+              <div class="plus-horizonal-line" />
+            </div>
           </div>
         </div>
       </div>
@@ -160,6 +172,25 @@ export default defineComponent({
     min-width: 3px;
     min-height: 100%;
   }
+  .vertical-top-line {
+    background-color: v-bind(color);
+    min-width: 3px;
+    height: 50%;
+  }
+  .vertical-bottom-line {
+    background-color: v-bind(color);
+    min-width: 3px;
+    height: 50%;
+  }
+
+  .next-tree-container {
+    display: flex;
+  }
+  .new-tree-container {
+    display: flex;
+    align-items: flex-end;
+  }
+
   .plus-vertical-line {
     position: absolute;
     width: 4px;
@@ -195,6 +226,7 @@ export default defineComponent({
     .next-tree {
       display: flex;
       align-items: center;
+      margin-left: -3px;
     }
   }
   .array-body {
