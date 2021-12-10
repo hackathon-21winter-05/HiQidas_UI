@@ -69,6 +69,7 @@ export default defineComponent({
     padding: 0 10px;
     display: inline-flex;
     align-items: center;
+    cursor: pointer;
 
     .hiqidashi-title {
       width: 232px;
