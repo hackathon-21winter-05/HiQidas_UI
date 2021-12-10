@@ -1,5 +1,5 @@
 <template>
-  <div class="hiqidashi-input">
+  <div ref="elRef" class="hiqidashi-input">
     <el-input
       :ref="setRef"
       v-model="input"
@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { ElInput } from 'element-plus'
-import { defineComponent, PropType, ref } from 'vue'
+import { defineComponent, onMounted, PropType, ref } from 'vue'
 import { HiqidashiTree } from '/@/lib/hiqidashiTree'
 import { getRandomColor } from '/@/lib/utils'
 import { useHiqidashiStore } from '/@/providers/hiqidashi'
@@ -56,7 +56,14 @@ export default defineComponent({
       if (el) el.focus()
     }
 
-    return { input, inputFinish, inputAbort, setRef }
+    const elRef = ref<HTMLElement>()
+    onMounted(() => {
+      if (elRef.value) {
+        elRef.value.scrollIntoView({ block: 'center', inline: 'center' })
+      }
+    })
+
+    return { input, inputFinish, inputAbort, setRef, elRef }
   },
 })
 </script>
