@@ -4,29 +4,83 @@
       <router-link to="/" class="title"><h1>HiQidas</h1></router-link>
       <span class="heya-name">Heya Name</span>
     </div>
+
     <div class="heya-main">
-      <h1>This is a heya page</h1>
-      <hi-qidashi :hiqidashi="hiqidashiData" />
+      <hi-qidashi-tree
+        :tree="hiqidashiTree"
+        :create-new-hiqidashi="createNewHiqidashi"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
-import HiQidashi from './components/HiQidashi.vue'
+import HiQidashiTree from './components/HiQidashiTree.vue'
+import { hiqidashi } from '/@/lib/apis/pb/ws/hiqidashi'
+import { constructHiqidashiTree, HiqidashiTree } from '/@/lib/hiqidashiTree'
 
 export default defineComponent({
   name: 'HeyaPage',
   components: {
-    HiQidashi,
+    HiQidashiTree,
   },
   setup() {
-    const hiqidashiData = reactive({
-      id: 'abcd',
-      title: 'タイトル',
-      description: '説明',
-    })
-    return { hiqidashiData }
+    const hiqidashis = [
+      new hiqidashi.Hiqidashi({
+        id: '1',
+        parentId: null,
+        title: 'title',
+        description: 'description',
+      }),
+      new hiqidashi.Hiqidashi({
+        id: '2',
+        parentId: '1',
+        title: 'title',
+        description: 'description',
+      }),
+      new hiqidashi.Hiqidashi({
+        id: '3',
+        parentId: '1',
+        title: 'title',
+        description: 'description',
+      }),
+      new hiqidashi.Hiqidashi({
+        id: '4',
+        parentId: '2',
+        title: 'title',
+        description: 'description',
+      }),
+      new hiqidashi.Hiqidashi({
+        id: '5',
+        parentId: '2',
+        title: 'title',
+        description: 'description',
+      }),
+    ]
+
+    const hiqidashiTree = reactive(constructHiqidashiTree(hiqidashis))
+
+    const hiqidashiMap = new Map<string, HiqidashiTree>()
+    const setHiqidashiMap = (tree: HiqidashiTree) => {
+      hiqidashiMap.set(tree.id, tree)
+      tree.children.forEach(setHiqidashiMap)
+    }
+
+    setHiqidashiMap(hiqidashiTree)
+
+    const createNewHiqidashi = (parentId: string, hiqidashi: HiqidashiTree) => {
+      const parent = hiqidashiMap.get(parentId)
+
+      if (!parent) {
+        throw new Error(`parentId ${parentId} not found.`)
+      }
+
+      parent.children.push(hiqidashi)
+      hiqidashiMap.set(hiqidashi.id, hiqidashi)
+    }
+
+    return { hiqidashiTree, createNewHiqidashi }
   },
 })
 </script>
