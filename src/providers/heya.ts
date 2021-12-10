@@ -1,10 +1,12 @@
 import { inject, InjectionKey, provide, reactive } from 'vue'
 import { HiqidashiTree } from '/@/lib/hiqidashiTree'
-// import { connectWS } from '/@/lib/apis/ws'
 import { hiqidashi } from '/@/lib/apis/pb/ws/ws'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { connectWS } from '/@/lib/apis/ws' // TODO: remove ↑
 
 export interface HeyaStore {
   heyaId: string
+  webSocket?: WebSocket
   hiqidashiTree: HiqidashiTree
   hiqidashiMap: Map<string, HiqidashiTree>
   addingChildId: string
@@ -115,8 +117,7 @@ export const useHeyaStore = () => {
     resetHeya()
 
     heyaStore.heyaId = heyaId
-
-    // connectWS(heyaId)
+    // heyaStore.webSocket = connectWS(heyaId)
   }
 
   const createNewHiqidashiAndSend = (
