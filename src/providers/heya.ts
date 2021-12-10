@@ -162,7 +162,8 @@ export const useHeyaStoreBase = () => {
 
 // Vue側から使う
 export const useHeyaStore = () => {
-  const { heyaStore, resetHeya, deleteHiqidashi } = useHeyaStoreBase()
+  const { heyaStore, resetHeya, deleteHiqidashi, createNewHiqidashi } =
+    useHeyaStoreBase()
 
   const connectHeya = (heyaId: string) => {
     if (heyaStore.heyaId === heyaId) {
@@ -179,6 +180,20 @@ export const useHeyaStore = () => {
     // wsを受け取ったら実際のcreate
 
     if (!heyaStore.webSocket) {
+      const id = Math.random().toString(32).substring(2)
+
+      // TODO: デバッグ用なので後で消す
+      createNewHiqidashi(parentId, {
+        children: [],
+        id,
+        parentId,
+        title: '',
+        description: '',
+        colorId: '',
+      })
+
+      heyaStore.inputTitleIds.push(id)
+
       console.error('WebSocket not connected')
       return
     }
