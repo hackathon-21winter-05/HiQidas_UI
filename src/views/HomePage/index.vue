@@ -62,6 +62,7 @@ import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { heya } from '/@/lib/apis/pb/rest/heyas'
 import * as heyasApi from '/@/lib/apis/heyas'
+import * as usersApi from '/@/lib/apis/users'
 import HeyaCard from './components/HeyaCard.vue'
 
 export default defineComponent({
@@ -107,7 +108,7 @@ export default defineComponent({
         updatedAt: '2022/01/03',
       },
     ]
-    const favoriteHeyas = ref(new Set(['uajass', 'uajs'])) // お気に入りのヘヤの id を持つ set
+    const favoriteHeyas: Ref<Set<string>> = ref(new Set([])) // お気に入りのヘヤの id を持つ set
 
     const sortKey: Ref<'更新日時順' | '作成日時順'> = ref('更新日時順')
     const sortOrder: Ref<'降順' | '昇順'> = ref('降順')
@@ -210,7 +211,17 @@ export default defineComponent({
     }
 
     /* onMounted(async () => {
-      heyasData = await heyasApi.getHeyas()
+      try {
+        heyasData = await heyasApi.getHeyas()
+        const res = await usersApi.getFavoriteHeyas()
+        favoriteHeyas.value = new Set(res.favoriteHeyaId)
+      } catch (error) {
+        ElMessage({
+          message: `エラーが発生しました\n${error}`,
+          type: 'warning',
+        })
+        console.log(error)
+      }
     }) */
 
     return {
