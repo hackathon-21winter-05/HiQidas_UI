@@ -2,7 +2,7 @@ import { inject, InjectionKey, provide, reactive } from 'vue'
 import { HiqidashiTree } from '/@/lib/hiqidashiTree'
 import { hiqidashi } from '/@/lib/apis/pb/ws/ws'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { connectWS } from '/@/lib/apis/ws' // TODO: remove ↑
+import { connectWS, sendCreateHiqidashiMessage } from '/@/lib/apis/ws' // TODO: remove ↑
 
 export interface HeyaStore {
   heyaId: string
@@ -125,7 +125,18 @@ export const useHeyaStore = () => {
     hiqidashi: HiqidashiTree
   ) => {
     createNewHiqidashi(parentId, hiqidashi)
-    // WSで送信
+
+    if (!heyaStore.webSocket) {
+      throw new Error('WebSocket not connected')
+    }
+
+    const { title, description } = hiqidashi
+    sendCreateHiqidashiMessage(
+      heyaStore.webSocket,
+      parentId,
+      title,
+      description
+    )
   }
 
   const createFirstHiqidashiAndSend = (
@@ -133,7 +144,18 @@ export const useHeyaStore = () => {
     hiqidashi: HiqidashiTree
   ) => {
     createFirstHiqidashi(parentId, hiqidashi)
-    // WSで送信
+
+    if (!heyaStore.webSocket) {
+      throw new Error('WebSocket not connected')
+    }
+
+    const { title, description } = hiqidashi
+    sendCreateHiqidashiMessage(
+      heyaStore.webSocket,
+      '', // TODO: parentIdをどうするのかサーバー側と調整
+      title,
+      description
+    )
   }
 
   return {
