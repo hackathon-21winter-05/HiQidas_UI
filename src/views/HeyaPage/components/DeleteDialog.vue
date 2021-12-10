@@ -24,7 +24,11 @@ export default defineComponent({
   setup(props) {
     const { hiqidashiStore: store } = useHiqidashiStore()
 
-    const visible = computed(() => store.deleteDialogVisible)
+    const visible = computed({
+      get: () => store.deleteDialogVisible,
+      set: (b: boolean) => (store.deleteDialogVisible = b),
+    })
+
     const handleClose = () => {
       store.deleteDialogVisible = false
     }
