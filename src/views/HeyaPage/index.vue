@@ -2,7 +2,7 @@
   <div class="heya">
     <div class="navbar">
       <router-link to="/" class="title"><h1>HiQidas</h1></router-link>
-      <span class="heya-name">Heya Name</span>
+      <span class="heya-name">{{ store.hiqidashiTree.title }}</span>
     </div>
     <div class="heya-main">
       <div class="heya-container">
