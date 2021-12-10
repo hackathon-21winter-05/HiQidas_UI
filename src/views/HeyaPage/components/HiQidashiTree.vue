@@ -6,7 +6,8 @@
         <div class="diamond" />
         <div class="array-body" />
         <div class="array-head" />
-        <div class="add-button" @click="createChild">
+        <hi-qidashi-input v-if="store.addingChildId === tree.id" />
+        <div v-else class="add-button" @click="createChild">
           <div class="plus-vertical-line" />
           <div class="plus-horizonal-line" />
         </div>
@@ -50,13 +51,16 @@
 <script lang="ts">
 import { computed, defineComponent, PropType, reactive, ref } from 'vue'
 import { HiqidashiTree } from '/@/lib/hiqidashiTree'
+import HiQidashiInput from './HiQidashiInput.vue'
 import HiQidashi from './HiQidashi.vue'
 import { getRandomColor } from '/@/lib/utils'
+import { useHiqidashiStore } from '/@/providers/hiqidashi'
 
 export default defineComponent({
   name: 'HiQidashiTree',
   components: {
     HiQidashi,
+    HiQidashiInput,
   },
   props: {
     tree: {
@@ -71,9 +75,16 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const { hiqidashiStore: store } = useHiqidashiStore()
+
     const isExpanded = ref(true)
 
+    // 子の名前を入力しているヒキダシのID
+    const inputParentId = ref('')
+
     const createChild = () => {
+      store.addingChildId = props.tree.id
+      /*
       props.createNewHiqidashi(
         props.tree.id,
         reactive({
@@ -84,13 +95,22 @@ export default defineComponent({
           colorId: getRandomColor(),
         })
       )
+      */
     }
 
     const color = computed(() => props.tree.colorId)
 
     const toggleExpand = () => (isExpanded.value = !isExpanded.value)
 
-    return { ...props, createChild, color, isExpanded, toggleExpand }
+    return {
+      ...props,
+      store,
+      createChild,
+      color,
+      isExpanded,
+      toggleExpand,
+      inputParentId,
+    }
   },
 })
 </script>

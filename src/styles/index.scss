@@ -41,3 +41,13 @@ body {
     border-color: #ff1787;
   }
 }
+
+.hiqidashi-input {
+  .el-input__inner {
+    border-radius: 0px;
+    border-color: transparent;
+    &:focus {
+      border-color: transparent;
+    }
+  }
+}
