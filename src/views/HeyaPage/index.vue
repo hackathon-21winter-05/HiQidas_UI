@@ -18,6 +18,7 @@ import { defineComponent, reactive } from 'vue'
 import HiQidashiTree from './components/HiQidashiTree.vue'
 import { hiqidashi } from '/@/lib/apis/pb/ws/hiqidashi'
 import { constructHiqidashiTree, HiqidashiTree } from '/@/lib/hiqidashiTree'
+import { getRandomColor } from '/@/lib/utils'
 
 export default defineComponent({
   name: 'HeyaPage',
@@ -31,30 +32,35 @@ export default defineComponent({
         parentId: null,
         title: 'title',
         description: 'description',
+        colorId: getRandomColor(),
       }),
       new hiqidashi.Hiqidashi({
         id: '2',
         parentId: '1',
         title: 'title',
         description: 'description',
+        colorId: getRandomColor(),
       }),
       new hiqidashi.Hiqidashi({
         id: '3',
         parentId: '1',
         title: 'title',
         description: 'description',
+        colorId: getRandomColor(),
       }),
       new hiqidashi.Hiqidashi({
         id: '4',
         parentId: '2',
         title: 'title',
         description: 'description',
+        colorId: getRandomColor(),
       }),
       new hiqidashi.Hiqidashi({
         id: '5',
         parentId: '2',
         title: 'title',
         description: 'description',
+        colorId: getRandomColor(),
       }),
     ]
 

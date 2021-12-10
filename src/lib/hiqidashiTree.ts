@@ -5,6 +5,7 @@ export type HiqidashiTree = {
   id: string
   title: string
   description: string
+  colorId: string
 }
 
 export const constructHiqidashiTree = (hiqidashis: hiqidashi.Hiqidashi[]) => {
@@ -28,6 +29,7 @@ export const constructHiqidashiTree = (hiqidashis: hiqidashi.Hiqidashi[]) => {
       id: root.id,
       title: root.title,
       description: root.description,
+      colorId: root.colorId,
     }
   }
 

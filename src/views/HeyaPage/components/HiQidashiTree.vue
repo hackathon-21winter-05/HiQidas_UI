@@ -52,9 +52,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive, ref } from 'vue'
+import { computed, defineComponent, PropType, reactive, ref } from 'vue'
 import { HiqidashiTree } from '/@/lib/hiqidashiTree'
 import HiQidashi from './HiQidashi.vue'
+import { getRandomColor } from '/@/lib/utils'
 
 export default defineComponent({
   name: 'HiQidashiTree',
@@ -84,13 +85,14 @@ export default defineComponent({
           id: Math.random().toString(32).substring(2),
           title: 'title',
           description: '',
+          colorId: getRandomColor(),
         })
       )
     }
 
-    const toggleExpand = () => (isExpanded.value = !isExpanded.value)
+    const color = computed(() => props.tree.colorId)
 
-    const color = '#' + Math.floor(Math.random() * 16777215).toString(16)
+    const toggleExpand = () => (isExpanded.value = !isExpanded.value)
 
     return { ...props, createChild, color, isExpanded, toggleExpand }
   },
