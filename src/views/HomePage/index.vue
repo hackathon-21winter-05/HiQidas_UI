@@ -24,7 +24,7 @@
       <div class="sidebar-text-button" @click="displayHeyasFlag = 'all'">
         すべてのヘヤ
       </div>
-      <div class="sidebar-text-button" @click="displayHeyasFlag = 'active'">
+      <div class="sidebar-text-button" @click="displayHeyasFlag = 'isActive'">
         アクティブなヘヤ
       </div>
       <div class="sidebar-text-button" @click="displayHeyasFlag = 'favorite'">
@@ -245,8 +245,9 @@ export default defineComponent({
     padding: 10px 0;
 
     .heya-cards {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 410px);
+      justify-content: center;
 
       .create-new-heya {
         width: 370px;
@@ -258,6 +259,7 @@ export default defineComponent({
         border: none;
         background-color: #f3f3f3;
         color: #626262;
+        cursor: pointer;
 
         .add-icon {
           font-size: 48px;
