@@ -38,7 +38,8 @@
         <div class="next-tree">
           <div class="array-body" />
           <div class="array-head" />
-          <div class="add-button-long" @click="createChild">
+          <hi-qidashi-input v-if="store.addingChildId === tree.id" />
+          <div v-else class="add-button-long" @click="createChild">
             <div class="plus-vertical-line" />
             <div class="plus-horizonal-line" />
           </div>
@@ -49,11 +50,10 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, reactive, ref } from 'vue'
+import { computed, defineComponent, PropType, ref } from 'vue'
 import { HiqidashiTree } from '/@/lib/hiqidashiTree'
 import HiQidashiInput from './HiQidashiInput.vue'
 import HiQidashi from './HiQidashi.vue'
-import { getRandomColor } from '/@/lib/utils'
 import { useHiqidashiStore } from '/@/providers/hiqidashi'
 
 export default defineComponent({
