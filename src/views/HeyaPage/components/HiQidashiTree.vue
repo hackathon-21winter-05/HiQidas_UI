@@ -6,10 +6,7 @@
         <div class="diamond" />
         <div class="array-body" />
         <div class="array-head" />
-        <hi-qidashi-input
-          v-if="store.addingChildId === tree.id"
-          :create-new-hiqidashi="createNewHiqidashi"
-        />
+        <hi-qidashi-input v-if="store.addingChildId === tree.id" />
         <div v-else class="add-button" @click="openInput">
           <div class="plus-vertical-line" />
           <div class="plus-horizonal-line" />
@@ -33,18 +30,12 @@
         <div v-for="child in tree.children" :key="child.id" class="next-tree">
           <div class="array-body" />
           <div class="array-head" />
-          <hi-qidashi-tree
-            :tree="child"
-            :create-new-hiqidashi="createNewHiqidashi"
-          />
+          <hi-qidashi-tree :tree="child" />
         </div>
         <div class="next-tree">
           <div class="array-body" />
           <div class="array-head" />
-          <hi-qidashi-input
-            v-if="store.addingChildId === tree.id"
-            :create-new-hiqidashi="createNewHiqidashi"
-          />
+          <hi-qidashi-input v-if="store.addingChildId === tree.id" />
           <div v-else class="add-button-long" @click="openInput">
             <div class="plus-vertical-line" />
             <div class="plus-horizonal-line" />
@@ -71,12 +62,6 @@ export default defineComponent({
   props: {
     tree: {
       type: Object as PropType<HiqidashiTree>,
-      required: true,
-    },
-    createNewHiqidashi: {
-      type: Function as PropType<
-        (parentId: string, tree: HiqidashiTree) => void
-      >,
       required: true,
     },
   },

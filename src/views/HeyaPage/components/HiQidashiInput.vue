@@ -12,32 +12,35 @@
 
 <script lang="ts">
 import { ElInput } from 'element-plus'
-import { defineComponent, onMounted, PropType, ref } from 'vue'
-import { HiqidashiTree } from '/@/lib/hiqidashiTree'
+import { defineComponent, onMounted, ref } from 'vue'
 import { getRandomColor } from '/@/lib/utils'
 import { useHeyaStore } from '/@/providers/heya'
 
 export default defineComponent({
   name: 'HiQidashiInput',
   props: {
-    createNewHiqidashi: {
-      type: Function as PropType<
-        (parentId: string, tree: HiqidashiTree) => void
-      >,
-      required: true,
-    },
-    placeHolder: {
-      type: String,
-      default: 'ヒキダシの名前を入力',
+    first: {
+      type: Boolean,
+      default: false,
     },
   },
   setup(props) {
-    const { heyaStore: store } = useHeyaStore()
+    const {
+      heyaStore: store,
+      createNewHiqidashi,
+      createFirstHiqidashi,
+    } = useHeyaStore()
+
+    const placeHolder = props.first
+      ? 'ヘヤの名前を入力'
+      : 'ヒキダシの名前を入力'
+
+    const createFunc = props.first ? createFirstHiqidashi : createNewHiqidashi
 
     const input = ref('')
 
     const inputFinish = () => {
-      props.createNewHiqidashi(store.addingChildId, {
+      createFunc(store.addingChildId, {
         children: [],
         id: Math.random().toString(32).substring(2),
         title: input.value,
@@ -63,7 +66,7 @@ export default defineComponent({
       }
     })
 
-    return { input, inputFinish, inputAbort, setRef, elRef }
+    return { input, inputFinish, inputAbort, setRef, elRef, placeHolder }
   },
 })
 </script>

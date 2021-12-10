@@ -7,16 +7,8 @@
     <div class="heya-main">
       <div class="heya-container">
         <delete-dialog />
-        <hi-qidashi-input
-          v-if="store.hiqidashiTree.id === ''"
-          :create-new-hiqidashi="createFirstHiqidashi"
-          place-holder="ヘヤの名前を入力"
-        />
-        <hi-qidashi-tree
-          v-else
-          :tree="store.hiqidashiTree"
-          :create-new-hiqidashi="createNewHiqidashi"
-        />
+        <hi-qidashi-input v-if="store.hiqidashiTree.id === ''" :first="true" />
+        <hi-qidashi-tree v-else :tree="store.hiqidashiTree" />
       </div>
     </div>
   </div>
