@@ -4,7 +4,7 @@
     <color-picker
       theme="light"
       :color="color"
-      :sucker-hide="false"
+      :colors-default="colors"
       @change-color="changeColor"
     />
   </div>
@@ -14,6 +14,7 @@
 import { computed, defineComponent } from 'vue'
 import { ColorPicker } from 'vue-color-kit'
 import { useHeyaStore } from '/@/providers/heya'
+import { getDefaultColors } from '/@/lib/utils'
 import 'vue-color-kit/dist/vue-color-kit.css'
 
 export default defineComponent({
@@ -25,8 +26,9 @@ export default defineComponent({
     const { heyaStore: store, getHiqidashiById } = useHeyaStore()
 
     const hiqidashi = getHiqidashiById(store.colorPickingId)
-
     const color = computed(() => hiqidashi.colorId)
+
+    const colors = getDefaultColors()
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const changeColor = (val: any) => {
@@ -39,7 +41,7 @@ export default defineComponent({
       store.colorPickingId = ''
     }
 
-    return { color, closeColorPicker, changeColor }
+    return { color, closeColorPicker, changeColor, colors }
   },
 })
 </script>
@@ -54,8 +56,8 @@ export default defineComponent({
 }
 .color-picker-container {
   position: fixed;
-  top: 50%;
-  left: 50%;
+  top: 70%;
+  left: 70%;
   transform: translate(-50%, -50%);
   z-index: 10;
 }
