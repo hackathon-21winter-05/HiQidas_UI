@@ -6,6 +6,7 @@
     </div>
     <div class="heya-main">
       <div class="heya-container">
+        <delete-dialog />
         <hi-qidashi-input
           v-if="hiqidashiTree.id === ''"
           :create-new-hiqidashi="createFirstHiqidashi"
@@ -27,12 +28,14 @@ import HiQidashiTree from './components/HiQidashiTree.vue'
 import HiQidashiInput from './components/HiQidashiInput.vue'
 import { HiqidashiTree } from '/@/lib/hiqidashiTree'
 import { provideHiqidashiStore } from '/@/providers/hiqidashi'
+import DeleteDialog from './components/DeleteDialog.vue'
 
 export default defineComponent({
   name: 'HeyaPage',
   components: {
     HiQidashiTree,
     HiQidashiInput,
+    DeleteDialog,
   },
   setup() {
     provideHiqidashiStore()

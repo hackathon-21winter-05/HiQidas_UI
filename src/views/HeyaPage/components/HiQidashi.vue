@@ -14,7 +14,9 @@
           <el-dropdown-menu>
             <el-dropdown-item>タイトルを変更</el-dropdown-item>
             <el-dropdown-item>ヒキダシのカラーを変更</el-dropdown-item>
-            <el-dropdown-item>このヒキダシを削除</el-dropdown-item>
+            <el-dropdown-item @click="openDeleteDialog"
+              >このヒキダシを削除</el-dropdown-item
+            >
             <!-- TODO: デザインにあわせる -->
           </el-dropdown-menu>
         </template>
@@ -29,6 +31,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue'
 import HiQidashiEditor from '/@/components/HiQidashiEditor/index.vue'
+import { useHiqidashiStore } from '/@/providers/hiqidashi'
 
 export default defineComponent({
   name: 'HiQidashi',
@@ -46,7 +49,15 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const { hiqidashiStore: store } = useHiqidashiStore()
+
     const isExpanded = ref(false)
+
+    const openDeleteDialog = () => {
+      store.deleteId = props.hiqidashi.id
+      store.deleteDialogVisible = true
+    }
+
     const elRef = ref<HTMLElement>()
 
     onMounted(() => {
@@ -55,7 +66,7 @@ export default defineComponent({
       }
     })
 
-    return { ...props, isExpanded, elRef }
+    return { ...props, isExpanded, elRef, openDeleteDialog }
   },
 })
 </script>
