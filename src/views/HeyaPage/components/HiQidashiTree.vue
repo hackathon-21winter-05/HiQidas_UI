@@ -3,11 +3,10 @@
     <div class="hiqidashi-content">
       <hi-qidashi :hiqidashi="tree" :color="color" />
       <div v-if="tree.children.length === 0" class="no-child-container">
-        <div class="diamond" />
+        <div class="small-diamond" />
         <div class="array-body" />
         <div class="array-head" />
-        <hi-qidashi-input v-if="store.addingChildId === tree.id" />
-        <div v-else class="add-button" @click="openInput">
+        <div class="add-button" @click="createChild">
           <div class="plus-vertical-line" />
           <div class="plus-horizonal-line" />
         </div>
@@ -30,13 +29,13 @@
         <div v-for="child in tree.children" :key="child.id" class="next-tree">
           <div class="array-body" />
           <div class="array-head" />
-          <hi-qidashi-tree :tree="child" />
+          <hi-qidashi-input v-if="isInputOpened" :tree="child" />
+          <hi-qidashi-tree v-else :tree="child" />
         </div>
         <div class="next-tree">
           <div class="array-body" />
           <div class="array-head" />
-          <hi-qidashi-input v-if="store.addingChildId === tree.id" />
-          <div v-else class="add-button-long" @click="openInput">
+          <div class="add-button-long" @click="createChild">
             <div class="plus-vertical-line" />
             <div class="plus-horizonal-line" />
           </div>
@@ -66,13 +65,19 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { heyaStore: store } = useHeyaStore()
+    const {
+      heyaStore: store,
+      createNewHiqidashi,
+      isInputOpenedById,
+    } = useHeyaStore()
 
     const isExpanded = ref(true)
 
-    const openInput = () => {
-      store.addingChildId = props.tree.id
+    const createChild = () => {
+      createNewHiqidashi(props.tree.id)
     }
+
+    const isInputOpened = computed(() => isInputOpenedById(props.tree.id))
 
     const color = computed(() => props.tree.colorId)
 
@@ -81,10 +86,11 @@ export default defineComponent({
     return {
       ...props,
       store,
-      openInput,
       color,
       isExpanded,
       toggleExpand,
+      createChild,
+      isInputOpened,
     }
   },
 })
@@ -102,12 +108,6 @@ export default defineComponent({
       display: flex;
       align-items: center;
       justify-content: center;
-      .diamond {
-        background-color: v-bind(color);
-        width: 9px;
-        height: 9px;
-        transform: rotate(45deg);
-      }
     }
     .add-button {
       position: relative;
@@ -116,6 +116,12 @@ export default defineComponent({
       height: 36px;
       border-radius: 50%;
     }
+  }
+  .small-diamond {
+    background-color: v-bind(color);
+    width: 9px;
+    height: 9px;
+    transform: rotate(45deg);
   }
   .arrow-container {
     display: flex;

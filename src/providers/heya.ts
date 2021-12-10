@@ -8,13 +8,15 @@ import {
   sendDeleteHiqidashiMessage,
   sendEditHiqidashiMessage,
 } from '/@/lib/apis/ws'
+import { useMe } from '/@/providers/me'
+import { getRandomColor } from '/@/lib/utils'
 
 export interface HeyaStore {
   heyaId: string
   webSocket?: WebSocket
   hiqidashiTree: HiqidashiTree
   hiqidashiMap: Map<string, HiqidashiTree>
-  addingChildId: string
+  inputTitleIds: string[]
   lastEditedId: string
   deleteDialogVisible: boolean
   deleteId: string
@@ -23,24 +25,28 @@ export interface HeyaStore {
 
 const heyaStoreSymbol: InjectionKey<HeyaStore> = Symbol()
 
-const createHeyaStore = () =>
-  reactive({
+const createHeyaStore = () => {
+  // TODO: デバッグ用なのでそのうち消す
+  const store = reactive({
     heyaId: '',
     hiqidashiTree: {
       children: [],
-      id: '',
+      id: 'test',
       parentId: '',
-      title: '',
+      title: 'first hiqidashi',
       description: '',
-      colorId: '',
+      colorId: getRandomColor(),
     },
     hiqidashiMap: new Map(),
-    addingChildId: '',
+    inputTitleIds: ['test'],
     lastEditedId: '',
     deleteDialogVisible: false,
     deleteId: '',
     colorPickingId: '',
   })
+  store.hiqidashiMap.set(store.hiqidashiTree.id, store.hiqidashiTree)
+  return store
+}
 
 export const provideHeyaStore = () =>
   provide(heyaStoreSymbol, createHeyaStore())
@@ -54,18 +60,23 @@ export const useHeyaStoreBase = () => {
   const resetHeya = () => {
     heyaStore.hiqidashiTree = reactive({
       children: [],
-      id: '',
+      id: 'test',
       parentId: '',
       title: '',
       description: '',
-      colorId: '',
+      colorId: getRandomColor(),
     })
     heyaStore.hiqidashiMap = new Map()
-    heyaStore.addingChildId = ''
+    heyaStore.inputTitleIds = reactive(['test'])
     heyaStore.lastEditedId = ''
     heyaStore.deleteDialogVisible = false
     heyaStore.deleteId = ''
     heyaStore.colorPickingId = ''
+
+    heyaStore.hiqidashiMap.set(
+      heyaStore.hiqidashiTree.id,
+      heyaStore.hiqidashiTree
+    )
   }
 
   const setHiqidashiMap = (tree: HiqidashiTree) => {
@@ -150,13 +161,7 @@ export const useHeyaStoreBase = () => {
 
 // Vue側から使う
 export const useHeyaStore = () => {
-  const {
-    heyaStore,
-    resetHeya,
-    createNewHiqidashi,
-    createFirstHiqidashi,
-    deleteHiqidashi,
-  } = useHeyaStoreBase()
+  const { heyaStore, resetHeya, deleteHiqidashi } = useHeyaStoreBase()
 
   const connectHeya = (heyaId: string) => {
     if (heyaStore.heyaId === heyaId) {
@@ -168,44 +173,16 @@ export const useHeyaStore = () => {
     // heyaStore.webSocket = connectWS(heyaId)
   }
 
-  const createNewHiqidashiAndSend = (
-    parentId: string,
-    hiqidashi: HiqidashiTree
-  ) => {
-    createNewHiqidashi(parentId, hiqidashi)
+  const createNewHiqidashiAndSend = (parentId: string) => {
+    // ここではWS送信のみを行う
+    // wsを受け取ったら実際のcreate
 
     if (!heyaStore.webSocket) {
       console.error('WebSocket not connected')
       return
     }
 
-    const { title, description } = hiqidashi
-    sendCreateHiqidashiMessage(
-      heyaStore.webSocket,
-      parentId,
-      title,
-      description
-    )
-  }
-
-  const createFirstHiqidashiAndSend = (
-    parentId: string,
-    hiqidashi: HiqidashiTree
-  ) => {
-    createFirstHiqidashi(parentId, hiqidashi)
-
-    if (!heyaStore.webSocket) {
-      console.error('WebSocket not connected')
-      return
-    }
-
-    const { title, description } = hiqidashi
-    sendCreateHiqidashiMessage(
-      heyaStore.webSocket,
-      '', // TODO: parentIdをどうするのかサーバー側と調整
-      title,
-      description
-    )
+    sendCreateHiqidashiMessage(heyaStore.webSocket, parentId)
   }
 
   const deleteHiqidashiAndSend = () => {
@@ -229,30 +206,56 @@ export const useHeyaStore = () => {
     return hiqidashi
   }
 
-  const changeHiqidashiColorAndSend = (id: string, colorId: string) => {
+  type HiqidashiChange = {
+    title?: string
+    colorId?: string
+  }
+
+  const changeHiqidashiAndSend = (id: string, change: HiqidashiChange) => {
     const hiqidashi = heyaStore.hiqidashiMap.get(id)
 
     if (!hiqidashi) {
       throw new Error(`hiqidashi not found.`)
     }
 
-    hiqidashi.colorId = colorId
-
     if (!heyaStore.webSocket) {
       console.error('WebSocket not connected')
       return
     }
-    sendEditHiqidashiMessage(heyaStore.webSocket, id, { colorId })
+
+    sendEditHiqidashiMessage(heyaStore.webSocket, id, change)
+  }
+
+  const isInputOpenedById = (id: string) => {
+    // const me = useMe()
+    const hiqidashi = heyaStore.hiqidashiMap.get(id)
+
+    if (!hiqidashi) {
+      throw new Error(`hiqidashi not found.`)
+    }
+
+    // TODO: ↓
+    return heyaStore.inputTitleIds.includes(id)
+    /* && me.id === hiqidashi.creatorId */
+  }
+
+  const deleteInputTitleId = (id: string) => {
+    const idx = heyaStore.inputTitleIds.indexOf(id)
+    if (idx === -1) {
+      return
+    }
+    heyaStore.inputTitleIds.splice(idx, 1)
   }
 
   return {
     heyaStore,
     connectHeya,
     createNewHiqidashi: createNewHiqidashiAndSend,
-    createFirstHiqidashi: createFirstHiqidashiAndSend,
     deleteHiqidashi: deleteHiqidashiAndSend,
-    changeHiqidashiColor: changeHiqidashiColorAndSend,
+    changeHiqidashi: changeHiqidashiAndSend,
     getHiqidashiById,
+    isInputOpenedById,
+    deleteInputTitleId,
   }
 }
 

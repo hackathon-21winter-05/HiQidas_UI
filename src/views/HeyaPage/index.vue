@@ -9,7 +9,12 @@
         <preload-icons />
         <color-picker-container v-if="store.colorPickingId" />
         <delete-dialog />
-        <hi-qidashi-input v-if="store.hiqidashiTree.id === ''" :first="true" />
+
+        <hi-qidashi-input
+          v-if="isInputOpen"
+          :first="true"
+          :tree="store.hiqidashiTree"
+        />
         <hi-qidashi-tree v-else :tree="store.hiqidashiTree" />
       </div>
     </div>
@@ -17,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
 import HiQidashiTree from './components/HiQidashiTree.vue'
 import HiQidashiInput from './components/HiQidashiInput.vue'
 import PreloadIcons from './components/PreloadIcons.vue'
@@ -40,13 +45,17 @@ export default defineComponent({
       heyaStore: store,
       connectHeya,
       createNewHiqidashi,
-      createFirstHiqidashi,
+      isInputOpenedById,
     } = useHeyaStore()
     const route = useRoute()
     const heyaId = route.params.id.toLocaleString()
     connectHeya(heyaId)
 
-    return { store, createNewHiqidashi, createFirstHiqidashi }
+    const isInputOpen = computed(() =>
+      isInputOpenedById(store.hiqidashiTree.id)
+    )
+
+    return { store, createNewHiqidashi, isInputOpen }
   },
 })
 </script>

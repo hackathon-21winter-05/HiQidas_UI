@@ -40,6 +40,7 @@ export const connectWS = (heyaId: string) => {
 
         // TODO: バリデーションをいい感じにするか別の関数を作るかする
         setHiqidashi(hiqidashi)
+        // TODO: もし自分の作ったヒキダシだったらタイトル入力欄を開く
         break
       }
       case 'editHiqidashi': {
@@ -73,17 +74,12 @@ export const sendDeleteHiqidashiMessage = (ws: WebSocket, id: string) => {
   ws.send(new Uint8Array(buffer))
 }
 
-export const sendCreateHiqidashiMessage = (
-  ws: WebSocket,
-  parentId: string,
-  title: string,
-  description: string
-) => {
+export const sendCreateHiqidashiMessage = (ws: WebSocket, parentId: string) => {
   const data = WsCommunicationData.create({
     createHiqidashi: {
       parentId,
-      title,
-      description,
+      title: '',
+      description: '',
     },
   })
 

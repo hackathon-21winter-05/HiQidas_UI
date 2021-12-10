@@ -12,13 +12,18 @@
 
 <script lang="ts">
 import { ElInput } from 'element-plus'
-import { defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, onMounted, PropType, ref } from 'vue'
+import { HiqidashiTree } from '/@/lib/hiqidashiTree'
 import { getRandomColor } from '/@/lib/utils'
 import { useHeyaStore } from '/@/providers/heya'
 
 export default defineComponent({
   name: 'HiQidashiInput',
   props: {
+    tree: {
+      type: Object as PropType<HiqidashiTree>,
+      required: true,
+    },
     first: {
       type: Boolean,
       default: false,
@@ -27,33 +32,27 @@ export default defineComponent({
   setup(props) {
     const {
       heyaStore: store,
-      createNewHiqidashi,
-      createFirstHiqidashi,
+      deleteInputTitleId,
+      changeHiqidashi,
     } = useHeyaStore()
 
     const placeHolder = props.first
       ? 'ヘヤの名前を入力'
       : 'ヒキダシの名前を入力'
 
-    const createFunc = props.first ? createFirstHiqidashi : createNewHiqidashi
-
     const input = ref('')
 
     const inputFinish = () => {
-      createFunc(store.addingChildId, {
-        children: [],
-        id: Math.random().toString(32).substring(2),
-        parentId: store.addingChildId,
+      changeHiqidashi(props.tree.id, {
         title: input.value,
-        description: '',
         colorId: getRandomColor(),
       })
 
-      store.addingChildId = ''
+      deleteInputTitleId(props.tree.id)
     }
 
     const inputAbort = () => {
-      store.addingChildId = ''
+      deleteInputTitleId(props.tree.id)
     }
 
     const setRef = (el: InstanceType<typeof ElInput>) => {
