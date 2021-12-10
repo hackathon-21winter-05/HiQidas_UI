@@ -10,18 +10,30 @@ ws.onmessage = (event) => {
   const data = hiqidashi.WsCommunicationData.decode(new Uint8Array(event.data))
 
   // TODO: 実装
-  if (data.getHiqidashis) {
-    // hiqidashiを反映させる
-  } else if (data.deleteHiqidashi) {
-    // hiqidashiを削除する
-  } else if (data.createHiqidashi) {
-    // hiqidashiを作成する
-  } else if (data.editHiqidashi) {
-    // hiqidashiを編集する
-  } else if (data.getHiqidashi) {
-    // hiqidashiを取得する
-  } else {
-    throw new Error('unknown websocket message')
+  switch (data.payload) {
+    case 'getHiqidashi': {
+      // hiqidashiを取得する
+      break
+    }
+    case 'getHiqidashis': {
+      // hiqidashiを取得する
+      break
+    }
+    case 'createHiqidashi': {
+      // hiqidashiを作成する
+      break
+    }
+    case 'editHiqidashi': {
+      // hiqidashiを編集する
+      break
+    }
+    case 'deleteHiqidashi': {
+      // hiqidashiを削除する
+      break
+    }
+    default: {
+      throw new Error('unknown payload')
+    }
   }
 }
 
