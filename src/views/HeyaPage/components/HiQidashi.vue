@@ -7,7 +7,9 @@
       >
         {{ isExpanded ? 'expand_less' : 'expand_more' }}
       </span>
-      <h3 class="hiqidashi-title">{{ hiqidashi.title }}</h3>
+      <h3 class="hiqidashi-title" @click="isExpanded = !isExpanded">
+        {{ hiqidashi.title }}
+      </h3>
       <el-dropdown trigger="click">
         <span class="material-icons right-button"> more_horiz </span>
         <template #dropdown>
