@@ -5,7 +5,13 @@
       <span class="heya-name">Heya Name</span>
     </div>
     <div class="main">
+      <hi-qidashi-input
+        v-if="hiqidashiTree.id === ''"
+        :create-new-hiqidashi="createFirstHiqidashi"
+        place-holder="ヘヤの名前を入力"
+      />
       <hi-qidashi-tree
+        v-else
         :tree="hiqidashiTree"
         :create-new-hiqidashi="createNewHiqidashi"
       />
@@ -16,58 +22,26 @@
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
 import HiQidashiTree from './components/HiQidashiTree.vue'
-import { hiqidashi } from '/@/lib/apis/pb/ws/hiqidashi'
-import { constructHiqidashiTree, HiqidashiTree } from '/@/lib/hiqidashiTree'
-import { getRandomColor } from '/@/lib/utils'
+import HiQidashiInput from './components/HiQidashiInput.vue'
+import { HiqidashiTree } from '/@/lib/hiqidashiTree'
 import { provideHiqidashiStore } from '/@/providers/hiqidashi'
 
 export default defineComponent({
   name: 'HeyaPage',
   components: {
     HiQidashiTree,
+    HiQidashiInput,
   },
   setup() {
     provideHiqidashiStore()
 
-    const hiqidashis = [
-      new hiqidashi.Hiqidashi({
-        id: '1',
-        parentId: null,
-        title: 'title',
-        description: 'description',
-        colorId: getRandomColor(),
-      }),
-      new hiqidashi.Hiqidashi({
-        id: '2',
-        parentId: '1',
-        title: 'title',
-        description: 'description',
-        colorId: getRandomColor(),
-      }),
-      new hiqidashi.Hiqidashi({
-        id: '3',
-        parentId: '1',
-        title: 'title',
-        description: 'description',
-        colorId: getRandomColor(),
-      }),
-      new hiqidashi.Hiqidashi({
-        id: '4',
-        parentId: '2',
-        title: 'title',
-        description: 'description',
-        colorId: getRandomColor(),
-      }),
-      new hiqidashi.Hiqidashi({
-        id: '5',
-        parentId: '2',
-        title: 'title',
-        description: 'description',
-        colorId: getRandomColor(),
-      }),
-    ]
-
-    const hiqidashiTree = reactive(constructHiqidashiTree(hiqidashis))
+    const hiqidashiTree = reactive({
+      children: [],
+      id: '',
+      title: '',
+      description: '',
+      colorId: '',
+    })
 
     const hiqidashiMap = new Map<string, HiqidashiTree>()
     const setHiqidashiMap = (tree: HiqidashiTree) => {
@@ -75,7 +49,9 @@ export default defineComponent({
       tree.children.forEach(setHiqidashiMap)
     }
 
-    setHiqidashiMap(hiqidashiTree)
+    if (hiqidashiTree.id !== '') {
+      setHiqidashiMap(hiqidashiTree)
+    }
 
     const createNewHiqidashi = (parentId: string, hiqidashi: HiqidashiTree) => {
       const parent = hiqidashiMap.get(parentId)
@@ -84,11 +60,23 @@ export default defineComponent({
         throw new Error(`parentId ${parentId} not found.`)
       }
 
-      parent.children.push(hiqidashi)
+      parent.children.push(reactive(hiqidashi))
       hiqidashiMap.set(hiqidashi.id, hiqidashi)
     }
 
-    return { hiqidashiTree, createNewHiqidashi }
+    const createFirstHiqidashi = (
+      parentId: string,
+      hiqidashi: HiqidashiTree
+    ) => {
+      hiqidashiTree.id = hiqidashi.id
+      hiqidashiTree.title = hiqidashi.title
+      hiqidashiTree.description = hiqidashi.description
+      hiqidashiTree.colorId = hiqidashi.colorId
+
+      setHiqidashiMap(hiqidashiTree)
+    }
+
+    return { hiqidashiTree, createNewHiqidashi, createFirstHiqidashi }
   },
 })
 </script>
