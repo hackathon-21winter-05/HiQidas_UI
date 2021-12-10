@@ -127,7 +127,8 @@ export const useHeyaStore = () => {
     createNewHiqidashi(parentId, hiqidashi)
 
     if (!heyaStore.webSocket) {
-      throw new Error('WebSocket not connected')
+      console.error('WebSocket not connected')
+      return
     }
 
     const { title, description } = hiqidashi
@@ -146,7 +147,8 @@ export const useHeyaStore = () => {
     createFirstHiqidashi(parentId, hiqidashi)
 
     if (!heyaStore.webSocket) {
-      throw new Error('WebSocket not connected')
+      console.error('WebSocket not connected')
+      return
     }
 
     const { title, description } = hiqidashi

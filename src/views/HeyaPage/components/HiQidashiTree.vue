@@ -70,9 +70,6 @@ export default defineComponent({
 
     const isExpanded = ref(true)
 
-    // 子の名前を入力しているヒキダシのID
-    const inputParentId = ref('')
-
     const openInput = () => {
       store.addingChildId = props.tree.id
     }
@@ -88,7 +85,6 @@ export default defineComponent({
       color,
       isExpanded,
       toggleExpand,
-      inputParentId,
     }
   },
 })
