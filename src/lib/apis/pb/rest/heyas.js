@@ -22,7 +22,7 @@ export const heya = $root.heya = (() => {
          * Properties of a GetHeyasResponse.
          * @memberof heya
          * @interface IGetHeyasResponse
-         * @property {Array.<string>|null} [heyaId] GetHeyasResponse heyaId
+         * @property {heya.IHeyas|null} [heyas] GetHeyasResponse heyas
          */
 
         /**
@@ -34,7 +34,6 @@ export const heya = $root.heya = (() => {
          * @param {heya.IGetHeyasResponse=} [properties] Properties to set
          */
         function GetHeyasResponse(properties) {
-            this.heyaId = [];
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -42,12 +41,12 @@ export const heya = $root.heya = (() => {
         }
 
         /**
-         * GetHeyasResponse heyaId.
-         * @member {Array.<string>} heyaId
+         * GetHeyasResponse heyas.
+         * @member {heya.IHeyas|null|undefined} heyas
          * @memberof heya.GetHeyasResponse
          * @instance
          */
-        GetHeyasResponse.prototype.heyaId = $util.emptyArray;
+        GetHeyasResponse.prototype.heyas = null;
 
         /**
          * Creates a new GetHeyasResponse instance using the specified properties.
@@ -73,9 +72,8 @@ export const heya = $root.heya = (() => {
         GetHeyasResponse.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.heyaId != null && message.heyaId.length)
-                for (let i = 0; i < message.heyaId.length; ++i)
-                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.heyaId[i]);
+            if (message.heyas != null && Object.hasOwnProperty.call(message, "heyas"))
+                $root.heya.Heyas.encode(message.heyas, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
             return writer;
         };
 
@@ -111,9 +109,7 @@ export const heya = $root.heya = (() => {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
-                    if (!(message.heyaId && message.heyaId.length))
-                        message.heyaId = [];
-                    message.heyaId.push(reader.string());
+                    message.heyas = $root.heya.Heyas.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -150,12 +146,10 @@ export const heya = $root.heya = (() => {
         GetHeyasResponse.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            if (message.heyaId != null && message.hasOwnProperty("heyaId")) {
-                if (!Array.isArray(message.heyaId))
-                    return "heyaId: array expected";
-                for (let i = 0; i < message.heyaId.length; ++i)
-                    if (!$util.isString(message.heyaId[i]))
-                        return "heyaId: string[] expected";
+            if (message.heyas != null && message.hasOwnProperty("heyas")) {
+                let error = $root.heya.Heyas.verify(message.heyas);
+                if (error)
+                    return "heyas." + error;
             }
             return null;
         };
@@ -172,12 +166,10 @@ export const heya = $root.heya = (() => {
             if (object instanceof $root.heya.GetHeyasResponse)
                 return object;
             let message = new $root.heya.GetHeyasResponse();
-            if (object.heyaId) {
-                if (!Array.isArray(object.heyaId))
-                    throw TypeError(".heya.GetHeyasResponse.heyaId: array expected");
-                message.heyaId = [];
-                for (let i = 0; i < object.heyaId.length; ++i)
-                    message.heyaId[i] = String(object.heyaId[i]);
+            if (object.heyas != null) {
+                if (typeof object.heyas !== "object")
+                    throw TypeError(".heya.GetHeyasResponse.heyas: object expected");
+                message.heyas = $root.heya.Heyas.fromObject(object.heyas);
             }
             return message;
         };
@@ -195,13 +187,10 @@ export const heya = $root.heya = (() => {
             if (!options)
                 options = {};
             let object = {};
-            if (options.arrays || options.defaults)
-                object.heyaId = [];
-            if (message.heyaId && message.heyaId.length) {
-                object.heyaId = [];
-                for (let j = 0; j < message.heyaId.length; ++j)
-                    object.heyaId[j] = message.heyaId[j];
-            }
+            if (options.defaults)
+                object.heyas = null;
+            if (message.heyas != null && message.hasOwnProperty("heyas"))
+                object.heyas = $root.heya.Heyas.toObject(message.heyas, options);
             return object;
         };
 

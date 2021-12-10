@@ -5,8 +5,8 @@ export namespace heya {
     /** Properties of a GetHeyasResponse. */
     interface IGetHeyasResponse {
 
-        /** GetHeyasResponse heyaId */
-        heyaId?: (string[]|null);
+        /** GetHeyasResponse heyas */
+        heyas?: (heya.IHeyas|null);
     }
 
     /** Represents a GetHeyasResponse. */
@@ -18,8 +18,8 @@ export namespace heya {
          */
         constructor(properties?: heya.IGetHeyasResponse);
 
-        /** GetHeyasResponse heyaId. */
-        public heyaId: string[];
+        /** GetHeyasResponse heyas. */
+        public heyas?: (heya.IHeyas|null);
 
         /**
          * Creates a new GetHeyasResponse instance using the specified properties.
