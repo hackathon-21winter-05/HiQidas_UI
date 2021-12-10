@@ -73,7 +73,7 @@ export default defineComponent({
   setup() {
     const userMe = { id: 'hoge2', name: 'hoge2' }
 
-    // TODO: api 叩いて取得する・表示する分フィルターかける 表示分は getter にするのが良さそう？
+    // TODO: api 叩いて取得する
     const heyasData = [
       {
         id: 'abcs',
