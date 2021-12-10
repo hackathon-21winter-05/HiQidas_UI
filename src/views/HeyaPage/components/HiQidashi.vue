@@ -20,7 +20,7 @@
             <el-dropdown-item @click="openColorPicker">
               ヒキダシのカラーを変更</el-dropdown-item
             >
-            <el-dropdown-item @click="openDeleteDialog"
+            <el-dropdown-item v-if="!isRootHiqidashi" @click="openDeleteDialog"
               >このヒキダシを削除</el-dropdown-item
             >
             <!-- TODO: デザインにあわせる -->
@@ -79,6 +79,10 @@ export default defineComponent({
       store.colorPickingId = props.hiqidashi.id
     }
 
+    const isRootHiqidashi = computed(
+      () => props.hiqidashi.id === store.hiqidashiTree.id
+    )
+
     return {
       ...props,
       changeToEditMode,
@@ -87,6 +91,7 @@ export default defineComponent({
       openDeleteDialog,
       openColorPicker,
       color,
+      isRootHiqidashi,
     }
   },
 })
