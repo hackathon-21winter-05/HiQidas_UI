@@ -7,6 +7,7 @@ export type HiqidashiTree = {
   title: string
   description: string
   colorId: string
+  mode: 'normal' | 'edit' | 'init'
 }
 
 export const constructHiqidashiTree = (hiqidashis: hiqidashi.Hiqidashi[]) => {
@@ -35,6 +36,7 @@ export const constructHiqidashiTree = (hiqidashis: hiqidashi.Hiqidashi[]) => {
       title: root.title,
       description: root.description,
       colorId: root.colorId,
+      mode: 'normal',
     }
   }
 

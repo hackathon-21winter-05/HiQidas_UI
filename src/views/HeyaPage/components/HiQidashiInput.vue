@@ -39,7 +39,6 @@ export default defineComponent({
     const input = ref('')
 
     const inputFinish = () => {
-      console.log(input.value)
       changeHiqidashi(props.tree.id, {
         title: input.value,
         colorId: getRandomColor(),

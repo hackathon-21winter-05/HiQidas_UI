@@ -11,7 +11,7 @@
         <delete-dialog />
 
         <hi-qidashi-input
-          v-if="isInputOpen"
+          v-if="store.hiqidashiTree.mode === 'init'"
           :first="true"
           :tree="store.hiqidashiTree"
         />
@@ -41,21 +41,12 @@ export default defineComponent({
     ColorPickerContainer,
   },
   setup() {
-    const {
-      heyaStore: store,
-      connectHeya,
-      createNewHiqidashi,
-      isInputOpenedById,
-    } = useHeyaStore()
+    const { heyaStore: store, connectHeya, createNewHiqidashi } = useHeyaStore()
     const route = useRoute()
     const heyaId = route.params.id.toLocaleString()
     connectHeya(heyaId)
 
-    const isInputOpen = computed(() =>
-      isInputOpenedById(store.hiqidashiTree.id)
-    )
-
-    return { store, createNewHiqidashi, isInputOpen }
+    return { store, createNewHiqidashi }
   },
 })
 </script>

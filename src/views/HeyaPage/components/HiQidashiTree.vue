@@ -29,10 +29,7 @@
         <div v-for="child in tree.children" :key="child.id" class="next-tree">
           <div class="array-body" />
           <div class="array-head" />
-          <hi-qidashi-input
-            v-if="isInputOpened(child.id) === true"
-            :tree="child"
-          />
+          <hi-qidashi-input v-if="child.mode === 'init'" :tree="child" />
           <hi-qidashi-tree v-else :tree="child" />
         </div>
         <div class="next-tree">
@@ -68,19 +65,13 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const {
-      heyaStore: store,
-      createNewHiqidashi,
-      isInputOpenedById,
-    } = useHeyaStore()
+    const { heyaStore: store, createNewHiqidashi } = useHeyaStore()
 
     const isExpanded = ref(true)
 
     const createChild = () => {
       createNewHiqidashi(props.tree.id)
     }
-
-    const isInputOpened = (id: string) => isInputOpenedById(id)
 
     const color = computed(() => props.tree.colorId)
 
@@ -93,7 +84,6 @@ export default defineComponent({
       isExpanded,
       toggleExpand,
       createChild,
-      isInputOpened,
     }
   },
 })

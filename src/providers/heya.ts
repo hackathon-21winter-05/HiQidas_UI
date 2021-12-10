@@ -17,7 +17,6 @@ export interface HeyaStore {
   webSocket?: WebSocket
   hiqidashiTree: HiqidashiTree
   hiqidashiMap: Map<string, HiqidashiTree>
-  inputTitleIds: string[]
   lastEditedId: string
   deleteDialogVisible: boolean
   deleteId: string
@@ -28,7 +27,7 @@ const heyaStoreSymbol: InjectionKey<HeyaStore> = Symbol()
 
 const createHeyaStore = () => {
   // TODO: デバッグ用なのでそのうち消す
-  const store = reactive({
+  const store: HeyaStore = reactive({
     heyaId: '',
     hiqidashiTree: {
       children: [],
@@ -37,9 +36,9 @@ const createHeyaStore = () => {
       title: 'first hiqidashi',
       description: '',
       colorId: getRandomColor(),
+      mode: 'init',
     },
     hiqidashiMap: new Map(),
-    inputTitleIds: ['test'],
     lastEditedId: '',
     deleteDialogVisible: false,
     deleteId: '',
@@ -66,9 +65,9 @@ export const useHeyaStoreBase = () => {
       title: '',
       description: '',
       colorId: getRandomColor(),
+      mode: 'init',
     })
     heyaStore.hiqidashiMap = new Map()
-    heyaStore.inputTitleIds = reactive(['test'])
     heyaStore.lastEditedId = ''
     heyaStore.deleteDialogVisible = false
     heyaStore.deleteId = ''
@@ -134,6 +133,7 @@ export const useHeyaStoreBase = () => {
         title: '',
         description: '',
         colorId: '',
+        mode: 'normal',
       })
       return
     }
@@ -192,10 +192,9 @@ export const useHeyaStore = () => {
           title: '',
           description: '',
           colorId: '',
+          mode: 'init',
         })
       )
-
-      heyaStore.inputTitleIds.push(id)
 
       console.error('WebSocket not connected')
       return
@@ -252,25 +251,14 @@ export const useHeyaStore = () => {
     sendEditHiqidashiMessage(heyaStore.webSocket, id, change)
   }
 
-  const isInputOpenedById = (id: string) => {
-    // const me = useMe()
+  const deleteInputTitleId = (id: string) => {
     const hiqidashi = heyaStore.hiqidashiMap.get(id)
 
     if (!hiqidashi) {
       throw new Error(`hiqidashi not found.`)
     }
 
-    // TODO: ↓
-    return heyaStore.inputTitleIds.includes(id)
-    /* && me.id === hiqidashi.creatorId */
-  }
-
-  const deleteInputTitleId = (id: string) => {
-    const idx = heyaStore.inputTitleIds.indexOf(id)
-    if (idx === -1) {
-      return
-    }
-    heyaStore.inputTitleIds.splice(idx, 1)
+    hiqidashi.mode = 'normal'
   }
 
   return {
@@ -280,7 +268,6 @@ export const useHeyaStore = () => {
     deleteHiqidashi: deleteHiqidashiAndSend,
     changeHiqidashi: changeHiqidashiAndSend,
     getHiqidashiById,
-    isInputOpenedById,
     deleteInputTitleId,
   }
 }
@@ -306,14 +293,16 @@ export const useHeyaStoreFromWS = () => {
       throw new Error('invalid hiqidashi')
     }
 
-    const hiqidashiTree = {
+    const hiqidashiTree: HiqidashiTree = {
       children: [],
       id,
       parentId,
       title,
       description,
       colorId,
+      mode: 'init',
     }
+    // TODO: ここでmode判断でよさそう
 
     if (hiqidashi.parentId === '') {
       createFirstHiqidashi('', hiqidashiTree)
