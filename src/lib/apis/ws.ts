@@ -1,5 +1,7 @@
 import { hiqidashi } from '/@/lib/apis/pb/ws/ws'
 
+const { WsCommunicationData } = hiqidashi
+
 export const connectWS = (heyaId: string) => {
   const ws = new WebSocket(`ws://api/ws/heya/${heyaId}`)
   ws.onopen = () => {
@@ -7,9 +9,7 @@ export const connectWS = (heyaId: string) => {
   }
 
   ws.onmessage = (event) => {
-    const data = hiqidashi.WsCommunicationData.decode(
-      new Uint8Array(event.data)
-    )
+    const data = WsCommunicationData.decode(new Uint8Array(event.data))
 
     // TODO: 実装
     switch (data.payload) {
@@ -42,9 +42,9 @@ export const connectWS = (heyaId: string) => {
 }
 
 export const sendDeleteHiqidashiMessage = (ws: WebSocket, id: string) => {
-  const data = hiqidashi.WsCommunicationData.create({ deleteHiqidashi: { id } })
+  const data = WsCommunicationData.create({ deleteHiqidashi: { id } })
 
-  const buffer = hiqidashi.WsCommunicationData.encode(data).finish()
+  const buffer = WsCommunicationData.encode(data).finish()
   ws.send(new Uint8Array(buffer))
 }
 
@@ -54,7 +54,7 @@ export const sendCreateHiqidashiMessage = (
   title: string,
   description: string
 ) => {
-  const data = hiqidashi.WsCommunicationData.create({
+  const data = WsCommunicationData.create({
     createHiqidashi: {
       parentId,
       title,
@@ -62,7 +62,7 @@ export const sendCreateHiqidashiMessage = (
     },
   })
 
-  const buffer = hiqidashi.WsCommunicationData.encode(data).finish()
+  const buffer = WsCommunicationData.encode(data).finish()
   ws.send(new Uint8Array(buffer))
 }
 
@@ -84,8 +84,8 @@ export const sendEditHiqidashiMessage = (
   if (val.drawing) d.drawing = { value: val.drawing }
   if (val.colorId) d.colorId = { value: val.colorId }
 
-  const data = hiqidashi.WsCommunicationData.create({ editHiqidashi: d })
+  const data = WsCommunicationData.create({ editHiqidashi: d })
 
-  const buffer = hiqidashi.WsCommunicationData.encode(data).finish()
+  const buffer = WsCommunicationData.encode(data).finish()
   ws.send(new Uint8Array(buffer))
 }
