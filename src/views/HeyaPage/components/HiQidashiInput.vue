@@ -71,7 +71,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .hiqidashi-input {
   height: 50px;
-  width: 250px;
+  width: 306px;
   background-color: #ffffff;
   border-radius: 6px;
   transition: 0.3s height ease-in-out;

@@ -4,19 +4,20 @@
       <hi-qidashi :hiqidashi="tree" :color="color" />
       <div v-if="tree.children.length === 0" class="no-child-container">
         <div class="small-diamond" />
-        <div class="array-body" />
-        <div class="array-head" />
+        <div class="arrow-body" />
+        <div class="arrow-head" />
         <div class="add-button" @click="createChild">
           <div class="plus-vertical-line" />
           <div class="plus-horizonal-line" />
         </div>
       </div>
-      <div v-else class="arrow-container">
-        <div class="diamond" @click="toggleExpand" />
-        <div v-if="isExpanded" class="dotline" />
+      <div v-else class="arrow-container" @click="toggleExpand">
+        <div v-if="isExpanded" class="diamond" />
+        <div v-else class="small-diamond" />
+        <div v-if="isExpanded" class="dotline"/>
         <template v-else>
-          <div class="array-body" />
-          <div class="array-head" />
+          <div class="arrow-body" />
+          <div class="arrow-head" />
           <div class="children-count">
             {{ tree.children.length }}
           </div>
@@ -27,8 +28,8 @@
       <div v-show="isExpanded" class="vertical-line" />
       <div v-show="isExpanded" class="next-trees">
         <div v-for="child in tree.children" :key="child.id" class="next-tree">
-          <div class="array-body" />
-          <div class="array-head" />
+          <div class="arrow-body" />
+          <div class="arrow-head" />
           <hi-qidashi-input
             v-if="isInputOpened(child.id) === true"
             :tree="child"
@@ -36,8 +37,8 @@
           <hi-qidashi-tree v-else :tree="child" />
         </div>
         <div class="next-tree">
-          <div class="array-body" />
-          <div class="array-head" />
+          <div class="arrow-body" />
+          <div class="arrow-head" />
           <div class="add-button-long" @click="createChild">
             <div class="plus-vertical-line" />
             <div class="plus-horizonal-line" />
@@ -138,7 +139,7 @@ export default defineComponent({
     }
 
     .dotline {
-      width: 24px;
+      width: 40px;
       border-bottom: 4px dotted v-bind(color);
     }
 
@@ -157,7 +158,7 @@ export default defineComponent({
   .vertical-line {
     background-color: v-bind(color);
     min-width: 3px;
-    min-height: 100%;
+    min-height: 100% ;
   }
   .plus-vertical-line {
     position: absolute;
@@ -195,13 +196,13 @@ export default defineComponent({
       align-items: center;
     }
   }
-  .array-body {
+  .arrow-body {
     background-color: v-bind(color);
     height: 3px;
-    min-width: 20px;
+    min-width: 40px;
   }
 
-  .array-head {
+  .arrow-head {
     width: 0;
     height: 0;
     border-left: 10px solid v-bind(color);
