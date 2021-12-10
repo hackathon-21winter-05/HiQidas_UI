@@ -50,6 +50,7 @@
           :heya-data="heyaData"
           :is-stared="favoriteHeyas.has(heyaData.id)"
           @star-changed="changeStar"
+          @heya-deleted="deleteHeya"
         />
       </div>
     </div>
@@ -60,7 +61,6 @@
 import { computed, defineComponent, onMounted, Ref, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { heya } from '/@/lib/apis/pb/rest/heyas'
 import * as heyasApi from '/@/lib/apis/heyas'
 import * as usersApi from '/@/lib/apis/users'
 import HeyaCard from './components/HeyaCard.vue'
@@ -74,7 +74,7 @@ export default defineComponent({
     const userMe = { id: 'hoge2', name: 'hoge2' }
 
     // TODO: api 叩いて取得する
-    const heyasData = [
+    let heyasData = [
       {
         id: 'abcs',
         title: 'タイトル長いよながい長いながいTitle',
@@ -183,14 +183,27 @@ export default defineComponent({
 
     const changeStar = (isStared: boolean, heyaId: string) => {
       if (isStared) {
-        favoriteHeyas.value.add(heyaId)
-        console.log(heyaId, ' stared!', favoriteHeyas.value)
         // TODO: お気に入り追加の api 叩く
+        favoriteHeyas.value.add(heyaId)
       } else {
-        favoriteHeyas.value.delete(heyaId)
-        console.log(heyaId, ' unstared!', favoriteHeyas.value)
         // TODO: お気に入り削除の api 叩く
+        favoriteHeyas.value.delete(heyaId)
       }
+    }
+
+    const deleteHeya = (heyaId: string) => {
+      heyasData = heyasData.filter((heya) => heya.id !== heyaId)
+      console.log(heyasData)
+      /* try {
+        await heyasApi.deleteHeya(heyaId)
+        heyasData = heyasData.filter((heya) => heya.id !== heyaId)
+      } catch (error) {
+        ElMessage({
+          message: `エラーが発生しました\n${error}`,
+          type: 'warning',
+        })
+        console.log(error)
+      } */
     }
 
     const router = useRouter()
@@ -210,10 +223,22 @@ export default defineComponent({
       }
     }
 
-    /* onMounted(async () => {
+    /* const setHeyasData = async () => {
       try {
-        heyasData = await heyasApi.getHeyas()
-        const res = await usersApi.getFavoriteHeyas()
+        const res = await heyasApi.getHeyas()
+        heyasData = res.heya
+      } catch (error) {
+        ElMessage({
+          message: `エラーが発生しました\n${error}`,
+          type: 'warning',
+        })
+        console.log(error)
+      }
+    } */
+
+    const setFavoriteHeyasId = async () => {
+      try {
+        const res = await usersApi.getFavoriteHeyasId()
         favoriteHeyas.value = new Set(res.favoriteHeyaId)
       } catch (error) {
         ElMessage({
@@ -222,7 +247,12 @@ export default defineComponent({
         })
         console.log(error)
       }
-    }) */
+    }
+
+    onMounted(async () => {
+      // await setHeyasData()
+      await setFavoriteHeyasId()
+    })
 
     return {
       displayHeyasData,
@@ -234,6 +264,7 @@ export default defineComponent({
       changeSortKey,
       changeSortOrder,
       changeStar,
+      deleteHeya,
       createNewHeya,
     }
   },

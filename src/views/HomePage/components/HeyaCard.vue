@@ -61,7 +61,7 @@ export default defineComponent({
       default: false,
     },
   },
-  emits: ['star-changed'],
+  emits: ['star-changed', 'heya-deleted'],
   setup(props, context) {
     const isStaredRef = ref(props.isStared) // ref にしないと値変更時に再描画されない
 
@@ -82,9 +82,9 @@ export default defineComponent({
       router.push({ name: 'HeyaPage', params: { id: heyaId } })
     }
 
-    const deleteHeya = () => {
+    const deleteHeya = async () => {
       if (window.confirm(`ヘヤ: "${props.heyaData.title}" を削除します。`)) {
-        // TODO: ヘヤの削除
+        context.emit('heya-deleted', props.heyaData.id)
       }
     }
 
