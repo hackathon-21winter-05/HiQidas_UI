@@ -7,7 +7,7 @@
     "serve": "vite serve",
     "build": "vite build",
     "lint": "eslint --fix --cache .",
-    "type-check": "tsc --noEmit",
+    "type-check": "vue-tsc --noEmit",
     "gen-pb": "node ./scripts/gen-pb.js"
   },
   "dependencies": {
@@ -36,6 +36,7 @@
     "protobufjs": "^6.11.2",
     "sass": "^1.44.0",
     "typescript": "~4.5.2",
-    "vite": "^2.6.14"
+    "vite": "^2.6.14",
+    "vue-tsc": "^0.29.8"
   }
 }
