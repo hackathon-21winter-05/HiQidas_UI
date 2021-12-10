@@ -5,6 +5,7 @@
       v-model="input"
       placeholder="子ヒキダシの名前を入力"
       @keyup.enter="inputFinish"
+      @keyup.esc="inputAbort"
     />
   </div>
 </template>
@@ -46,11 +47,15 @@ export default defineComponent({
       store.addingChildId = ''
     }
 
+    const inputAbort = () => {
+      store.addingChildId = ''
+    }
+
     const setRef = (el: InstanceType<typeof ElInput>) => {
       if (el) el.focus()
     }
 
-    return { input, inputFinish, setRef }
+    return { input, inputFinish, inputAbort, setRef }
   },
 })
 </script>
