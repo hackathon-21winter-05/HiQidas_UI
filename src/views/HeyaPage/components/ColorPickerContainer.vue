@@ -1,12 +1,17 @@
 <template>
   <div class="color-picker-background" @click="closeColorPicker" />
   <div class="color-picker-container">
-    <color-picker theme="light" :color="color" :sucker-hide="false" />
+    <color-picker
+      theme="light"
+      :color="color"
+      :sucker-hide="false"
+      @change-color="changeColor"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { computed, defineComponent } from 'vue'
 import { ColorPicker } from 'vue-color-kit'
 import { useHeyaStore } from '/@/providers/heya'
 import 'vue-color-kit/dist/vue-color-kit.css'
@@ -21,7 +26,12 @@ export default defineComponent({
 
     const hiqidashi = getHiqidashiById(store.colorPickingId)
 
-    const color = ref(hiqidashi.colorId)
+    const color = computed(() => hiqidashi.colorId)
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const changeColor = (val: any) => {
+      hiqidashi.colorId = val.hex
+    }
 
     const closeColorPicker = () => {
       // store に反映 + WSで送信
@@ -29,7 +39,7 @@ export default defineComponent({
       store.colorPickingId = ''
     }
 
-    return { color, closeColorPicker }
+    return { color, closeColorPicker, changeColor }
   },
 })
 </script>

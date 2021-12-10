@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, PropType, ref } from 'vue'
+import { computed, defineComponent, onMounted, PropType, ref } from 'vue'
 import HiQidashiEditor from '/@/components/HiQidashiEditor/index.vue'
 import { HiqidashiTree } from '/@/lib/hiqidashiTree'
 import { useHeyaStore } from '/@/providers/heya'
@@ -45,10 +45,6 @@ export default defineComponent({
   props: {
     hiqidashi: {
       type: Object as PropType<HiqidashiTree>,
-      required: true,
-    },
-    color: {
-      type: String,
       required: true,
     },
   },
@@ -70,11 +66,20 @@ export default defineComponent({
       }
     })
 
+    const color = computed(() => props.hiqidashi.colorId)
+
     const openColorPicker = () => {
       store.colorPickingId = props.hiqidashi.id
     }
 
-    return { ...props, isExpanded, elRef, openDeleteDialog, openColorPicker }
+    return {
+      ...props,
+      isExpanded,
+      elRef,
+      openDeleteDialog,
+      openColorPicker,
+      color,
+    }
   },
 })
 </script>
