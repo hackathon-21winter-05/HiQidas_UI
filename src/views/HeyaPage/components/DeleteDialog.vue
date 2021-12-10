@@ -17,12 +17,12 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
-import { useHiqidashiStore } from '/@/providers/hiqidashi'
+import { useHeyaStore } from '/@/providers/heya'
 
 export default defineComponent({
   name: 'DeleteDialog',
   setup(props) {
-    const { hiqidashiStore: store } = useHiqidashiStore()
+    const { heyaStore: store } = useHeyaStore()
 
     const visible = computed({
       get: () => store.deleteDialogVisible,

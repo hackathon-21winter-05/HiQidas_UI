@@ -8,13 +8,13 @@
       <div class="heya-container">
         <delete-dialog />
         <hi-qidashi-input
-          v-if="hiqidashiTree.id === ''"
+          v-if="store.hiqidashiTree.id === ''"
           :create-new-hiqidashi="createFirstHiqidashi"
           place-holder="ヘヤの名前を入力"
         />
         <hi-qidashi-tree
           v-else
-          :tree="hiqidashiTree"
+          :tree="store.hiqidashiTree"
           :create-new-hiqidashi="createNewHiqidashi"
         />
       </div>
@@ -23,12 +23,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
+import { defineComponent } from 'vue'
 import HiQidashiTree from './components/HiQidashiTree.vue'
 import HiQidashiInput from './components/HiQidashiInput.vue'
-import { HiqidashiTree } from '/@/lib/hiqidashiTree'
-import { provideHiqidashiStore } from '/@/providers/hiqidashi'
+import { useHeyaStore } from '/@/providers/heya'
 import DeleteDialog from './components/DeleteDialog.vue'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'HeyaPage',
@@ -38,50 +38,17 @@ export default defineComponent({
     DeleteDialog,
   },
   setup() {
-    provideHiqidashiStore()
+    const {
+      heyaStore: store,
+      connectHeya,
+      createNewHiqidashi,
+      createFirstHiqidashi,
+    } = useHeyaStore()
+    const route = useRoute()
+    const heyaId = route.params.id.toLocaleString()
+    connectHeya(heyaId)
 
-    const hiqidashiTree = reactive({
-      children: [],
-      id: '',
-      title: '',
-      description: '',
-      colorId: '',
-    })
-
-    const hiqidashiMap = new Map<string, HiqidashiTree>()
-    const setHiqidashiMap = (tree: HiqidashiTree) => {
-      hiqidashiMap.set(tree.id, tree)
-      tree.children.forEach(setHiqidashiMap)
-    }
-
-    if (hiqidashiTree.id !== '') {
-      setHiqidashiMap(hiqidashiTree)
-    }
-
-    const createNewHiqidashi = (parentId: string, hiqidashi: HiqidashiTree) => {
-      const parent = hiqidashiMap.get(parentId)
-
-      if (!parent) {
-        throw new Error(`parentId ${parentId} not found.`)
-      }
-
-      parent.children.push(reactive(hiqidashi))
-      hiqidashiMap.set(hiqidashi.id, hiqidashi)
-    }
-
-    const createFirstHiqidashi = (
-      parentId: string,
-      hiqidashi: HiqidashiTree
-    ) => {
-      hiqidashiTree.id = hiqidashi.id
-      hiqidashiTree.title = hiqidashi.title
-      hiqidashiTree.description = hiqidashi.description
-      hiqidashiTree.colorId = hiqidashi.colorId
-
-      setHiqidashiMap(hiqidashiTree)
-    }
-
-    return { hiqidashiTree, createNewHiqidashi, createFirstHiqidashi }
+    return { store, createNewHiqidashi, createFirstHiqidashi }
   },
 })
 </script>

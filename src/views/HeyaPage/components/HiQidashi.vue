@@ -31,7 +31,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue'
 import HiQidashiEditor from '/@/components/HiQidashiEditor/index.vue'
-import { useHiqidashiStore } from '/@/providers/hiqidashi'
+import { useHeyaStore } from '/@/providers/heya'
 
 export default defineComponent({
   name: 'HiQidashi',
@@ -49,7 +49,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { hiqidashiStore: store } = useHiqidashiStore()
+    const { heyaStore: store } = useHeyaStore()
 
     const isExpanded = ref(false)
 

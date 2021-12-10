@@ -15,7 +15,7 @@ import { ElInput } from 'element-plus'
 import { defineComponent, onMounted, PropType, ref } from 'vue'
 import { HiqidashiTree } from '/@/lib/hiqidashiTree'
 import { getRandomColor } from '/@/lib/utils'
-import { useHiqidashiStore } from '/@/providers/hiqidashi'
+import { useHeyaStore } from '/@/providers/heya'
 
 export default defineComponent({
   name: 'HiQidashiInput',
@@ -32,7 +32,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { hiqidashiStore: store } = useHiqidashiStore()
+    const { heyaStore: store } = useHeyaStore()
 
     const input = ref('')
 

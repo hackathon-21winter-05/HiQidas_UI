@@ -60,7 +60,7 @@ import { computed, defineComponent, PropType, ref } from 'vue'
 import { HiqidashiTree } from '/@/lib/hiqidashiTree'
 import HiQidashiInput from './HiQidashiInput.vue'
 import HiQidashi from './HiQidashi.vue'
-import { useHiqidashiStore } from '/@/providers/hiqidashi'
+import { useHeyaStore } from '/@/providers/heya'
 
 export default defineComponent({
   name: 'HiQidashiTree',
@@ -81,7 +81,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { hiqidashiStore: store } = useHiqidashiStore()
+    const { heyaStore: store } = useHeyaStore()
 
     const isExpanded = ref(true)
 
