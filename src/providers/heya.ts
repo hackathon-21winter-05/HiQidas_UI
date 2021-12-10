@@ -183,14 +183,17 @@ export const useHeyaStore = () => {
       const id = Math.random().toString(32).substring(2)
 
       // TODO: デバッグ用なので後で消す
-      createNewHiqidashi(parentId, {
-        children: [],
-        id,
+      createNewHiqidashi(
         parentId,
-        title: '',
-        description: '',
-        colorId: '',
-      })
+        reactive({
+          children: [],
+          id,
+          parentId,
+          title: '',
+          description: '',
+          colorId: '',
+        })
+      )
 
       heyaStore.inputTitleIds.push(id)
 
