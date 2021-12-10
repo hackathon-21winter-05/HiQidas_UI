@@ -7,6 +7,7 @@
     <div class="heya-main">
       <div class="heya-container">
         <preload-icons />
+        <color-picker-container v-if="store.colorPickingId" />
         <delete-dialog />
         <hi-qidashi-input v-if="store.hiqidashiTree.id === ''" :first="true" />
         <hi-qidashi-tree v-else :tree="store.hiqidashiTree" />
@@ -21,6 +22,7 @@ import HiQidashiTree from './components/HiQidashiTree.vue'
 import HiQidashiInput from './components/HiQidashiInput.vue'
 import PreloadIcons from './components/PreloadIcons.vue'
 import DeleteDialog from './components/DeleteDialog.vue'
+import ColorPickerContainer from './components/ColorPickerContainer.vue'
 import { useHeyaStore } from '/@/providers/heya'
 import { useRoute } from 'vue-router'
 
@@ -31,6 +33,7 @@ export default defineComponent({
     HiQidashiInput,
     DeleteDialog,
     PreloadIcons,
+    ColorPickerContainer,
   },
   setup() {
     const {

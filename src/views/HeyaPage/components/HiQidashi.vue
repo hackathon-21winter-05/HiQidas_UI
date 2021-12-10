@@ -13,7 +13,10 @@
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item>タイトルを変更</el-dropdown-item>
-            <el-dropdown-item>ヒキダシのカラーを変更</el-dropdown-item>
+            <el-dropdown-item @click="openColorPicker">
+              ヒキダシのカラーを変更</el-dropdown-item
+            >
+
             <el-dropdown-item @click="openDeleteDialog"
               >このヒキダシを削除</el-dropdown-item
             >
@@ -29,8 +32,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, onMounted, PropType, ref } from 'vue'
 import HiQidashiEditor from '/@/components/HiQidashiEditor/index.vue'
+import { HiqidashiTree } from '/@/lib/hiqidashiTree'
 import { useHeyaStore } from '/@/providers/heya'
 
 export default defineComponent({
@@ -40,7 +44,7 @@ export default defineComponent({
   },
   props: {
     hiqidashi: {
-      type: Object,
+      type: Object as PropType<HiqidashiTree>,
       required: true,
     },
     color: {
@@ -66,7 +70,11 @@ export default defineComponent({
       }
     })
 
-    return { ...props, isExpanded, elRef, openDeleteDialog }
+    const openColorPicker = () => {
+      store.colorPickingId = props.hiqidashi.id
+    }
+
+    return { ...props, isExpanded, elRef, openDeleteDialog, openColorPicker }
   },
 })
 </script>

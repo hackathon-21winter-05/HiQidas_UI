@@ -1,10 +1,5 @@
 <template>
-  <el-dialog
-    v-model="visible"
-    title="Tips"
-    width="30%"
-    :before-close="handleClose"
-  >
+  <el-dialog v-model="visible" title="Tips" width="30%">
     <span>This is a message</span>
     <template #footer>
       <span class="dialog-footer">
@@ -29,16 +24,12 @@ export default defineComponent({
       set: (b: boolean) => (store.deleteDialogVisible = b),
     })
 
-    const handleClose = () => {
-      store.deleteDialogVisible = false
-    }
-
     const deleteHandler = () => {
       deleteHiqidashi()
       store.deleteDialogVisible = false
     }
 
-    return { ...props, visible, handleClose, deleteHandler }
+    return { ...props, visible, deleteHandler }
   },
 })
 </script>

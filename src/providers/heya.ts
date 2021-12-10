@@ -17,6 +17,7 @@ export interface HeyaStore {
   lastEditedId: string
   deleteDialogVisible: boolean
   deleteId: string
+  colorPickingId: string
 }
 
 const heyaStoreSymbol: InjectionKey<HeyaStore> = Symbol()
@@ -37,6 +38,7 @@ const createHeyaStore = () =>
     lastEditedId: '',
     deleteDialogVisible: false,
     deleteId: '',
+    colorPickingId: '',
   })
 
 export const provideHeyaStore = () =>
@@ -62,6 +64,7 @@ export const useHeyaStoreBase = () => {
     heyaStore.lastEditedId = ''
     heyaStore.deleteDialogVisible = false
     heyaStore.deleteId = ''
+    heyaStore.colorPickingId = ''
   }
 
   const setHiqidashiMap = (tree: HiqidashiTree) => {
@@ -217,12 +220,22 @@ export const useHeyaStore = () => {
     heyaStore.deleteId = ''
   }
 
+  const getHiqidashiById = (id: string) => {
+    const hiqidashi = heyaStore.hiqidashiMap.get(id)
+
+    if (!hiqidashi) {
+      throw new Error(`hiqidashi not found.`)
+    }
+    return hiqidashi
+  }
+
   return {
     heyaStore,
     connectHeya,
     createNewHiqidashi: createNewHiqidashiAndSend,
     createFirstHiqidashi: createFirstHiqidashiAndSend,
     deleteHiqidashi: deleteHiqidashiAndSend,
+    getHiqidashiById,
   }
 }
 
