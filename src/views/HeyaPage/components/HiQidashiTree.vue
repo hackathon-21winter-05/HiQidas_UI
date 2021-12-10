@@ -13,41 +13,37 @@
       </div>
       <div v-else class="arrow-container">
         <div class="diamond" @click="toggleExpand" />
-        <div v-show="isExpanded" class="dotline" />
-        <div v-show="!isExpanded" class="array-body" />
-        <div v-show="!isExpanded" class="array-head" />
-        <div v-show="!isExpanded" class="children-count">
-          {{ tree.children.length }}
-        </div>
+        <div v-if="isExpanded" class="dotline" />
+        <template v-else>
+          <div class="array-body" />
+          <div class="array-head" />
+          <div class="children-count">
+            {{ tree.children.length }}
+          </div>
+        </template>
       </div>
     </div>
-    <div
-      v-if="tree.children.length !== 0"
-      v-show="isExpanded"
-      class="vertical-line"
-    />
-    <div
-      v-if="tree.children.length !== 0"
-      v-show="isExpanded"
-      class="next-trees"
-    >
-      <div v-for="child in tree.children" :key="child.id" class="next-tree">
-        <div class="array-body" />
-        <div class="array-head" />
-        <hi-qidashi-tree
-          :tree="child"
-          :create-new-hiqidashi="createNewHiqidashi"
-        />
-      </div>
-      <div class="next-tree">
-        <div class="array-body" />
-        <div class="array-head" />
-        <div class="add-button-long" @click="createChild">
-          <div class="plus-vertical-line" />
-          <div class="plus-horizonal-line" />
+    <template v-if="tree.children.length !== 0">
+      <div v-show="isExpanded" class="vertical-line" />
+      <div v-show="isExpanded" class="next-trees">
+        <div v-for="child in tree.children" :key="child.id" class="next-tree">
+          <div class="array-body" />
+          <div class="array-head" />
+          <hi-qidashi-tree
+            :tree="child"
+            :create-new-hiqidashi="createNewHiqidashi"
+          />
+        </div>
+        <div class="next-tree">
+          <div class="array-body" />
+          <div class="array-head" />
+          <div class="add-button-long" @click="createChild">
+            <div class="plus-vertical-line" />
+            <div class="plus-horizonal-line" />
+          </div>
         </div>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 
