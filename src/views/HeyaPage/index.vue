@@ -19,6 +19,7 @@ import HiQidashiTree from './components/HiQidashiTree.vue'
 import { hiqidashi } from '/@/lib/apis/pb/ws/hiqidashi'
 import { constructHiqidashiTree, HiqidashiTree } from '/@/lib/hiqidashiTree'
 import { getRandomColor } from '/@/lib/utils'
+import { provideHiqidashiStore } from '/@/providers/hiqidashi'
 
 export default defineComponent({
   name: 'HeyaPage',
@@ -26,6 +27,8 @@ export default defineComponent({
     HiQidashiTree,
   },
   setup() {
+    provideHiqidashiStore()
+
     const hiqidashis = [
       new hiqidashi.Hiqidashi({
         id: '1',
