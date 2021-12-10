@@ -5,16 +5,18 @@
       <span class="heya-name">Heya Name</span>
     </div>
     <div class="main">
-      <hi-qidashi-input
-        v-if="hiqidashiTree.id === ''"
-        :create-new-hiqidashi="createFirstHiqidashi"
-        place-holder="ヘヤの名前を入力"
-      />
-      <hi-qidashi-tree
-        v-else
-        :tree="hiqidashiTree"
-        :create-new-hiqidashi="createNewHiqidashi"
-      />
+      <div class="heya-container">
+        <hi-qidashi-input
+          v-if="hiqidashiTree.id === ''"
+          :create-new-hiqidashi="createFirstHiqidashi"
+          place-holder="ヘヤの名前を入力"
+        />
+        <hi-qidashi-tree
+          v-else
+          :tree="hiqidashiTree"
+          :create-new-hiqidashi="createNewHiqidashi"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -112,6 +114,10 @@ export default defineComponent({
   .main {
     overflow: auto;
     grid-row: 2;
+  }
+  .heya-container {
+    padding: 50%;
+    display: inline-block;
   }
 }
 </style>
