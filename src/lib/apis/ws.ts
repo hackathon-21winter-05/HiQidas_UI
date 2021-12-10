@@ -20,17 +20,24 @@ export const connectWS = (heyaId: string) => {
         if (!hiqidashi) {
           throw new Error('invalid response')
         }
-
         setHiqidashi(hiqidashi)
-
         break
       }
       case 'getHiqidashis': {
-        // hiqidashiを取得する
+        const hiqidashis = data.getHiqidashis?.hiqidashi
+        if (!hiqidashis) {
+          throw new Error('invalid response')
+        }
+        hiqidashis.forEach(setHiqidashi)
+
         break
       }
       case 'createHiqidashi': {
-        // hiqidashiを作成する
+        const hiqidashi = data.createHiqidashi
+        if (!hiqidashi) {
+          throw new Error('invalid response')
+        }
+        setHiqidashi(hiqidashi)
         break
       }
       case 'editHiqidashi': {
