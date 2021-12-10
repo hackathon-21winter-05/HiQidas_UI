@@ -75,7 +75,7 @@ export default defineComponent({
         title: 'タイトル長いよながい長いながいTitle',
         creatorId: 'nananananananananaganaganaganaga',
         creatorName: 'nananananananananaganaganaganaga',
-        createdAt: '2022/01/01',
+        createdAt: '2022/01/02',
         updatedAt: '2022/02/02',
       },
       {
@@ -146,12 +146,13 @@ export default defineComponent({
 
     // 実際に表示するデータ
     const displayHeyasData = computed(() => {
-      if (searchText.value.length > 0) {
-        return heyasData.filter((heya) => {
+      if (searchText.value.trim().length > 0) {
+        return heyasData.filter((heya) =>
           searchText.value
             .split(/\s+/i)
+            .filter((str) => str.length > 0)
             .some((str) => heya.title.indexOf(str) >= 0)
-        })
+        )
       }
 
       if (displayHeyasFlag.value === 'favorite') {
@@ -159,6 +160,7 @@ export default defineComponent({
       } else if (displayHeyasFlag.value === 'owner') {
         return heyasData.filter((heya) => heya.creatorId === userMe.id)
       }
+
       return heyasData
     })
 
