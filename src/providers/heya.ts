@@ -17,7 +17,7 @@ export interface HeyaStore {
   webSocket?: WebSocket
   hiqidashiTree: HiqidashiTree
   hiqidashiMap: Map<string, HiqidashiTree>
-  lastEditedId: string
+  lastFocusedId: string
   deleteDialogVisible: boolean
   deleteId: string
   colorPickingId: string
@@ -39,7 +39,7 @@ const createHeyaStore = () => {
       mode: 'init',
     },
     hiqidashiMap: new Map(),
-    lastEditedId: '',
+    lastFocusedId: '',
     deleteDialogVisible: false,
     deleteId: '',
     colorPickingId: '',
@@ -68,7 +68,7 @@ export const useHeyaStoreBase = () => {
       mode: 'init',
     })
     heyaStore.hiqidashiMap = new Map()
-    heyaStore.lastEditedId = ''
+    heyaStore.lastFocusedId = ''
     heyaStore.deleteDialogVisible = false
     heyaStore.deleteId = ''
     heyaStore.colorPickingId = ''
@@ -261,6 +261,10 @@ export const useHeyaStore = () => {
     hiqidashi.mode = mode
   }
 
+  const setLastFocusedId = (id: string) => {
+    heyaStore.lastFocusedId = id
+  }
+
   return {
     heyaStore,
     connectHeya,
@@ -269,6 +273,7 @@ export const useHeyaStore = () => {
     changeHiqidashi: changeHiqidashiAndSend,
     getHiqidashiById,
     changeMode,
+    setLastFocusedId,
   }
 }
 

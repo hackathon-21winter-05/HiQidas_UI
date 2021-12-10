@@ -1,5 +1,13 @@
 <template>
-  <div ref="elRef" class="hiqidashi" :class="{ 'is-expanded': isExpanded }">
+  <div
+    ref="elRef"
+    class="hiqidashi"
+    :class="{
+      'is-expanded': isExpanded,
+      'is-focused': store.lastFocusedId === hiqidashi.id,
+    }"
+    @click="setFocus"
+  >
     <div class="top-menu">
       <span class="material-icons left-button" @click="toggleExpanded">
         {{ isExpanded ? 'expand_less' : 'expand_more' }}
@@ -30,7 +38,11 @@
     </div>
     <div class="avatar-container">
       <div v-for="(user, index) in users" :key="user" class="avatars">
-        <el-avatar size="medium" :style="`border: 2px solid ${colors[index]}`">
+        <el-avatar
+          size="medium"
+          :style="`border: 2px solid ${colors[index]}`"
+          @visible-change="setFocus"
+        >
           {{ user }}
         </el-avatar>
         <div class="diamond" :style="`background-color: ${colors[index]}`" />
@@ -58,7 +70,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { heyaStore: store, changeMode } = useHeyaStore()
+    const { heyaStore: store, changeMode, setLastFocusedId } = useHeyaStore()
 
     const changeToEditMode = () => {
       changeMode(props.hiqidashi.id, 'edit')
@@ -73,10 +85,15 @@ export default defineComponent({
 
     const elRef = ref<HTMLElement>()
 
-    onMounted(() => {
+    const setFocus = () => {
+      setLastFocusedId(props.hiqidashi.id)
       if (elRef.value) {
         elRef.value.scrollIntoView({ block: 'center', inline: 'center' })
       }
+    }
+
+    onMounted(() => {
+      setFocus()
     })
 
     const color = computed(() => props.hiqidashi.colorId)
@@ -111,6 +128,8 @@ export default defineComponent({
       toggleExpanded,
       users,
       colors,
+      setFocus,
+      store,
     }
   },
 })
@@ -134,6 +153,10 @@ export default defineComponent({
 
   &:focus-within {
     box-shadow: 0px 2px 4px;
+  }
+
+  &.is-focused {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
 
   .top-menu {
