@@ -89,7 +89,7 @@ export const useHeyaStoreBase = () => {
     setHiqidashiMap(heyaStore.hiqidashiTree)
   }
 
-  const deleteHiqidashi = (id: string) => {
+  const deleteHiqidashiRec = (id: string) => {
     const hiqidashi = heyaStore.hiqidashiMap.get(id)
     if (!hiqidashi) {
       throw new Error(`hiqidashi not found.`)
@@ -100,6 +100,40 @@ export const useHeyaStoreBase = () => {
     } else {
       hiqidashi.children.map((child) => child.id).forEach(deleteHiqidashi)
     }
+  }
+
+  const deleteHiqidashi = (id: string) => {
+    const hiqidashi = heyaStore.hiqidashiMap.get(id)
+    if (!hiqidashi) {
+      throw new Error(`hiqidashi not found.`)
+    }
+
+    deleteHiqidashiRec(id)
+
+    if (hiqidashi.parentId === '') {
+      heyaStore.hiqidashiTree = reactive({
+        children: [],
+        id: '',
+        parentId: '',
+        title: '',
+        description: '',
+        colorId: '',
+      })
+      return
+    }
+
+    console.log(hiqidashi)
+    const parent = heyaStore.hiqidashiMap.get(hiqidashi.parentId)
+    if (!parent) {
+      throw new Error(`hiqidashi not found.`)
+    }
+
+    const idx = parent.children.findIndex((child) => child.id === id)
+    if (idx === -1) {
+      throw new Error(`hiqidashi not found.`)
+    }
+
+    parent.children.splice(idx, 1)
   }
 
   return {
@@ -172,7 +206,6 @@ export const useHeyaStore = () => {
   }
 
   const deleteHiqidashiAndSend = () => {
-    console.log(heyaStore.deleteId)
     deleteHiqidashi(heyaStore.deleteId)
 
     if (!heyaStore.webSocket) {
@@ -182,7 +215,6 @@ export const useHeyaStore = () => {
 
     sendDeleteHiqidashiMessage(heyaStore.webSocket, heyaStore.deleteId)
     heyaStore.deleteId = ''
-    heyaStore.deleteDialogVisible = false
   }
 
   return {

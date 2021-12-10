@@ -43,6 +43,7 @@ export default defineComponent({
       createFunc(store.addingChildId, {
         children: [],
         id: Math.random().toString(32).substring(2),
+        parentId: store.addingChildId,
         title: input.value,
         description: '',
         colorId: getRandomColor(),

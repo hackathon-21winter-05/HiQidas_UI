@@ -9,7 +9,7 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="visible = false">Cancel</el-button>
-        <el-button type="primary" @click="deleteHiqidashi">Confirm</el-button>
+        <el-button type="primary" @click="deleteHandler">Confirm</el-button>
       </span>
     </template>
   </el-dialog>
@@ -33,7 +33,12 @@ export default defineComponent({
       store.deleteDialogVisible = false
     }
 
-    return { ...props, visible, handleClose, deleteHiqidashi }
+    const deleteHandler = () => {
+      deleteHiqidashi()
+      store.deleteDialogVisible = false
+    }
+
+    return { ...props, visible, handleClose, deleteHandler }
   },
 })
 </script>
