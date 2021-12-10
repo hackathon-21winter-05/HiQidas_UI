@@ -1,13 +1,10 @@
 <template>
   <div ref="elRef" class="hiqidashi" :class="{ 'is-expanded': isExpanded }">
     <div class="top-menu">
-      <span
-        class="material-icons left-button"
-        @click="isExpanded = !isExpanded"
-      >
+      <span class="material-icons left-button" @click="toggleExpanded">
         {{ isExpanded ? 'expand_less' : 'expand_more' }}
       </span>
-      <h3 class="hiqidashi-title" @click="isExpanded = !isExpanded">
+      <h3 class="hiqidashi-title" @click="toggleExpanded">
         {{ hiqidashi.title }}
       </h3>
       <el-dropdown trigger="click">
@@ -79,6 +76,13 @@ export default defineComponent({
       store.colorPickingId = props.hiqidashi.id
     }
 
+    const toggleExpanded = () => {
+      if (elRef.value) {
+        elRef.value.scrollIntoView({ block: 'center', inline: 'center' })
+      }
+      isExpanded.value = !isExpanded.value
+    }
+
     const isRootHiqidashi = computed(
       () => props.hiqidashi.id === store.hiqidashiTree.id
     )
@@ -92,6 +96,7 @@ export default defineComponent({
       openColorPicker,
       color,
       isRootHiqidashi,
+      toggleExpanded,
     }
   },
 })

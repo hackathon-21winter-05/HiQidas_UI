@@ -1,7 +1,10 @@
 <template>
   <div class="tree-container">
     <div class="hiqidashi-content">
-      <hi-qidashi-input v-if="tree.mode === 'edit'" :tree="tree" />
+      <hi-qidashi-input
+        v-if="tree.mode === 'init' || tree.mode === 'edit'"
+        :tree="tree"
+      />
       <hi-qidashi v-else :hiqidashi="tree" :color="color" />
       <div v-if="tree.children.length === 0" class="no-child-container">
         <div class="small-diamond" />
@@ -13,7 +16,7 @@
         </div>
       </div>
       <div v-else class="arrow-container">
-        <div class="diamond" @click="toggleExpand" />
+        <div ref="diamondRef" class="diamond" @click="toggleExpand" />
         <div v-if="isExpanded" class="dotline" />
         <template v-else>
           <div class="array-body" />
@@ -30,8 +33,7 @@
         <div v-for="child in tree.children" :key="child.id" class="next-tree">
           <div class="array-body" />
           <div class="array-head" />
-          <hi-qidashi-input v-if="child.mode === 'init'" :tree="child" />
-          <hi-qidashi-tree v-else :tree="child" />
+          <hi-qidashi-tree :tree="child" />
         </div>
         <div class="next-tree">
           <div class="array-body" />
@@ -74,9 +76,16 @@ export default defineComponent({
       createNewHiqidashi(props.tree.id)
     }
 
+    const diamondRef = ref<HTMLElement>()
+
     const color = computed(() => props.tree.colorId)
 
-    const toggleExpand = () => (isExpanded.value = !isExpanded.value)
+    const toggleExpand = () => {
+      isExpanded.value = !isExpanded.value
+      if (diamondRef.value) {
+        diamondRef.value.scrollIntoView({ block: 'center', inline: 'center' })
+      }
+    }
 
     return {
       ...props,
@@ -85,6 +94,7 @@ export default defineComponent({
       isExpanded,
       toggleExpand,
       createChild,
+      diamondRef,
     }
   },
 })
@@ -180,6 +190,7 @@ export default defineComponent({
   .next-trees {
     display: flex;
     flex-direction: column-reverse;
+    justify-content: space-around;
 
     .next-tree {
       display: flex;
