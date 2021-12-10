@@ -6,6 +6,7 @@ import {
   connectWS, // TODO: remove ↑
   sendCreateHiqidashiMessage,
   sendDeleteHiqidashiMessage,
+  sendEditHiqidashiMessage,
 } from '/@/lib/apis/ws'
 
 export interface HeyaStore {
@@ -125,7 +126,6 @@ export const useHeyaStoreBase = () => {
       return
     }
 
-    console.log(hiqidashi)
     const parent = heyaStore.hiqidashiMap.get(hiqidashi.parentId)
     if (!parent) {
       throw new Error(`hiqidashi not found.`)
@@ -229,12 +229,29 @@ export const useHeyaStore = () => {
     return hiqidashi
   }
 
+  const changeHiqidashiColorAndSend = (id: string, colorId: string) => {
+    const hiqidashi = heyaStore.hiqidashiMap.get(id)
+
+    if (!hiqidashi) {
+      throw new Error(`hiqidashi not found.`)
+    }
+
+    hiqidashi.colorId = colorId
+
+    if (!heyaStore.webSocket) {
+      console.error('WebSocket not connected')
+      return
+    }
+    sendEditHiqidashiMessage(heyaStore.webSocket, id, { colorId })
+  }
+
   return {
     heyaStore,
     connectHeya,
     createNewHiqidashi: createNewHiqidashiAndSend,
     createFirstHiqidashi: createFirstHiqidashiAndSend,
     deleteHiqidashi: deleteHiqidashiAndSend,
+    changeHiqidashiColor: changeHiqidashiColorAndSend,
     getHiqidashiById,
   }
 }

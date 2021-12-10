@@ -23,7 +23,11 @@ export default defineComponent({
     ColorPicker,
   },
   setup() {
-    const { heyaStore: store, getHiqidashiById } = useHeyaStore()
+    const {
+      heyaStore: store,
+      getHiqidashiById,
+      changeHiqidashiColor,
+    } = useHeyaStore()
 
     const hiqidashi = getHiqidashiById(store.colorPickingId)
     const color = computed(() => hiqidashi.colorId)
@@ -36,7 +40,7 @@ export default defineComponent({
     }
 
     const closeColorPicker = () => {
-      // store に反映 + WSで送信
+      changeHiqidashiColor(store.colorPickingId, color.value)
 
       store.colorPickingId = ''
     }
