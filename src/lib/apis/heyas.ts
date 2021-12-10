@@ -36,3 +36,7 @@ export const editHeyaData = async (
 
   await axios.put(`/api/heyas/${heyaId}`, new Uint8Array(buffer))
 }
+
+export const deleteHeya = async (heyaId: string) => {
+  await axios.delete(`/api/heyas/${heyaId}`)
+}
