@@ -27,6 +27,7 @@ const createHeyaStore = () =>
     hiqidashiTree: {
       children: [],
       id: '',
+      parentId: '',
       title: '',
       description: '',
       colorId: '',
@@ -51,6 +52,7 @@ export const useHeyaStoreBase = () => {
     heyaStore.hiqidashiTree = reactive({
       children: [],
       id: '',
+      parentId: '',
       title: '',
       description: '',
       colorId: '',
@@ -216,6 +218,7 @@ export const useHeyaStoreFromWS = () => {
     const hiqidashiTree = {
       children: [],
       id,
+      parentId,
       title,
       description,
       colorId,
