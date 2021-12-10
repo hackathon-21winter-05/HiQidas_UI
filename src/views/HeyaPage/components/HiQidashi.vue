@@ -8,7 +8,17 @@
         {{ isExpanded ? 'expand_less' : 'expand_more' }}
       </span>
       <h3 class="hiqidashi-title">{{ hiqidashi.title }}</h3>
-      <span class="material-icons right-button"> more_horiz </span>
+      <el-dropdown trigger="click">
+        <span class="material-icons right-button"> more_horiz </span>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item>タイトルを変更</el-dropdown-item>
+            <el-dropdown-item>ヒキダシのカラーを変更</el-dropdown-item>
+            <el-dropdown-item>このヒキダシを削除</el-dropdown-item>
+            <!-- TODO: デザインにあわせる -->
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
     </div>
     <div v-show="isExpanded">
       <hi-qidashi-editor :description="hiqidashi.description" />
