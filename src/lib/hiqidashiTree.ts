@@ -5,8 +5,9 @@ export type HiqidashiTree = {
   id: string
   parentId: string
   title: string
+  creatorId: string
   description: string
-  colorId: string
+  colorCode: string
   mode: 'normal' | 'edit' | 'init'
 }
 
@@ -14,10 +15,13 @@ export const constructHiqidashiTree = (hiqidashis: hiqidashi.Hiqidashi[]) => {
   const childrenMap = new Map<string, hiqidashi.Hiqidashi[]>()
 
   hiqidashis.forEach((hiqidashi) => {
-    if (childrenMap.has(hiqidashi.parentId)) {
-      childrenMap.get(hiqidashi.parentId)?.push(hiqidashi)
+    if (!hiqidashi.parentId?.value) {
+      return
+    }
+    if (childrenMap.has(hiqidashi.parentId.value)) {
+      childrenMap.get(hiqidashi.parentId.value)?.push(hiqidashi)
     } else {
-      childrenMap.set(hiqidashi.parentId, [hiqidashi])
+      childrenMap.set(hiqidashi.parentId.value, [hiqidashi])
     }
   })
 
@@ -35,7 +39,8 @@ export const constructHiqidashiTree = (hiqidashis: hiqidashi.Hiqidashi[]) => {
       parentId,
       title: root.title,
       description: root.description,
-      colorId: root.colorId,
+      creatorId: root.creatorId,
+      colorCode: root.colorCode,
       mode: 'normal',
     }
   }

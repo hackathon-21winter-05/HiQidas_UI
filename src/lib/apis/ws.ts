@@ -1,7 +1,7 @@
 import { hiqidashi } from '/@/lib/apis/pb/ws/ws'
 import { useHeyaStoreFromWS } from '/@/providers/heya'
 
-const { WsCommunicationData } = hiqidashi
+const { WsHeyaData } = hiqidashi
 
 export const connectWS = (heyaId: string) => {
   const { setHiqidashi, editHiqidashi, deleteHiqidashi } = useHeyaStoreFromWS()
@@ -11,36 +11,25 @@ export const connectWS = (heyaId: string) => {
   }
 
   ws.onmessage = (event) => {
-    const data = WsCommunicationData.decode(new Uint8Array(event.data))
+    const data = WsHeyaData.decode(new Uint8Array(event.data))
 
     // TODO: 実装
     switch (data.payload) {
-      case 'getHiqidashi': {
-        const hiqidashi = data.getHiqidashi?.hiqidashi
+      case 'sendHiqidashi': {
+        const hiqidashi = data.sendHiqidashi?.hiqidashi
         if (!hiqidashi) {
           throw new Error('invalid response')
         }
         setHiqidashi(hiqidashi)
         break
       }
-      case 'getHiqidashis': {
-        const hiqidashis = data.getHiqidashis?.hiqidashi
+      case 'sendHiqidashis': {
+        const hiqidashis = data.sendHiqidashis?.hiqidashis
         if (!hiqidashis) {
           throw new Error('invalid response')
         }
         hiqidashis.forEach(setHiqidashi)
 
-        break
-      }
-      case 'createHiqidashi': {
-        const hiqidashi = data.createHiqidashi
-        if (!hiqidashi) {
-          throw new Error('invalid response')
-        }
-
-        // TODO: バリデーションをいい感じにするか別の関数を作るかする
-        setHiqidashi(hiqidashi)
-        // TODO: もし自分の作ったヒキダシだったらタイトル入力欄を開く
         break
       }
       case 'editHiqidashi': {
@@ -59,6 +48,9 @@ export const connectWS = (heyaId: string) => {
         deleteHiqidashi(id)
         break
       }
+      case 'error': {
+        throw new Error('error occured')
+      }
       default: {
         throw new Error('unknown payload')
       }
@@ -68,22 +60,20 @@ export const connectWS = (heyaId: string) => {
 }
 
 export const sendDeleteHiqidashiMessage = (ws: WebSocket, id: string) => {
-  const data = WsCommunicationData.create({ deleteHiqidashi: { id } })
+  const data = WsHeyaData.create({ deleteHiqidashi: { id } })
 
-  const buffer = WsCommunicationData.encode(data).finish()
+  const buffer = WsHeyaData.encode(data).finish()
   ws.send(new Uint8Array(buffer))
 }
 
 export const sendCreateHiqidashiMessage = (ws: WebSocket, parentId: string) => {
-  const data = WsCommunicationData.create({
+  const data = WsHeyaData.create({
     createHiqidashi: {
       parentId,
-      title: '',
-      description: '',
     },
   })
 
-  const buffer = WsCommunicationData.encode(data).finish()
+  const buffer = WsHeyaData.encode(data).finish()
   ws.send(new Uint8Array(buffer))
 }
 
@@ -91,7 +81,7 @@ type EditValue = {
   title?: string
   description?: string
   drawing?: string
-  colorId?: string
+  colorCode?: string
 }
 
 export const sendEditHiqidashiMessage = (
@@ -101,12 +91,11 @@ export const sendEditHiqidashiMessage = (
 ) => {
   const d: hiqidashi.IWsEditHiqidashi = { id }
   if (val.title) d.title = { value: val.title }
-  if (val.description) d.description = { value: val.description }
   if (val.drawing) d.drawing = { value: val.drawing }
-  if (val.colorId) d.colorId = { value: val.colorId }
+  if (val.colorCode) d.colorCode = { value: val.colorCode }
 
-  const data = WsCommunicationData.create({ editHiqidashi: d })
+  const data = WsHeyaData.create({ editHiqidashi: d })
 
-  const buffer = WsCommunicationData.encode(data).finish()
+  const buffer = WsHeyaData.encode(data).finish()
   ws.send(new Uint8Array(buffer))
 }

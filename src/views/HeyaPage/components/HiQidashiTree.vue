@@ -90,7 +90,7 @@ export default defineComponent({
 
     const diamondRef = ref<HTMLElement>()
 
-    const color = computed(() => props.tree.colorId)
+    const color = computed(() => props.tree.colorCode)
 
     const toggleExpand = () => {
       isExpanded.value = !isExpanded.value

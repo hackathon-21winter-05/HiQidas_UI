@@ -33,9 +33,10 @@ const createHeyaStore = () => {
       children: [],
       id: 'test',
       parentId: '',
+      creatorId: '',
       title: 'first hiqidashi',
       description: '',
-      colorId: getRandomColor(),
+      colorCode: getRandomColor(),
       mode: 'init',
     },
     hiqidashiMap: new Map(),
@@ -62,9 +63,10 @@ export const useHeyaStoreBase = () => {
       children: [],
       id: 'test',
       parentId: '',
+      creatorId: '',
       title: '',
       description: '',
-      colorId: getRandomColor(),
+      colorCode: getRandomColor(),
       mode: 'init',
     })
     heyaStore.hiqidashiMap = new Map()
@@ -99,7 +101,7 @@ export const useHeyaStoreBase = () => {
     heyaStore.hiqidashiTree.id = hiqidashi.id
     heyaStore.hiqidashiTree.title = hiqidashi.title
     heyaStore.hiqidashiTree.description = hiqidashi.description
-    heyaStore.hiqidashiTree.colorId = hiqidashi.colorId
+    heyaStore.hiqidashiTree.colorCode = hiqidashi.colorCode
 
     setHiqidashiMap(heyaStore.hiqidashiTree)
   }
@@ -130,9 +132,10 @@ export const useHeyaStoreBase = () => {
         children: [],
         id: '',
         parentId: '',
+        creatorId: '',
         title: '',
         description: '',
-        colorId: '',
+        colorCode: '',
         mode: 'normal',
       })
       return
@@ -178,6 +181,7 @@ export const useHeyaStore = () => {
   const createNewHiqidashiAndSend = (parentId: string) => {
     // ここではWS送信のみを行う
     // wsを受け取ったら実際のcreate
+    const { me } = useMe()
 
     if (!heyaStore.webSocket) {
       const id = Math.random().toString(32).substring(2)
@@ -189,9 +193,10 @@ export const useHeyaStore = () => {
           children: [],
           id,
           parentId,
+          creatorId: me.id,
           title: '',
           description: '',
-          colorId: getRandomColor(),
+          colorCode: getRandomColor(),
           mode: 'init',
         })
       )
@@ -226,7 +231,7 @@ export const useHeyaStore = () => {
 
   type HiqidashiChange = {
     title?: string
-    colorId?: string
+    colorCode?: string
   }
 
   const changeHiqidashiAndSend = (id: string, change: HiqidashiChange) => {
@@ -239,8 +244,8 @@ export const useHeyaStore = () => {
     if (change.title) {
       hiqidashi.title = change.title
     }
-    if (change.colorId) {
-      hiqidashi.colorId = change.colorId
+    if (change.colorCode) {
+      hiqidashi.colorCode = change.colorCode
     }
 
     if (!heyaStore.webSocket) {
@@ -287,13 +292,14 @@ export const useHeyaStoreFromWS = () => {
   } = useHeyaStoreBase()
 
   const setHiqidashi = (hiqidashi: hiqidashi.IHiqidashi) => {
-    const { id, title, description, colorId, parentId } = hiqidashi
+    const { id, title, description, colorCode, parentId, creatorId } = hiqidashi
     if (
       typeof id !== 'string' ||
       typeof title !== 'string' ||
       typeof description !== 'string' ||
-      typeof colorId !== 'string' ||
-      typeof parentId !== 'string'
+      typeof colorCode !== 'string' ||
+      typeof parentId !== 'string' ||
+      typeof creatorId !== 'string'
     ) {
       throw new Error('invalid hiqidashi')
     }
@@ -302,9 +308,10 @@ export const useHeyaStoreFromWS = () => {
       children: [],
       id,
       parentId,
+      creatorId,
       title,
       description,
-      colorId,
+      colorCode,
       mode: 'init',
     }
     // TODO: ここでmode判断でよさそう
@@ -322,9 +329,7 @@ export const useHeyaStoreFromWS = () => {
     }
 
     tree.title = hiqidashi.title?.value ?? tree.title
-    // NOTE: 多分ここでの更新はしなくなる
-    tree.description = hiqidashi.description?.value ?? tree.description
-    tree.colorId = hiqidashi.colorId?.value ?? tree.colorId
+    tree.colorCode = hiqidashi.colorCode?.value ?? tree.colorCode
   }
 
   return {

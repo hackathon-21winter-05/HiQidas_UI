@@ -96,7 +96,7 @@ export default defineComponent({
       setFocus()
     })
 
-    const color = computed(() => props.hiqidashi.colorId)
+    const color = computed(() => props.hiqidashi.colorCode)
 
     const openColorPicker = () => {
       store.colorPickingId = props.hiqidashi.id

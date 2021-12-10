@@ -71,7 +71,7 @@ export default defineComponent({
       }
     })
 
-    const color = computed(() => props.tree.colorId)
+    const color = computed(() => props.tree.colorCode)
 
     return { input, inputFinish, inputAbort, setRef, elRef, placeHolder, color }
   },
