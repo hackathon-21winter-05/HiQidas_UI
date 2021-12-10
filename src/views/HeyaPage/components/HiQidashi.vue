@@ -14,11 +14,12 @@
         <span class="material-icons right-button"> more_horiz </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item>タイトルを変更</el-dropdown-item>
+            <el-dropdown-item @click="changeToEditMode"
+              >タイトルを変更</el-dropdown-item
+            >
             <el-dropdown-item @click="openColorPicker">
               ヒキダシのカラーを変更</el-dropdown-item
             >
-
             <el-dropdown-item @click="openDeleteDialog"
               >このヒキダシを削除</el-dropdown-item
             >
@@ -51,7 +52,11 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { heyaStore: store } = useHeyaStore()
+    const { heyaStore: store, changeMode } = useHeyaStore()
+
+    const changeToEditMode = () => {
+      changeMode(props.hiqidashi.id, 'edit')
+    }
 
     const isExpanded = ref(false)
 
@@ -76,6 +81,7 @@ export default defineComponent({
 
     return {
       ...props,
+      changeToEditMode,
       isExpanded,
       elRef,
       openDeleteDialog,
@@ -92,14 +98,13 @@ export default defineComponent({
   height: 50px;
   width: 300px;
   background-color: #ffffff;
-  border: medium solid v-bind(color);
+  border: 2px solid v-bind(color);
   border-radius: 6px;
   transition: 0.3s height ease-in-out;
   margin: 8px 6px;
 
   &.is-expanded {
     height: auto;
-    border: medium solid v-bind(color);
   }
 
   &:focus-within {

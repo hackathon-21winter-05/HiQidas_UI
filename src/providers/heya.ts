@@ -251,14 +251,14 @@ export const useHeyaStore = () => {
     sendEditHiqidashiMessage(heyaStore.webSocket, id, change)
   }
 
-  const deleteInputTitleId = (id: string) => {
+  const changeMode = (id: string, mode: 'normal' | 'edit' | 'init') => {
     const hiqidashi = heyaStore.hiqidashiMap.get(id)
 
     if (!hiqidashi) {
       throw new Error(`hiqidashi not found.`)
     }
 
-    hiqidashi.mode = 'normal'
+    hiqidashi.mode = mode
   }
 
   return {
@@ -268,7 +268,7 @@ export const useHeyaStore = () => {
     deleteHiqidashi: deleteHiqidashiAndSend,
     changeHiqidashi: changeHiqidashiAndSend,
     getHiqidashiById,
-    deleteInputTitleId,
+    changeMode,
   }
 }
 

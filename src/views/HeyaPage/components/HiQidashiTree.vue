@@ -1,7 +1,8 @@
 <template>
   <div class="tree-container">
     <div class="hiqidashi-content">
-      <hi-qidashi :hiqidashi="tree" :color="color" />
+      <hi-qidashi-input v-if="tree.mode === 'edit'" :tree="tree" />
+      <hi-qidashi v-else :hiqidashi="tree" :color="color" />
       <div v-if="tree.children.length === 0" class="no-child-container">
         <div class="small-diamond" />
         <div class="array-body" />

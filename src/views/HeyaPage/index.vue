@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { defineComponent } from 'vue'
 import HiQidashiTree from './components/HiQidashiTree.vue'
 import HiQidashiInput from './components/HiQidashiInput.vue'
 import PreloadIcons from './components/PreloadIcons.vue'
