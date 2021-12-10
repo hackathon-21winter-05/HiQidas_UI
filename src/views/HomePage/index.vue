@@ -73,8 +73,8 @@ export default defineComponent({
   setup() {
     const userMe = { id: 'hoge2', name: 'hoge2' }
 
-    // TODO: api 叩いて取得する
-    let heyasData = [
+    // computed で検知されるように ref にする
+    const heyasData = ref([
       {
         id: 'abcs',
         title: 'タイトル長いよながい長いながいTitle',
@@ -107,7 +107,7 @@ export default defineComponent({
         createdAt: '2022/01/03',
         updatedAt: '2022/01/03',
       },
-    ]
+    ])
     const favoriteHeyas: Ref<Set<string>> = ref(new Set()) // お気に入りのヘヤの id を持つ set
 
     const sortKey: Ref<'更新日時順' | '作成日時順'> = ref('更新日時順')
@@ -117,7 +117,7 @@ export default defineComponent({
         sortKey.value === '更新日時順' ? '作成日時順' : '更新日時順'
 
       if (sortKey.value === '更新日時順') {
-        heyasData.sort((a, b) => {
+        heyasData.value.sort((a, b) => {
           if (!a.updatedAt || !b.updatedAt) {
             return 0
           }
@@ -131,7 +131,7 @@ export default defineComponent({
           return 0
         })
       } else {
-        heyasData.sort((a, b) => {
+        heyasData.value.sort((a, b) => {
           if (!a.createdAt || !b.createdAt) {
             return 0
           }
@@ -147,7 +147,7 @@ export default defineComponent({
       }
     }
     const changeSortOrder = () => {
-      heyasData.reverse()
+      heyasData.value.reverse()
       sortOrder.value = sortOrder.value === '降順' ? '昇順' : '降順'
     }
 
@@ -160,7 +160,7 @@ export default defineComponent({
     // 実際に表示するデータ
     const displayHeyasData = computed(() => {
       if (searchText.value.trim().length > 0) {
-        return heyasData.filter((heya) => {
+        return heyasData.value.filter((heya) => {
           if (!heya.title) {
             return false
           }
@@ -173,12 +173,14 @@ export default defineComponent({
       }
 
       if (displayHeyasFlag.value === 'favorite') {
-        return heyasData.filter((heya) => favoriteHeyas.value.has(heya.id))
+        return heyasData.value.filter((heya) =>
+          favoriteHeyas.value.has(heya.id)
+        )
       } else if (displayHeyasFlag.value === 'owner') {
-        return heyasData.filter((heya) => heya.creatorId === userMe.id)
+        return heyasData.value.filter((heya) => heya.creatorId === userMe.id)
       }
 
-      return heyasData
+      return heyasData.value
     })
 
     const changeStar = (isStared: boolean, heyaId: string) => {
@@ -191,12 +193,11 @@ export default defineComponent({
       }
     }
 
-    const deleteHeya = (heyaId: string) => {
-      heyasData = heyasData.filter((heya) => heya.id !== heyaId)
-      console.log(heyasData)
+    const deleteHeya = async (heyaId: string) => {
       /* try {
         await heyasApi.deleteHeya(heyaId)
-        heyasData = heyasData.filter((heya) => heya.id !== heyaId)
+        heyasData.value = heyasData.value.filter((heya) => heya.id !== heyaId)
+        favoriteHeyas.value.delete(heyaId)
       } catch (error) {
         ElMessage({
           message: `エラーが発生しました\n${error}`,
@@ -226,7 +227,7 @@ export default defineComponent({
     /* const setHeyasData = async () => {
       try {
         const res = await heyasApi.getHeyas()
-        heyasData = res.heya
+        heyasData.value = res.heya
       } catch (error) {
         ElMessage({
           message: `エラーが発生しました\n${error}`,
