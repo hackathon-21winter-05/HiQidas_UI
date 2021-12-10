@@ -6,10 +6,9 @@
         v-model="searchText"
         placeholder="名前で検索"
         class="heya-search-input"
-        @keydown.enter.exact="search"
       >
         <template #suffix>
-          <el-icon class="el-input__icon" @click="search">
+          <el-icon class="el-input__icon">
             <span class="material-icons"> search </span>
           </el-icon>
         </template>
@@ -58,7 +57,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, Ref, ref, watch } from 'vue'
+import { computed, defineComponent, Ref, ref } from 'vue'
 import HeyaCard from './components/HeyaCard.vue'
 
 export default defineComponent({
@@ -70,7 +69,7 @@ export default defineComponent({
     const userMe = { id: 'hoge2', name: 'hoge2' }
 
     // TODO: api 叩いて取得する・表示する分フィルターかける 表示分は getter にするのが良さそう？
-    const heyasData = ref([
+    const heyasData = [
       {
         id: 'abcs',
         title: 'タイトル長いよながい長いながいTitle',
@@ -103,23 +102,8 @@ export default defineComponent({
         createdAt: '2022/01/03',
         updatedAt: '2022/01/03',
       },
-    ])
+    ]
     const favoriteHeyas = ref(new Set(['uajass', 'uajs'])) // お気に入りのヘヤの id を持つ set
-    const displayHeyasData = ref(heyasData.value) // 実際に表示するデータ
-
-    const searchText = ref('')
-    const search = () => {
-      if (searchText.value === '') {
-        displayHeyasData.value = heyasData.value
-        return
-      }
-
-      displayHeyasData.value = heyasData.value.filter((heya) => {
-        searchText.value
-          .split(/\s+/i)
-          .some((str) => heya.title.indexOf(str) >= 0)
-      })
-    }
 
     const sortKey: Ref<'更新日時順' | '作成日時順'> = ref('更新日時順')
     const sortOrder: Ref<'降順' | '昇順'> = ref('降順')
@@ -128,7 +112,7 @@ export default defineComponent({
         sortKey.value === '更新日時順' ? '作成日時順' : '更新日時順'
 
       if (sortKey.value === '更新日時順') {
-        heyasData.value.sort((a, b) => {
+        heyasData.sort((a, b) => {
           if (a.updatedAt < b.updatedAt) {
             return -1
           }
@@ -138,7 +122,7 @@ export default defineComponent({
           return 0
         })
       } else {
-        heyasData.value.sort((a, b) => {
+        heyasData.sort((a, b) => {
           if (a.createdAt < b.createdAt) {
             return -1
           }
@@ -150,29 +134,33 @@ export default defineComponent({
       }
     }
     const changeSortOrder = () => {
-      heyasData.value.reverse()
+      heyasData.reverse()
       sortOrder.value = sortOrder.value === '降順' ? '昇順' : '降順'
     }
 
     const displayHeyasFlag: Ref<
       'all' | 'isActive' | 'favorite' | 'owner' | 'recent'
     > = ref('all')
-    watch(
-      () => displayHeyasFlag.value,
-      () => {
-        if (displayHeyasFlag.value === 'favorite') {
-          displayHeyasData.value = heyasData.value.filter((heya) =>
-            favoriteHeyas.value.has(heya.id)
-          )
-        } else if (displayHeyasFlag.value === 'owner') {
-          displayHeyasData.value = heyasData.value.filter(
-            (heya) => heya.creatorId === userMe.id
-          )
-        } else {
-          displayHeyasData.value = heyasData.value
-        }
+
+    const searchText = ref('')
+
+    // 実際に表示するデータ
+    const displayHeyasData = computed(() => {
+      if (searchText.value.length > 0) {
+        return heyasData.filter((heya) => {
+          searchText.value
+            .split(/\s+/i)
+            .some((str) => heya.title.indexOf(str) >= 0)
+        })
       }
-    )
+
+      if (displayHeyasFlag.value === 'favorite') {
+        return heyasData.filter((heya) => favoriteHeyas.value.has(heya.id))
+      } else if (displayHeyasFlag.value === 'owner') {
+        return heyasData.filter((heya) => heya.creatorId === userMe.id)
+      }
+      return heyasData
+    })
 
     const changeStar = (isStared: boolean, heyaId: string) => {
       if (isStared) {
@@ -198,7 +186,6 @@ export default defineComponent({
       sortKey,
       sortOrder,
       displayHeyasFlag,
-      search,
       changeSortKey,
       changeSortOrder,
       changeStar,
