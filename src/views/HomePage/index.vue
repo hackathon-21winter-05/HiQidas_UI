@@ -108,7 +108,7 @@ export default defineComponent({
         updatedAt: '2022/01/03',
       },
     ]
-    const favoriteHeyas: Ref<Set<string>> = ref(new Set([])) // お気に入りのヘヤの id を持つ set
+    const favoriteHeyas: Ref<Set<string>> = ref(new Set()) // お気に入りのヘヤの id を持つ set
 
     const sortKey: Ref<'更新日時順' | '作成日時順'> = ref('更新日時順')
     const sortOrder: Ref<'降順' | '昇順'> = ref('降順')
