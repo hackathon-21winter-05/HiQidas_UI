@@ -81,11 +81,25 @@ export const useHeyaStoreBase = () => {
     setHiqidashiMap(heyaStore.hiqidashiTree)
   }
 
+  const deleteHiqidashi = (id: string) => {
+    const hiqidashi = heyaStore.hiqidashiMap.get(id)
+    if (!hiqidashi) {
+      throw new Error(`hiqidashi not found.`)
+    }
+    if (hiqidashi.children.length === 0) {
+      heyaStore.hiqidashiMap.delete(id)
+      return
+    } else {
+      hiqidashi.children.map((child) => child.id).forEach(deleteHiqidashi)
+    }
+  }
+
   return {
     heyaStore,
     resetHeya,
     createNewHiqidashi,
     createFirstHiqidashi,
+    deleteHiqidashi,
   }
 }
 
@@ -131,8 +145,12 @@ export const useHeyaStore = () => {
 
 // WebSocket側から使う
 export const useHeyaStoreFromWS = () => {
-  const { heyaStore, createNewHiqidashi, createFirstHiqidashi } =
-    useHeyaStoreBase()
+  const {
+    heyaStore,
+    createNewHiqidashi,
+    createFirstHiqidashi,
+    deleteHiqidashi,
+  } = useHeyaStoreBase()
 
   const setHiqidashi = (hiqidashi: hiqidashi.IHiqidashi) => {
     const { id, title, description, colorId, parentId } = hiqidashi
@@ -176,5 +194,6 @@ export const useHeyaStoreFromWS = () => {
     heyaStore,
     setHiqidashi,
     editHiqidashi,
+    deleteHiqidashi,
   }
 }
