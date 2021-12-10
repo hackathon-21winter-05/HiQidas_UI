@@ -24,7 +24,6 @@
 import { ElInput } from 'element-plus'
 import { computed, defineComponent, onMounted, PropType, ref } from 'vue'
 import { HiqidashiTree } from '/@/lib/hiqidashiTree'
-import { getRandomColor } from '/@/lib/utils'
 import { useHeyaStore } from '/@/providers/heya'
 
 export default defineComponent({
