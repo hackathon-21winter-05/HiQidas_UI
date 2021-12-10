@@ -6,8 +6,11 @@
         <div class="diamond" />
         <div class="array-body" />
         <div class="array-head" />
-        <hi-qidashi-input v-if="store.addingChildId === tree.id" />
-        <div v-else class="add-button" @click="createChild">
+        <hi-qidashi-input
+          v-if="store.addingChildId === tree.id"
+          :create-new-hiqidashi="createNewHiqidashi"
+        />
+        <div v-else class="add-button" @click="openInput">
           <div class="plus-vertical-line" />
           <div class="plus-horizonal-line" />
         </div>
@@ -38,8 +41,11 @@
         <div class="next-tree">
           <div class="array-body" />
           <div class="array-head" />
-          <hi-qidashi-input v-if="store.addingChildId === tree.id" />
-          <div v-else class="add-button-long" @click="createChild">
+          <hi-qidashi-input
+            v-if="store.addingChildId === tree.id"
+            :create-new-hiqidashi="createNewHiqidashi"
+          />
+          <div v-else class="add-button-long" @click="openInput">
             <div class="plus-vertical-line" />
             <div class="plus-horizonal-line" />
           </div>
@@ -82,20 +88,8 @@ export default defineComponent({
     // 子の名前を入力しているヒキダシのID
     const inputParentId = ref('')
 
-    const createChild = () => {
+    const openInput = () => {
       store.addingChildId = props.tree.id
-      /*
-      props.createNewHiqidashi(
-        props.tree.id,
-        reactive({
-          children: [],
-          id: Math.random().toString(32).substring(2),
-          title: 'title',
-          description: '',
-          colorId: getRandomColor(),
-        })
-      )
-      */
     }
 
     const color = computed(() => props.tree.colorId)
@@ -105,7 +99,7 @@ export default defineComponent({
     return {
       ...props,
       store,
-      createChild,
+      openInput,
       color,
       isExpanded,
       toggleExpand,

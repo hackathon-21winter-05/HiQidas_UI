@@ -1,17 +1,56 @@
 <template>
   <div class="hiqidashi-input">
-    <el-input v-model="input" placeholder="子ヒキダシの名前を入力" />
+    <el-input
+      :ref="setRef"
+      v-model="input"
+      placeholder="子ヒキダシの名前を入力"
+      @keyup.enter="inputFinish"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { ElInput } from 'element-plus'
+import { defineComponent, PropType, reactive, ref } from 'vue'
+import { HiqidashiTree } from '/@/lib/hiqidashiTree'
+import { getRandomColor } from '/@/lib/utils'
+import { useHiqidashiStore } from '/@/providers/hiqidashi'
 
 export default defineComponent({
   name: 'HiQidashiInput',
-  setup() {
+  props: {
+    createNewHiqidashi: {
+      type: Function as PropType<
+        (parentId: string, tree: HiqidashiTree) => void
+      >,
+      required: true,
+    },
+  },
+  setup(props) {
+    const { hiqidashiStore: store } = useHiqidashiStore()
+
     const input = ref('')
-    return { input }
+
+    const inputFinish = () => {
+      props.createNewHiqidashi(
+        store.addingChildId,
+        reactive({
+          children: [],
+          id: Math.random().toString(32).substring(2),
+          title: input,
+          description: '',
+          colorId: getRandomColor(),
+        })
+      )
+
+      store.addingChildId = ''
+    }
+
+    const setRef = (el: InstanceType<typeof ElInput>) => {
+      if (el) el.focus()
+    }
+
+    return { input, inputFinish, setRef }
   },
 })
 </script>
