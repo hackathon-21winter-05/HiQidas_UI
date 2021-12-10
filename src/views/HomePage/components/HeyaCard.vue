@@ -9,26 +9,29 @@
       <span class="left-content owner-data">
         owner: @{{ heyaData.creatorName }}
       </span>
-      <span class="material-icons right-content" @click="showDialog = true">
+      <span
+        class="material-icons navbar-button right-content"
+        @click="showDialog = true"
+      >
         more_horiz
       </span>
       <span
         v-if="isStaredRef"
-        class="material-icons star-fill right-content"
+        class="material-icons star-fill navbar-button right-content"
         @click="emitStarChanged"
       >
         star
       </span>
       <span
         v-else
-        class="material-icons right-content"
+        class="material-icons navbar-button right-content"
         @click="emitStarChanged"
       >
         star_outline
       </span>
     </div>
 
-    <span @click="goToHeyaPage(heyaData.id)">
+    <span class="link-area" @click="goToHeyaPage(heyaData.id)">
       <h2 class="heya-data-title">{{ heyaData.title }}</h2>
 
       <div class="card-footer">
@@ -135,6 +138,7 @@ export default defineComponent({
 
     .dialog-text {
       text-align: left;
+      cursor: pointer;
     }
   }
 
@@ -149,21 +153,29 @@ export default defineComponent({
     .star-fill {
       color: #ffe974;
     }
+
+    .navbar-button {
+      cursor: pointer;
+    }
   }
 
-  .heya-data-title {
-    font-size: 36px;
-    display: flex;
-    text-align: left;
-    align-items: center;
-    margin: 0;
-    line-height: 1.5em;
-    height: 3em;
-  }
+  .link-area {
+    cursor: pointer;
 
-  .card-footer {
-    height: 48px;
-    align-items: center;
+    .heya-data-title {
+      font-size: 36px;
+      display: flex;
+      text-align: left;
+      align-items: center;
+      margin: 0;
+      line-height: 1.5em;
+      height: 3em;
+    }
+
+    .card-footer {
+      height: 48px;
+      align-items: center;
+    }
   }
 
   .right-content {

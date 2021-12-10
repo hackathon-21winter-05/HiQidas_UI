@@ -219,6 +219,7 @@ export default defineComponent({
       font-size: 12px;
       padding: 2px 20px;
       margin: 10px;
+      cursor: pointer;
     }
 
     .sidebar-text-button {
@@ -230,6 +231,7 @@ export default defineComponent({
       font-size: 12px;
       line-height: 3rem;
       color: #ffffff;
+      cursor: pointer;
     }
   }
 
