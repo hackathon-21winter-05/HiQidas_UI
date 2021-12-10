@@ -1,5 +1,7 @@
 import { inject, InjectionKey, provide, reactive } from 'vue'
 import { HiqidashiTree } from '/@/lib/hiqidashiTree'
+// import { connectWS } from '/@/lib/apis/ws'
+import { hiqidashi } from '/@/lib/apis/pb/ws/ws'
 
 export interface HeyaStore {
   heyaId: string
@@ -33,7 +35,7 @@ const createHeyaStore = () =>
 export const provideHeyaStore = () =>
   provide(heyaStoreSymbol, createHeyaStore())
 
-export const useHeyaStore = () => {
+export const useHeyaStoreBase = () => {
   const heyaStore = inject(heyaStoreSymbol)
   if (!heyaStore) {
     throw new Error('useHeyaStore() called without provider.')
@@ -52,17 +54,6 @@ export const useHeyaStore = () => {
     heyaStore.lastEditedId = ''
     heyaStore.deleteDialogVisible = false
     heyaStore.deleteId = ''
-  }
-
-  const connectHeya = (heyaId: string) => {
-    if (heyaStore.heyaId === heyaId) {
-      return
-    }
-    resetHeya()
-
-    heyaStore.heyaId = heyaId
-
-    // TODO: ws connect
   }
 
   const setHiqidashiMap = (tree: HiqidashiTree) => {
@@ -92,9 +83,85 @@ export const useHeyaStore = () => {
 
   return {
     heyaStore,
-    connectHeya,
-    setHiqidashiMap,
+    resetHeya,
     createNewHiqidashi,
     createFirstHiqidashi,
+  }
+}
+
+// Vue側から使う
+export const useHeyaStore = () => {
+  const { heyaStore, resetHeya, createNewHiqidashi, createFirstHiqidashi } =
+    useHeyaStoreBase()
+
+  const connectHeya = (heyaId: string) => {
+    if (heyaStore.heyaId === heyaId) {
+      return
+    }
+    resetHeya()
+
+    heyaStore.heyaId = heyaId
+
+    // connectWS(heyaId)
+  }
+
+  const createNewHiqidashiAndSend = (
+    parentId: string,
+    hiqidashi: HiqidashiTree
+  ) => {
+    createNewHiqidashi(parentId, hiqidashi)
+    // WSで送信
+  }
+
+  const createFirstHiqidashiAndSend = (
+    parentId: string,
+    hiqidashi: HiqidashiTree
+  ) => {
+    createFirstHiqidashi(parentId, hiqidashi)
+    // WSで送信
+  }
+
+  return {
+    heyaStore,
+    connectHeya,
+    createNewHiqidashi: createNewHiqidashiAndSend,
+    createFirstHiqidashi: createFirstHiqidashiAndSend,
+  }
+}
+
+// WebSocket側から使う
+export const useHeyaStoreFromWS = () => {
+  const { heyaStore, createNewHiqidashi, createFirstHiqidashi } =
+    useHeyaStoreBase()
+
+  const setHiqidashi = (hiqidashi: hiqidashi.IHiqidashi) => {
+    const { id, title, description, colorId, parentId } = hiqidashi
+    if (
+      typeof id !== 'string' ||
+      typeof title !== 'string' ||
+      typeof description !== 'string' ||
+      typeof colorId !== 'string' ||
+      typeof parentId !== 'string'
+    ) {
+      throw new Error('invalid hiqidashi')
+    }
+
+    const hiqidashiTree = {
+      children: [],
+      id,
+      title,
+      description,
+      colorId,
+    }
+
+    if (hiqidashi.parentId === '') {
+      createFirstHiqidashi('', hiqidashiTree)
+    } else {
+      createNewHiqidashi(parentId, hiqidashiTree)
+    }
+  }
+  return {
+    heyaStore,
+    setHiqidashi,
   }
 }

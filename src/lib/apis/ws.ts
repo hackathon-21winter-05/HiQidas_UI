@@ -1,8 +1,10 @@
 import { hiqidashi } from '/@/lib/apis/pb/ws/ws'
+import { useHeyaStoreFromWS } from '/@/providers/heya'
 
 const { WsCommunicationData } = hiqidashi
 
 export const connectWS = (heyaId: string) => {
+  const { setHiqidashi } = useHeyaStoreFromWS()
   const ws = new WebSocket(`ws://api/ws/heya/${heyaId}`)
   ws.onopen = () => {
     console.log('ws open')
@@ -14,7 +16,13 @@ export const connectWS = (heyaId: string) => {
     // TODO: 実装
     switch (data.payload) {
       case 'getHiqidashi': {
-        // hiqidashiを取得する
+        const hiqidashi = data.getHiqidashi?.hiqidashi
+        if (!hiqidashi) {
+          throw new Error('invalid response')
+        }
+
+        setHiqidashi(hiqidashi)
+
         break
       }
       case 'getHiqidashis': {
