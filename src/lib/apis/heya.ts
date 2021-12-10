@@ -8,3 +8,13 @@ export const getHeyas = async () => {
 
   return data
 }
+
+export const createHeya = async (title: string, description: string) => {
+  const req = heya.PostHeyasRequest.create({
+    title: title,
+    description: description,
+  })
+  const buffer = heya.PostHeyasRequest.encode(req).finish()
+
+  await axios.post('/api/heyas', new Uint8Array(buffer))
+}
