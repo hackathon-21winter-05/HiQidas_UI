@@ -1,5 +1,5 @@
 <template>
-  <div class="hiqidashi" :class="{ 'is-expanded': isExpanded }">
+  <div ref="elRef" class="hiqidashi" :class="{ 'is-expanded': isExpanded }">
     <div class="top-menu">
       <span
         class="material-icons left-button"
@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 import HiQidashiEditor from '/@/components/HiQidashiEditor/index.vue'
 
 export default defineComponent({
@@ -37,8 +37,15 @@ export default defineComponent({
   },
   setup(props) {
     const isExpanded = ref(false)
+    const elRef = ref<HTMLElement>()
 
-    return { ...props, isExpanded }
+    onMounted(() => {
+      if (elRef.value) {
+        elRef.value.scrollIntoView({ block: 'center', inline: 'center' })
+      }
+    })
+
+    return { ...props, isExpanded, elRef }
   },
 })
 </script>
