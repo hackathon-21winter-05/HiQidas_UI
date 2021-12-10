@@ -4,6 +4,7 @@
       :ref="setRef"
       v-model="input"
       :placeholder="placeHolder"
+      autocomplete="off"
       @keyup.enter="inputFinish"
       @keyup.esc="inputAbort"
     />
