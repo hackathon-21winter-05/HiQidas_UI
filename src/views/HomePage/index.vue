@@ -57,7 +57,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, Ref, ref } from 'vue'
+import { computed, defineComponent, onMounted, Ref, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
+import { heya } from '/@/lib/apis/pb/rest/heyas'
+import * as heyasApi from '/@/lib/apis/heyas'
 import HeyaCard from './components/HeyaCard.vue'
 
 export default defineComponent({
@@ -113,6 +117,10 @@ export default defineComponent({
 
       if (sortKey.value === '更新日時順') {
         heyasData.sort((a, b) => {
+          if (!a.updatedAt || !b.updatedAt) {
+            return 0
+          }
+
           if (a.updatedAt < b.updatedAt) {
             return -1
           }
@@ -123,6 +131,10 @@ export default defineComponent({
         })
       } else {
         heyasData.sort((a, b) => {
+          if (!a.createdAt || !b.createdAt) {
+            return 0
+          }
+
           if (a.createdAt < b.createdAt) {
             return -1
           }
@@ -147,12 +159,16 @@ export default defineComponent({
     // 実際に表示するデータ
     const displayHeyasData = computed(() => {
       if (searchText.value.trim().length > 0) {
-        return heyasData.filter((heya) =>
-          searchText.value
+        return heyasData.filter((heya) => {
+          if (!heya.title) {
+            return false
+          }
+
+          return searchText.value
             .split(/\s+/i)
             .filter((str) => str.length > 0)
             .some((str) => heya.title.indexOf(str) >= 0)
-        )
+        })
       }
 
       if (displayHeyasFlag.value === 'favorite') {
@@ -176,10 +192,26 @@ export default defineComponent({
       }
     }
 
-    const createNewHeya = () => {
-      // TODO: 新しいヘヤ作成
-      console.log('create')
+    const router = useRouter()
+    const createNewHeya = async () => {
+      try {
+        const newHeya = await heyasApi.createHeya('新しいヘヤ', '')
+        router.push({
+          name: 'HeyaPage',
+          params: { id: newHeya.heya?.id },
+        })
+      } catch (error) {
+        ElMessage({
+          message: `エラーが発生しました\n${error}`,
+          type: 'warning',
+        })
+        console.log(error)
+      }
     }
+
+    /* onMounted(async () => {
+      heyasData = await heyasApi.getHeyas()
+    }) */
 
     return {
       displayHeyasData,
