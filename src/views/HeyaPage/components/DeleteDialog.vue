@@ -9,7 +9,7 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="visible = false">Cancel</el-button>
-        <el-button type="primary" @click="visible = false">Confirm</el-button>
+        <el-button type="primary" @click="deleteHiqidashi">Confirm</el-button>
       </span>
     </template>
   </el-dialog>
@@ -22,7 +22,7 @@ import { useHeyaStore } from '/@/providers/heya'
 export default defineComponent({
   name: 'DeleteDialog',
   setup(props) {
-    const { heyaStore: store } = useHeyaStore()
+    const { heyaStore: store, deleteHiqidashi } = useHeyaStore()
 
     const visible = computed({
       get: () => store.deleteDialogVisible,
@@ -33,7 +33,7 @@ export default defineComponent({
       store.deleteDialogVisible = false
     }
 
-    return { ...props, visible, handleClose }
+    return { ...props, visible, handleClose, deleteHiqidashi }
   },
 })
 </script>

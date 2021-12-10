@@ -1,8 +1,12 @@
 import { inject, InjectionKey, provide, reactive } from 'vue'
 import { HiqidashiTree } from '/@/lib/hiqidashiTree'
 import { hiqidashi } from '/@/lib/apis/pb/ws/ws'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { connectWS, sendCreateHiqidashiMessage } from '/@/lib/apis/ws' // TODO: remove ↑
+import {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  connectWS, // TODO: remove ↑
+  sendCreateHiqidashiMessage,
+  sendDeleteHiqidashiMessage,
+} from '/@/lib/apis/ws'
 
 export interface HeyaStore {
   heyaId: string
@@ -107,8 +111,13 @@ export const useHeyaStoreBase = () => {
 
 // Vue側から使う
 export const useHeyaStore = () => {
-  const { heyaStore, resetHeya, createNewHiqidashi, createFirstHiqidashi } =
-    useHeyaStoreBase()
+  const {
+    heyaStore,
+    resetHeya,
+    createNewHiqidashi,
+    createFirstHiqidashi,
+    deleteHiqidashi,
+  } = useHeyaStoreBase()
 
   const connectHeya = (heyaId: string) => {
     if (heyaStore.heyaId === heyaId) {
@@ -160,11 +169,26 @@ export const useHeyaStore = () => {
     )
   }
 
+  const deleteHiqidashiAndSend = () => {
+    console.log(heyaStore.deleteId)
+    deleteHiqidashi(heyaStore.deleteId)
+
+    if (!heyaStore.webSocket) {
+      console.error('WebSocket not connected')
+      return
+    }
+
+    sendDeleteHiqidashiMessage(heyaStore.webSocket, heyaStore.deleteId)
+    heyaStore.deleteId = ''
+    heyaStore.deleteDialogVisible = false
+  }
+
   return {
     heyaStore,
     connectHeya,
     createNewHiqidashi: createNewHiqidashiAndSend,
     createFirstHiqidashi: createFirstHiqidashiAndSend,
+    deleteHiqidashi: deleteHiqidashiAndSend,
   }
 }
 
