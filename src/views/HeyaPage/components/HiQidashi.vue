@@ -9,6 +9,7 @@
       </span>
       <h3 class="hiqidashi-title">{{ hiqidashi.title }}</h3>
       <span class="material-icons right-button"> more_horiz </span>
+      <!-- TODO: クリックでメニューが開く -->
     </div>
     <div v-show="isExpanded">
       <hi-qidashi-editor :description="hiqidashi.description" />
