@@ -14,7 +14,7 @@
         color="#c87b7b"
         class="button2"
         @click="inputFinish"
-        >作成</el-button
+        >{{ tree.mode === 'init' ? '作成' : '更新する' }}</el-button
       >
     </div>
   </div>
@@ -46,12 +46,11 @@ export default defineComponent({
       ? 'ヘヤの名前を入力'
       : 'ヒキダシの名前を入力'
 
-    const input = ref('')
+    const input = ref(props.tree.title)
 
     const inputFinish = () => {
       changeHiqidashi(props.tree.id, {
         title: input.value,
-        colorId: getRandomColor(),
       })
 
       changeMode(props.tree.id, 'normal')

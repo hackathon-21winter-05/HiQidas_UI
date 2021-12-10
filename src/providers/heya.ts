@@ -191,7 +191,7 @@ export const useHeyaStore = () => {
           parentId,
           title: '',
           description: '',
-          colorId: '',
+          colorId: getRandomColor(),
           mode: 'init',
         })
       )
