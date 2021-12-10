@@ -4,7 +4,7 @@
       <router-link to="/" class="title"><h1>HiQidas</h1></router-link>
       <span class="heya-name">Heya Name</span>
     </div>
-    <div class="main">
+    <div class="heya-main">
       <div class="heya-container">
         <hi-qidashi-input
           v-if="hiqidashiTree.id === ''"
@@ -111,7 +111,7 @@ export default defineComponent({
     }
   }
 
-  .main {
+  .heya-main {
     overflow: auto;
     grid-row: 2;
   }
