@@ -30,11 +30,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const {
-      heyaStore: store,
-      deleteInputTitleId,
-      changeHiqidashi,
-    } = useHeyaStore()
+    const { deleteInputTitleId, changeHiqidashi } = useHeyaStore()
 
     const placeHolder = props.first
       ? 'ヘヤの名前を入力'
@@ -43,6 +39,7 @@ export default defineComponent({
     const input = ref('')
 
     const inputFinish = () => {
+      console.log(input.value)
       changeHiqidashi(props.tree.id, {
         title: input.value,
         colorId: getRandomColor(),

@@ -8,6 +8,7 @@ import {
   sendDeleteHiqidashiMessage,
   sendEditHiqidashiMessage,
 } from '/@/lib/apis/ws'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useMe } from '/@/providers/me'
 import { getRandomColor } from '/@/lib/utils'
 
@@ -216,6 +217,13 @@ export const useHeyaStore = () => {
 
     if (!hiqidashi) {
       throw new Error(`hiqidashi not found.`)
+    }
+
+    if (change.title) {
+      hiqidashi.title = change.title
+    }
+    if (change.colorId) {
+      hiqidashi.colorId = change.colorId
     }
 
     if (!heyaStore.webSocket) {
