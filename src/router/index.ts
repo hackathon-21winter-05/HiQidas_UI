@@ -8,10 +8,16 @@ const routes: Array<RouteRecordRaw> = [
       import(/* webpackChunkName: "home" */ '/@/views/HomePage/index.vue'),
   },
   {
-    path: '/heya',
+    path: '/:id',
     name: 'HeyaPage',
     component: () =>
       import(/* webpackChunkName: "about" */ '/@/views/HeyaPage/index.vue'),
+  },
+  {
+    path: '/oauth',
+    name: 'OAuthPage',
+    component: () =>
+      import(/* webpackChunkName: "oauth" */ '/@/views/OAuthPage/index.vue'),
   },
 ]
 
