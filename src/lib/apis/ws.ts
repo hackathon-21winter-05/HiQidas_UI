@@ -4,7 +4,7 @@ import { useHeyaStoreFromWS } from '/@/providers/heya'
 const { WsCommunicationData } = hiqidashi
 
 export const connectWS = (heyaId: string) => {
-  const { setHiqidashi } = useHeyaStoreFromWS()
+  const { setHiqidashi, editHiqidashi } = useHeyaStoreFromWS()
   const ws = new WebSocket(`ws://api/ws/heya/${heyaId}`)
   ws.onopen = () => {
     console.log('ws open')
@@ -37,11 +37,17 @@ export const connectWS = (heyaId: string) => {
         if (!hiqidashi) {
           throw new Error('invalid response')
         }
+
+        // TODO: バリデーションをいい感じにするか別の関数を作るかする
         setHiqidashi(hiqidashi)
         break
       }
       case 'editHiqidashi': {
-        // hiqidashiを編集する
+        const hiqidashi = data.editHiqidashi
+        if (!hiqidashi) {
+          throw new Error('invalid response')
+        }
+        editHiqidashi(hiqidashi)
         break
       }
       case 'deleteHiqidashi': {

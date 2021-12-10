@@ -160,8 +160,21 @@ export const useHeyaStoreFromWS = () => {
       createNewHiqidashi(parentId, hiqidashiTree)
     }
   }
+  const editHiqidashi = (hiqidashi: hiqidashi.IWsEditHiqidashi) => {
+    const tree = heyaStore.hiqidashiMap.get(hiqidashi.id ?? '')
+    if (!tree) {
+      throw new Error('invalid hiqidashi id')
+    }
+
+    tree.title = hiqidashi.title?.value ?? tree.title
+    // NOTE: 多分ここでの更新はしなくなる
+    tree.description = hiqidashi.description?.value ?? tree.description
+    tree.colorId = hiqidashi.colorId?.value ?? tree.colorId
+  }
+
   return {
     heyaStore,
     setHiqidashi,
+    editHiqidashi,
   }
 }
