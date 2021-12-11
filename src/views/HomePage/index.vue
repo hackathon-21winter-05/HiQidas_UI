@@ -271,9 +271,7 @@ export default defineComponent({
     border-radius: 50px;
   }
 }
-</style>
 
-<style lang="scss">
 .home-page-error-message {
   p.el-message__content {
     white-space: pre-line;
