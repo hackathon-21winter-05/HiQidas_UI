@@ -31,18 +31,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { createUser } from '/@/lib/apis/users'
 import { getOAuthCallback } from '/@/lib/apis/oauth'
+import { useMe } from '/@/providers/me'
 
 export default defineComponent({
   name: 'LoginPage',
   setup() {
     const route = useRoute()
     const redirectQuery = !route.query.redirect
-      ? ''
+      ? '/'
       : (route.query.redirect as string)
 
     // TODO: ログインのエンドポイント生えたらコメントアウト外して書く
@@ -72,6 +73,11 @@ export default defineComponent({
         console.log(error)
       }
     }
+
+    onMounted(async () => {
+      await useMe()
+      router.push({ path: redirectQuery }) // ログイン済みの場合、リダイレクト
+    })
 
     return { name, loginWithTraq, createAccount }
   },
