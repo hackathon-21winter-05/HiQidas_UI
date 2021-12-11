@@ -2,181 +2,181 @@ import * as $protobuf from "protobufjs";
 /** Namespace hiqidashi. */
 export namespace hiqidashi {
 
-    /** Properties of a WsGetHiqidashi. */
-    interface IWsGetHiqidashi {
+    /** Properties of a WsSendHiqidashi. */
+    interface IWsSendHiqidashi {
 
-        /** WsGetHiqidashi hiqidashi */
+        /** WsSendHiqidashi hiqidashi */
         hiqidashi?: (hiqidashi.IHiqidashi|null);
     }
 
-    /** Represents a WsGetHiqidashi. */
-    class WsGetHiqidashi implements IWsGetHiqidashi {
+    /** Represents a WsSendHiqidashi. */
+    class WsSendHiqidashi implements IWsSendHiqidashi {
 
         /**
-         * Constructs a new WsGetHiqidashi.
+         * Constructs a new WsSendHiqidashi.
          * @param [properties] Properties to set
          */
-        constructor(properties?: hiqidashi.IWsGetHiqidashi);
+        constructor(properties?: hiqidashi.IWsSendHiqidashi);
 
-        /** WsGetHiqidashi hiqidashi. */
+        /** WsSendHiqidashi hiqidashi. */
         public hiqidashi?: (hiqidashi.IHiqidashi|null);
 
         /**
-         * Creates a new WsGetHiqidashi instance using the specified properties.
+         * Creates a new WsSendHiqidashi instance using the specified properties.
          * @param [properties] Properties to set
-         * @returns WsGetHiqidashi instance
+         * @returns WsSendHiqidashi instance
          */
-        public static create(properties?: hiqidashi.IWsGetHiqidashi): hiqidashi.WsGetHiqidashi;
+        public static create(properties?: hiqidashi.IWsSendHiqidashi): hiqidashi.WsSendHiqidashi;
 
         /**
-         * Encodes the specified WsGetHiqidashi message. Does not implicitly {@link hiqidashi.WsGetHiqidashi.verify|verify} messages.
-         * @param message WsGetHiqidashi message or plain object to encode
+         * Encodes the specified WsSendHiqidashi message. Does not implicitly {@link hiqidashi.WsSendHiqidashi.verify|verify} messages.
+         * @param message WsSendHiqidashi message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: hiqidashi.IWsGetHiqidashi, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: hiqidashi.IWsSendHiqidashi, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified WsGetHiqidashi message, length delimited. Does not implicitly {@link hiqidashi.WsGetHiqidashi.verify|verify} messages.
-         * @param message WsGetHiqidashi message or plain object to encode
+         * Encodes the specified WsSendHiqidashi message, length delimited. Does not implicitly {@link hiqidashi.WsSendHiqidashi.verify|verify} messages.
+         * @param message WsSendHiqidashi message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: hiqidashi.IWsGetHiqidashi, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: hiqidashi.IWsSendHiqidashi, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Decodes a WsGetHiqidashi message from the specified reader or buffer.
+         * Decodes a WsSendHiqidashi message from the specified reader or buffer.
          * @param reader Reader or buffer to decode from
          * @param [length] Message length if known beforehand
-         * @returns WsGetHiqidashi
+         * @returns WsSendHiqidashi
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): hiqidashi.WsGetHiqidashi;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): hiqidashi.WsSendHiqidashi;
 
         /**
-         * Decodes a WsGetHiqidashi message from the specified reader or buffer, length delimited.
+         * Decodes a WsSendHiqidashi message from the specified reader or buffer, length delimited.
          * @param reader Reader or buffer to decode from
-         * @returns WsGetHiqidashi
+         * @returns WsSendHiqidashi
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): hiqidashi.WsGetHiqidashi;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): hiqidashi.WsSendHiqidashi;
 
         /**
-         * Verifies a WsGetHiqidashi message.
+         * Verifies a WsSendHiqidashi message.
          * @param message Plain object to verify
          * @returns `null` if valid, otherwise the reason why it is not
          */
         public static verify(message: { [k: string]: any }): (string|null);
 
         /**
-         * Creates a WsGetHiqidashi message from a plain object. Also converts values to their respective internal types.
+         * Creates a WsSendHiqidashi message from a plain object. Also converts values to their respective internal types.
          * @param object Plain object
-         * @returns WsGetHiqidashi
+         * @returns WsSendHiqidashi
          */
-        public static fromObject(object: { [k: string]: any }): hiqidashi.WsGetHiqidashi;
+        public static fromObject(object: { [k: string]: any }): hiqidashi.WsSendHiqidashi;
 
         /**
-         * Creates a plain object from a WsGetHiqidashi message. Also converts values to other types if specified.
-         * @param message WsGetHiqidashi
+         * Creates a plain object from a WsSendHiqidashi message. Also converts values to other types if specified.
+         * @param message WsSendHiqidashi
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: hiqidashi.WsGetHiqidashi, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: hiqidashi.WsSendHiqidashi, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
-         * Converts this WsGetHiqidashi to JSON.
+         * Converts this WsSendHiqidashi to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
     }
 
-    /** Properties of a WsGetHiqidashis. */
-    interface IWsGetHiqidashis {
+    /** Properties of a WsSendHiqidashis. */
+    interface IWsSendHiqidashis {
 
-        /** WsGetHiqidashis hiqidashi */
-        hiqidashi?: (hiqidashi.IHiqidashi[]|null);
+        /** WsSendHiqidashis hiqidashis */
+        hiqidashis?: (hiqidashi.IHiqidashi[]|null);
     }
 
-    /** Represents a WsGetHiqidashis. */
-    class WsGetHiqidashis implements IWsGetHiqidashis {
+    /** Represents a WsSendHiqidashis. */
+    class WsSendHiqidashis implements IWsSendHiqidashis {
 
         /**
-         * Constructs a new WsGetHiqidashis.
+         * Constructs a new WsSendHiqidashis.
          * @param [properties] Properties to set
          */
-        constructor(properties?: hiqidashi.IWsGetHiqidashis);
+        constructor(properties?: hiqidashi.IWsSendHiqidashis);
 
-        /** WsGetHiqidashis hiqidashi. */
-        public hiqidashi: hiqidashi.IHiqidashi[];
+        /** WsSendHiqidashis hiqidashis. */
+        public hiqidashis: hiqidashi.IHiqidashi[];
 
         /**
-         * Creates a new WsGetHiqidashis instance using the specified properties.
+         * Creates a new WsSendHiqidashis instance using the specified properties.
          * @param [properties] Properties to set
-         * @returns WsGetHiqidashis instance
+         * @returns WsSendHiqidashis instance
          */
-        public static create(properties?: hiqidashi.IWsGetHiqidashis): hiqidashi.WsGetHiqidashis;
+        public static create(properties?: hiqidashi.IWsSendHiqidashis): hiqidashi.WsSendHiqidashis;
 
         /**
-         * Encodes the specified WsGetHiqidashis message. Does not implicitly {@link hiqidashi.WsGetHiqidashis.verify|verify} messages.
-         * @param message WsGetHiqidashis message or plain object to encode
+         * Encodes the specified WsSendHiqidashis message. Does not implicitly {@link hiqidashi.WsSendHiqidashis.verify|verify} messages.
+         * @param message WsSendHiqidashis message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: hiqidashi.IWsGetHiqidashis, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: hiqidashi.IWsSendHiqidashis, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified WsGetHiqidashis message, length delimited. Does not implicitly {@link hiqidashi.WsGetHiqidashis.verify|verify} messages.
-         * @param message WsGetHiqidashis message or plain object to encode
+         * Encodes the specified WsSendHiqidashis message, length delimited. Does not implicitly {@link hiqidashi.WsSendHiqidashis.verify|verify} messages.
+         * @param message WsSendHiqidashis message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: hiqidashi.IWsGetHiqidashis, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: hiqidashi.IWsSendHiqidashis, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Decodes a WsGetHiqidashis message from the specified reader or buffer.
+         * Decodes a WsSendHiqidashis message from the specified reader or buffer.
          * @param reader Reader or buffer to decode from
          * @param [length] Message length if known beforehand
-         * @returns WsGetHiqidashis
+         * @returns WsSendHiqidashis
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): hiqidashi.WsGetHiqidashis;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): hiqidashi.WsSendHiqidashis;
 
         /**
-         * Decodes a WsGetHiqidashis message from the specified reader or buffer, length delimited.
+         * Decodes a WsSendHiqidashis message from the specified reader or buffer, length delimited.
          * @param reader Reader or buffer to decode from
-         * @returns WsGetHiqidashis
+         * @returns WsSendHiqidashis
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): hiqidashi.WsGetHiqidashis;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): hiqidashi.WsSendHiqidashis;
 
         /**
-         * Verifies a WsGetHiqidashis message.
+         * Verifies a WsSendHiqidashis message.
          * @param message Plain object to verify
          * @returns `null` if valid, otherwise the reason why it is not
          */
         public static verify(message: { [k: string]: any }): (string|null);
 
         /**
-         * Creates a WsGetHiqidashis message from a plain object. Also converts values to their respective internal types.
+         * Creates a WsSendHiqidashis message from a plain object. Also converts values to their respective internal types.
          * @param object Plain object
-         * @returns WsGetHiqidashis
+         * @returns WsSendHiqidashis
          */
-        public static fromObject(object: { [k: string]: any }): hiqidashi.WsGetHiqidashis;
+        public static fromObject(object: { [k: string]: any }): hiqidashi.WsSendHiqidashis;
 
         /**
-         * Creates a plain object from a WsGetHiqidashis message. Also converts values to other types if specified.
-         * @param message WsGetHiqidashis
+         * Creates a plain object from a WsSendHiqidashis message. Also converts values to other types if specified.
+         * @param message WsSendHiqidashis
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: hiqidashi.WsGetHiqidashis, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: hiqidashi.WsSendHiqidashis, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
-         * Converts this WsGetHiqidashis to JSON.
+         * Converts this WsSendHiqidashis to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
@@ -187,12 +187,6 @@ export namespace hiqidashi {
 
         /** WsCreateHiqidashi parentId */
         parentId?: (string|null);
-
-        /** WsCreateHiqidashi title */
-        title?: (string|null);
-
-        /** WsCreateHiqidashi description */
-        description?: (string|null);
     }
 
     /** Represents a WsCreateHiqidashi. */
@@ -206,12 +200,6 @@ export namespace hiqidashi {
 
         /** WsCreateHiqidashi parentId. */
         public parentId: string;
-
-        /** WsCreateHiqidashi title. */
-        public title: string;
-
-        /** WsCreateHiqidashi description. */
-        public description: string;
 
         /**
          * Creates a new WsCreateHiqidashi instance using the specified properties.
@@ -293,14 +281,11 @@ export namespace hiqidashi {
         /** WsEditHiqidashi title */
         title?: (google.protobuf.IStringValue|null);
 
-        /** WsEditHiqidashi description */
-        description?: (google.protobuf.IStringValue|null);
-
         /** WsEditHiqidashi drawing */
         drawing?: (google.protobuf.IStringValue|null);
 
-        /** WsEditHiqidashi colorId */
-        colorId?: (google.protobuf.IStringValue|null);
+        /** WsEditHiqidashi colorCode */
+        colorCode?: (google.protobuf.IStringValue|null);
     }
 
     /** Represents a WsEditHiqidashi. */
@@ -318,14 +303,11 @@ export namespace hiqidashi {
         /** WsEditHiqidashi title. */
         public title?: (google.protobuf.IStringValue|null);
 
-        /** WsEditHiqidashi description. */
-        public description?: (google.protobuf.IStringValue|null);
-
         /** WsEditHiqidashi drawing. */
         public drawing?: (google.protobuf.IStringValue|null);
 
-        /** WsEditHiqidashi colorId. */
-        public colorId?: (google.protobuf.IStringValue|null);
+        /** WsEditHiqidashi colorCode. */
+        public colorCode?: (google.protobuf.IStringValue|null);
 
         /**
          * Creates a new WsEditHiqidashi instance using the specified properties.
@@ -494,8 +476,11 @@ export namespace hiqidashi {
         /** Hiqidashi id */
         id?: (string|null);
 
+        /** Hiqidashi creatorId */
+        creatorId?: (string|null);
+
         /** Hiqidashi parentId */
-        parentId?: (string|null);
+        parentId?: (google.protobuf.IStringValue|null);
 
         /** Hiqidashi title */
         title?: (string|null);
@@ -506,14 +491,8 @@ export namespace hiqidashi {
         /** Hiqidashi drawing */
         drawing?: (google.protobuf.IStringValue|null);
 
-        /** Hiqidashi colorId */
-        colorId?: (string|null);
-
-        /** Hiqidashi createdAt */
-        createdAt?: (string|null);
-
-        /** Hiqidashi updatedAt */
-        updatedAt?: (string|null);
+        /** Hiqidashi colorCode */
+        colorCode?: (string|null);
     }
 
     /** Represents a Hiqidashi. */
@@ -528,8 +507,11 @@ export namespace hiqidashi {
         /** Hiqidashi id. */
         public id: string;
 
+        /** Hiqidashi creatorId. */
+        public creatorId: string;
+
         /** Hiqidashi parentId. */
-        public parentId: string;
+        public parentId?: (google.protobuf.IStringValue|null);
 
         /** Hiqidashi title. */
         public title: string;
@@ -540,14 +522,8 @@ export namespace hiqidashi {
         /** Hiqidashi drawing. */
         public drawing?: (google.protobuf.IStringValue|null);
 
-        /** Hiqidashi colorId. */
-        public colorId: string;
-
-        /** Hiqidashi createdAt. */
-        public createdAt: string;
-
-        /** Hiqidashi updatedAt. */
-        public updatedAt: string;
+        /** Hiqidashi colorCode. */
+        public colorCode: string;
 
         /**
          * Creates a new Hiqidashi instance using the specified properties.

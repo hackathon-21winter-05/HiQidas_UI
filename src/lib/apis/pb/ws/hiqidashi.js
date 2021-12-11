@@ -16,24 +16,24 @@ export const hiqidashi = $root.hiqidashi = (() => {
      */
     const hiqidashi = {};
 
-    hiqidashi.WsGetHiqidashi = (function() {
+    hiqidashi.WsSendHiqidashi = (function() {
 
         /**
-         * Properties of a WsGetHiqidashi.
+         * Properties of a WsSendHiqidashi.
          * @memberof hiqidashi
-         * @interface IWsGetHiqidashi
-         * @property {hiqidashi.IHiqidashi|null} [hiqidashi] WsGetHiqidashi hiqidashi
+         * @interface IWsSendHiqidashi
+         * @property {hiqidashi.IHiqidashi|null} [hiqidashi] WsSendHiqidashi hiqidashi
          */
 
         /**
-         * Constructs a new WsGetHiqidashi.
+         * Constructs a new WsSendHiqidashi.
          * @memberof hiqidashi
-         * @classdesc Represents a WsGetHiqidashi.
-         * @implements IWsGetHiqidashi
+         * @classdesc Represents a WsSendHiqidashi.
+         * @implements IWsSendHiqidashi
          * @constructor
-         * @param {hiqidashi.IWsGetHiqidashi=} [properties] Properties to set
+         * @param {hiqidashi.IWsSendHiqidashi=} [properties] Properties to set
          */
-        function WsGetHiqidashi(properties) {
+        function WsSendHiqidashi(properties) {
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -41,35 +41,35 @@ export const hiqidashi = $root.hiqidashi = (() => {
         }
 
         /**
-         * WsGetHiqidashi hiqidashi.
+         * WsSendHiqidashi hiqidashi.
          * @member {hiqidashi.IHiqidashi|null|undefined} hiqidashi
-         * @memberof hiqidashi.WsGetHiqidashi
+         * @memberof hiqidashi.WsSendHiqidashi
          * @instance
          */
-        WsGetHiqidashi.prototype.hiqidashi = null;
+        WsSendHiqidashi.prototype.hiqidashi = null;
 
         /**
-         * Creates a new WsGetHiqidashi instance using the specified properties.
+         * Creates a new WsSendHiqidashi instance using the specified properties.
          * @function create
-         * @memberof hiqidashi.WsGetHiqidashi
+         * @memberof hiqidashi.WsSendHiqidashi
          * @static
-         * @param {hiqidashi.IWsGetHiqidashi=} [properties] Properties to set
-         * @returns {hiqidashi.WsGetHiqidashi} WsGetHiqidashi instance
+         * @param {hiqidashi.IWsSendHiqidashi=} [properties] Properties to set
+         * @returns {hiqidashi.WsSendHiqidashi} WsSendHiqidashi instance
          */
-        WsGetHiqidashi.create = function create(properties) {
-            return new WsGetHiqidashi(properties);
+        WsSendHiqidashi.create = function create(properties) {
+            return new WsSendHiqidashi(properties);
         };
 
         /**
-         * Encodes the specified WsGetHiqidashi message. Does not implicitly {@link hiqidashi.WsGetHiqidashi.verify|verify} messages.
+         * Encodes the specified WsSendHiqidashi message. Does not implicitly {@link hiqidashi.WsSendHiqidashi.verify|verify} messages.
          * @function encode
-         * @memberof hiqidashi.WsGetHiqidashi
+         * @memberof hiqidashi.WsSendHiqidashi
          * @static
-         * @param {hiqidashi.IWsGetHiqidashi} message WsGetHiqidashi message or plain object to encode
+         * @param {hiqidashi.IWsSendHiqidashi} message WsSendHiqidashi message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        WsGetHiqidashi.encode = function encode(message, writer) {
+        WsSendHiqidashi.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
             if (message.hiqidashi != null && Object.hasOwnProperty.call(message, "hiqidashi"))
@@ -78,33 +78,33 @@ export const hiqidashi = $root.hiqidashi = (() => {
         };
 
         /**
-         * Encodes the specified WsGetHiqidashi message, length delimited. Does not implicitly {@link hiqidashi.WsGetHiqidashi.verify|verify} messages.
+         * Encodes the specified WsSendHiqidashi message, length delimited. Does not implicitly {@link hiqidashi.WsSendHiqidashi.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof hiqidashi.WsGetHiqidashi
+         * @memberof hiqidashi.WsSendHiqidashi
          * @static
-         * @param {hiqidashi.IWsGetHiqidashi} message WsGetHiqidashi message or plain object to encode
+         * @param {hiqidashi.IWsSendHiqidashi} message WsSendHiqidashi message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        WsGetHiqidashi.encodeDelimited = function encodeDelimited(message, writer) {
+        WsSendHiqidashi.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a WsGetHiqidashi message from the specified reader or buffer.
+         * Decodes a WsSendHiqidashi message from the specified reader or buffer.
          * @function decode
-         * @memberof hiqidashi.WsGetHiqidashi
+         * @memberof hiqidashi.WsSendHiqidashi
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {hiqidashi.WsGetHiqidashi} WsGetHiqidashi
+         * @returns {hiqidashi.WsSendHiqidashi} WsSendHiqidashi
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        WsGetHiqidashi.decode = function decode(reader, length) {
+        WsSendHiqidashi.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.hiqidashi.WsGetHiqidashi();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.hiqidashi.WsSendHiqidashi();
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
@@ -120,30 +120,30 @@ export const hiqidashi = $root.hiqidashi = (() => {
         };
 
         /**
-         * Decodes a WsGetHiqidashi message from the specified reader or buffer, length delimited.
+         * Decodes a WsSendHiqidashi message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof hiqidashi.WsGetHiqidashi
+         * @memberof hiqidashi.WsSendHiqidashi
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {hiqidashi.WsGetHiqidashi} WsGetHiqidashi
+         * @returns {hiqidashi.WsSendHiqidashi} WsSendHiqidashi
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        WsGetHiqidashi.decodeDelimited = function decodeDelimited(reader) {
+        WsSendHiqidashi.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a WsGetHiqidashi message.
+         * Verifies a WsSendHiqidashi message.
          * @function verify
-         * @memberof hiqidashi.WsGetHiqidashi
+         * @memberof hiqidashi.WsSendHiqidashi
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        WsGetHiqidashi.verify = function verify(message) {
+        WsSendHiqidashi.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
             if (message.hiqidashi != null && message.hasOwnProperty("hiqidashi")) {
@@ -155,35 +155,35 @@ export const hiqidashi = $root.hiqidashi = (() => {
         };
 
         /**
-         * Creates a WsGetHiqidashi message from a plain object. Also converts values to their respective internal types.
+         * Creates a WsSendHiqidashi message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof hiqidashi.WsGetHiqidashi
+         * @memberof hiqidashi.WsSendHiqidashi
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {hiqidashi.WsGetHiqidashi} WsGetHiqidashi
+         * @returns {hiqidashi.WsSendHiqidashi} WsSendHiqidashi
          */
-        WsGetHiqidashi.fromObject = function fromObject(object) {
-            if (object instanceof $root.hiqidashi.WsGetHiqidashi)
+        WsSendHiqidashi.fromObject = function fromObject(object) {
+            if (object instanceof $root.hiqidashi.WsSendHiqidashi)
                 return object;
-            let message = new $root.hiqidashi.WsGetHiqidashi();
+            let message = new $root.hiqidashi.WsSendHiqidashi();
             if (object.hiqidashi != null) {
                 if (typeof object.hiqidashi !== "object")
-                    throw TypeError(".hiqidashi.WsGetHiqidashi.hiqidashi: object expected");
+                    throw TypeError(".hiqidashi.WsSendHiqidashi.hiqidashi: object expected");
                 message.hiqidashi = $root.hiqidashi.Hiqidashi.fromObject(object.hiqidashi);
             }
             return message;
         };
 
         /**
-         * Creates a plain object from a WsGetHiqidashi message. Also converts values to other types if specified.
+         * Creates a plain object from a WsSendHiqidashi message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof hiqidashi.WsGetHiqidashi
+         * @memberof hiqidashi.WsSendHiqidashi
          * @static
-         * @param {hiqidashi.WsGetHiqidashi} message WsGetHiqidashi
+         * @param {hiqidashi.WsSendHiqidashi} message WsSendHiqidashi
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        WsGetHiqidashi.toObject = function toObject(message, options) {
+        WsSendHiqidashi.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
             let object = {};
@@ -195,38 +195,38 @@ export const hiqidashi = $root.hiqidashi = (() => {
         };
 
         /**
-         * Converts this WsGetHiqidashi to JSON.
+         * Converts this WsSendHiqidashi to JSON.
          * @function toJSON
-         * @memberof hiqidashi.WsGetHiqidashi
+         * @memberof hiqidashi.WsSendHiqidashi
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        WsGetHiqidashi.prototype.toJSON = function toJSON() {
+        WsSendHiqidashi.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
-        return WsGetHiqidashi;
+        return WsSendHiqidashi;
     })();
 
-    hiqidashi.WsGetHiqidashis = (function() {
+    hiqidashi.WsSendHiqidashis = (function() {
 
         /**
-         * Properties of a WsGetHiqidashis.
+         * Properties of a WsSendHiqidashis.
          * @memberof hiqidashi
-         * @interface IWsGetHiqidashis
-         * @property {Array.<hiqidashi.IHiqidashi>|null} [hiqidashi] WsGetHiqidashis hiqidashi
+         * @interface IWsSendHiqidashis
+         * @property {Array.<hiqidashi.IHiqidashi>|null} [hiqidashis] WsSendHiqidashis hiqidashis
          */
 
         /**
-         * Constructs a new WsGetHiqidashis.
+         * Constructs a new WsSendHiqidashis.
          * @memberof hiqidashi
-         * @classdesc Represents a WsGetHiqidashis.
-         * @implements IWsGetHiqidashis
+         * @classdesc Represents a WsSendHiqidashis.
+         * @implements IWsSendHiqidashis
          * @constructor
-         * @param {hiqidashi.IWsGetHiqidashis=} [properties] Properties to set
+         * @param {hiqidashi.IWsSendHiqidashis=} [properties] Properties to set
          */
-        function WsGetHiqidashis(properties) {
-            this.hiqidashi = [];
+        function WsSendHiqidashis(properties) {
+            this.hiqidashis = [];
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -234,78 +234,78 @@ export const hiqidashi = $root.hiqidashi = (() => {
         }
 
         /**
-         * WsGetHiqidashis hiqidashi.
-         * @member {Array.<hiqidashi.IHiqidashi>} hiqidashi
-         * @memberof hiqidashi.WsGetHiqidashis
+         * WsSendHiqidashis hiqidashis.
+         * @member {Array.<hiqidashi.IHiqidashi>} hiqidashis
+         * @memberof hiqidashi.WsSendHiqidashis
          * @instance
          */
-        WsGetHiqidashis.prototype.hiqidashi = $util.emptyArray;
+        WsSendHiqidashis.prototype.hiqidashis = $util.emptyArray;
 
         /**
-         * Creates a new WsGetHiqidashis instance using the specified properties.
+         * Creates a new WsSendHiqidashis instance using the specified properties.
          * @function create
-         * @memberof hiqidashi.WsGetHiqidashis
+         * @memberof hiqidashi.WsSendHiqidashis
          * @static
-         * @param {hiqidashi.IWsGetHiqidashis=} [properties] Properties to set
-         * @returns {hiqidashi.WsGetHiqidashis} WsGetHiqidashis instance
+         * @param {hiqidashi.IWsSendHiqidashis=} [properties] Properties to set
+         * @returns {hiqidashi.WsSendHiqidashis} WsSendHiqidashis instance
          */
-        WsGetHiqidashis.create = function create(properties) {
-            return new WsGetHiqidashis(properties);
+        WsSendHiqidashis.create = function create(properties) {
+            return new WsSendHiqidashis(properties);
         };
 
         /**
-         * Encodes the specified WsGetHiqidashis message. Does not implicitly {@link hiqidashi.WsGetHiqidashis.verify|verify} messages.
+         * Encodes the specified WsSendHiqidashis message. Does not implicitly {@link hiqidashi.WsSendHiqidashis.verify|verify} messages.
          * @function encode
-         * @memberof hiqidashi.WsGetHiqidashis
+         * @memberof hiqidashi.WsSendHiqidashis
          * @static
-         * @param {hiqidashi.IWsGetHiqidashis} message WsGetHiqidashis message or plain object to encode
+         * @param {hiqidashi.IWsSendHiqidashis} message WsSendHiqidashis message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        WsGetHiqidashis.encode = function encode(message, writer) {
+        WsSendHiqidashis.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.hiqidashi != null && message.hiqidashi.length)
-                for (let i = 0; i < message.hiqidashi.length; ++i)
-                    $root.hiqidashi.Hiqidashi.encode(message.hiqidashi[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            if (message.hiqidashis != null && message.hiqidashis.length)
+                for (let i = 0; i < message.hiqidashis.length; ++i)
+                    $root.hiqidashi.Hiqidashi.encode(message.hiqidashis[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
             return writer;
         };
 
         /**
-         * Encodes the specified WsGetHiqidashis message, length delimited. Does not implicitly {@link hiqidashi.WsGetHiqidashis.verify|verify} messages.
+         * Encodes the specified WsSendHiqidashis message, length delimited. Does not implicitly {@link hiqidashi.WsSendHiqidashis.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof hiqidashi.WsGetHiqidashis
+         * @memberof hiqidashi.WsSendHiqidashis
          * @static
-         * @param {hiqidashi.IWsGetHiqidashis} message WsGetHiqidashis message or plain object to encode
+         * @param {hiqidashi.IWsSendHiqidashis} message WsSendHiqidashis message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        WsGetHiqidashis.encodeDelimited = function encodeDelimited(message, writer) {
+        WsSendHiqidashis.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a WsGetHiqidashis message from the specified reader or buffer.
+         * Decodes a WsSendHiqidashis message from the specified reader or buffer.
          * @function decode
-         * @memberof hiqidashi.WsGetHiqidashis
+         * @memberof hiqidashi.WsSendHiqidashis
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {hiqidashi.WsGetHiqidashis} WsGetHiqidashis
+         * @returns {hiqidashi.WsSendHiqidashis} WsSendHiqidashis
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        WsGetHiqidashis.decode = function decode(reader, length) {
+        WsSendHiqidashis.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.hiqidashi.WsGetHiqidashis();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.hiqidashi.WsSendHiqidashis();
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
-                    if (!(message.hiqidashi && message.hiqidashi.length))
-                        message.hiqidashi = [];
-                    message.hiqidashi.push($root.hiqidashi.Hiqidashi.decode(reader, reader.uint32()));
+                    if (!(message.hiqidashis && message.hiqidashis.length))
+                        message.hiqidashis = [];
+                    message.hiqidashis.push($root.hiqidashi.Hiqidashi.decode(reader, reader.uint32()));
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -316,104 +316,104 @@ export const hiqidashi = $root.hiqidashi = (() => {
         };
 
         /**
-         * Decodes a WsGetHiqidashis message from the specified reader or buffer, length delimited.
+         * Decodes a WsSendHiqidashis message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof hiqidashi.WsGetHiqidashis
+         * @memberof hiqidashi.WsSendHiqidashis
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {hiqidashi.WsGetHiqidashis} WsGetHiqidashis
+         * @returns {hiqidashi.WsSendHiqidashis} WsSendHiqidashis
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        WsGetHiqidashis.decodeDelimited = function decodeDelimited(reader) {
+        WsSendHiqidashis.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a WsGetHiqidashis message.
+         * Verifies a WsSendHiqidashis message.
          * @function verify
-         * @memberof hiqidashi.WsGetHiqidashis
+         * @memberof hiqidashi.WsSendHiqidashis
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        WsGetHiqidashis.verify = function verify(message) {
+        WsSendHiqidashis.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            if (message.hiqidashi != null && message.hasOwnProperty("hiqidashi")) {
-                if (!Array.isArray(message.hiqidashi))
-                    return "hiqidashi: array expected";
-                for (let i = 0; i < message.hiqidashi.length; ++i) {
-                    let error = $root.hiqidashi.Hiqidashi.verify(message.hiqidashi[i]);
+            if (message.hiqidashis != null && message.hasOwnProperty("hiqidashis")) {
+                if (!Array.isArray(message.hiqidashis))
+                    return "hiqidashis: array expected";
+                for (let i = 0; i < message.hiqidashis.length; ++i) {
+                    let error = $root.hiqidashi.Hiqidashi.verify(message.hiqidashis[i]);
                     if (error)
-                        return "hiqidashi." + error;
+                        return "hiqidashis." + error;
                 }
             }
             return null;
         };
 
         /**
-         * Creates a WsGetHiqidashis message from a plain object. Also converts values to their respective internal types.
+         * Creates a WsSendHiqidashis message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof hiqidashi.WsGetHiqidashis
+         * @memberof hiqidashi.WsSendHiqidashis
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {hiqidashi.WsGetHiqidashis} WsGetHiqidashis
+         * @returns {hiqidashi.WsSendHiqidashis} WsSendHiqidashis
          */
-        WsGetHiqidashis.fromObject = function fromObject(object) {
-            if (object instanceof $root.hiqidashi.WsGetHiqidashis)
+        WsSendHiqidashis.fromObject = function fromObject(object) {
+            if (object instanceof $root.hiqidashi.WsSendHiqidashis)
                 return object;
-            let message = new $root.hiqidashi.WsGetHiqidashis();
-            if (object.hiqidashi) {
-                if (!Array.isArray(object.hiqidashi))
-                    throw TypeError(".hiqidashi.WsGetHiqidashis.hiqidashi: array expected");
-                message.hiqidashi = [];
-                for (let i = 0; i < object.hiqidashi.length; ++i) {
-                    if (typeof object.hiqidashi[i] !== "object")
-                        throw TypeError(".hiqidashi.WsGetHiqidashis.hiqidashi: object expected");
-                    message.hiqidashi[i] = $root.hiqidashi.Hiqidashi.fromObject(object.hiqidashi[i]);
+            let message = new $root.hiqidashi.WsSendHiqidashis();
+            if (object.hiqidashis) {
+                if (!Array.isArray(object.hiqidashis))
+                    throw TypeError(".hiqidashi.WsSendHiqidashis.hiqidashis: array expected");
+                message.hiqidashis = [];
+                for (let i = 0; i < object.hiqidashis.length; ++i) {
+                    if (typeof object.hiqidashis[i] !== "object")
+                        throw TypeError(".hiqidashi.WsSendHiqidashis.hiqidashis: object expected");
+                    message.hiqidashis[i] = $root.hiqidashi.Hiqidashi.fromObject(object.hiqidashis[i]);
                 }
             }
             return message;
         };
 
         /**
-         * Creates a plain object from a WsGetHiqidashis message. Also converts values to other types if specified.
+         * Creates a plain object from a WsSendHiqidashis message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof hiqidashi.WsGetHiqidashis
+         * @memberof hiqidashi.WsSendHiqidashis
          * @static
-         * @param {hiqidashi.WsGetHiqidashis} message WsGetHiqidashis
+         * @param {hiqidashi.WsSendHiqidashis} message WsSendHiqidashis
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        WsGetHiqidashis.toObject = function toObject(message, options) {
+        WsSendHiqidashis.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
             let object = {};
             if (options.arrays || options.defaults)
-                object.hiqidashi = [];
-            if (message.hiqidashi && message.hiqidashi.length) {
-                object.hiqidashi = [];
-                for (let j = 0; j < message.hiqidashi.length; ++j)
-                    object.hiqidashi[j] = $root.hiqidashi.Hiqidashi.toObject(message.hiqidashi[j], options);
+                object.hiqidashis = [];
+            if (message.hiqidashis && message.hiqidashis.length) {
+                object.hiqidashis = [];
+                for (let j = 0; j < message.hiqidashis.length; ++j)
+                    object.hiqidashis[j] = $root.hiqidashi.Hiqidashi.toObject(message.hiqidashis[j], options);
             }
             return object;
         };
 
         /**
-         * Converts this WsGetHiqidashis to JSON.
+         * Converts this WsSendHiqidashis to JSON.
          * @function toJSON
-         * @memberof hiqidashi.WsGetHiqidashis
+         * @memberof hiqidashi.WsSendHiqidashis
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        WsGetHiqidashis.prototype.toJSON = function toJSON() {
+        WsSendHiqidashis.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
-        return WsGetHiqidashis;
+        return WsSendHiqidashis;
     })();
 
     hiqidashi.WsCreateHiqidashi = (function() {
@@ -423,8 +423,6 @@ export const hiqidashi = $root.hiqidashi = (() => {
          * @memberof hiqidashi
          * @interface IWsCreateHiqidashi
          * @property {string|null} [parentId] WsCreateHiqidashi parentId
-         * @property {string|null} [title] WsCreateHiqidashi title
-         * @property {string|null} [description] WsCreateHiqidashi description
          */
 
         /**
@@ -449,22 +447,6 @@ export const hiqidashi = $root.hiqidashi = (() => {
          * @instance
          */
         WsCreateHiqidashi.prototype.parentId = "";
-
-        /**
-         * WsCreateHiqidashi title.
-         * @member {string} title
-         * @memberof hiqidashi.WsCreateHiqidashi
-         * @instance
-         */
-        WsCreateHiqidashi.prototype.title = "";
-
-        /**
-         * WsCreateHiqidashi description.
-         * @member {string} description
-         * @memberof hiqidashi.WsCreateHiqidashi
-         * @instance
-         */
-        WsCreateHiqidashi.prototype.description = "";
 
         /**
          * Creates a new WsCreateHiqidashi instance using the specified properties.
@@ -492,10 +474,6 @@ export const hiqidashi = $root.hiqidashi = (() => {
                 writer = $Writer.create();
             if (message.parentId != null && Object.hasOwnProperty.call(message, "parentId"))
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.parentId);
-            if (message.title != null && Object.hasOwnProperty.call(message, "title"))
-                writer.uint32(/* id 2, wireType 2 =*/18).string(message.title);
-            if (message.description != null && Object.hasOwnProperty.call(message, "description"))
-                writer.uint32(/* id 3, wireType 2 =*/26).string(message.description);
             return writer;
         };
 
@@ -532,12 +510,6 @@ export const hiqidashi = $root.hiqidashi = (() => {
                 switch (tag >>> 3) {
                 case 1:
                     message.parentId = reader.string();
-                    break;
-                case 2:
-                    message.title = reader.string();
-                    break;
-                case 3:
-                    message.description = reader.string();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -577,12 +549,6 @@ export const hiqidashi = $root.hiqidashi = (() => {
             if (message.parentId != null && message.hasOwnProperty("parentId"))
                 if (!$util.isString(message.parentId))
                     return "parentId: string expected";
-            if (message.title != null && message.hasOwnProperty("title"))
-                if (!$util.isString(message.title))
-                    return "title: string expected";
-            if (message.description != null && message.hasOwnProperty("description"))
-                if (!$util.isString(message.description))
-                    return "description: string expected";
             return null;
         };
 
@@ -600,10 +566,6 @@ export const hiqidashi = $root.hiqidashi = (() => {
             let message = new $root.hiqidashi.WsCreateHiqidashi();
             if (object.parentId != null)
                 message.parentId = String(object.parentId);
-            if (object.title != null)
-                message.title = String(object.title);
-            if (object.description != null)
-                message.description = String(object.description);
             return message;
         };
 
@@ -620,17 +582,10 @@ export const hiqidashi = $root.hiqidashi = (() => {
             if (!options)
                 options = {};
             let object = {};
-            if (options.defaults) {
+            if (options.defaults)
                 object.parentId = "";
-                object.title = "";
-                object.description = "";
-            }
             if (message.parentId != null && message.hasOwnProperty("parentId"))
                 object.parentId = message.parentId;
-            if (message.title != null && message.hasOwnProperty("title"))
-                object.title = message.title;
-            if (message.description != null && message.hasOwnProperty("description"))
-                object.description = message.description;
             return object;
         };
 
@@ -656,9 +611,8 @@ export const hiqidashi = $root.hiqidashi = (() => {
          * @interface IWsEditHiqidashi
          * @property {string|null} [id] WsEditHiqidashi id
          * @property {google.protobuf.IStringValue|null} [title] WsEditHiqidashi title
-         * @property {google.protobuf.IStringValue|null} [description] WsEditHiqidashi description
          * @property {google.protobuf.IStringValue|null} [drawing] WsEditHiqidashi drawing
-         * @property {google.protobuf.IStringValue|null} [colorId] WsEditHiqidashi colorId
+         * @property {google.protobuf.IStringValue|null} [colorCode] WsEditHiqidashi colorCode
          */
 
         /**
@@ -693,14 +647,6 @@ export const hiqidashi = $root.hiqidashi = (() => {
         WsEditHiqidashi.prototype.title = null;
 
         /**
-         * WsEditHiqidashi description.
-         * @member {google.protobuf.IStringValue|null|undefined} description
-         * @memberof hiqidashi.WsEditHiqidashi
-         * @instance
-         */
-        WsEditHiqidashi.prototype.description = null;
-
-        /**
          * WsEditHiqidashi drawing.
          * @member {google.protobuf.IStringValue|null|undefined} drawing
          * @memberof hiqidashi.WsEditHiqidashi
@@ -709,12 +655,12 @@ export const hiqidashi = $root.hiqidashi = (() => {
         WsEditHiqidashi.prototype.drawing = null;
 
         /**
-         * WsEditHiqidashi colorId.
-         * @member {google.protobuf.IStringValue|null|undefined} colorId
+         * WsEditHiqidashi colorCode.
+         * @member {google.protobuf.IStringValue|null|undefined} colorCode
          * @memberof hiqidashi.WsEditHiqidashi
          * @instance
          */
-        WsEditHiqidashi.prototype.colorId = null;
+        WsEditHiqidashi.prototype.colorCode = null;
 
         /**
          * Creates a new WsEditHiqidashi instance using the specified properties.
@@ -744,12 +690,10 @@ export const hiqidashi = $root.hiqidashi = (() => {
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
             if (message.title != null && Object.hasOwnProperty.call(message, "title"))
                 $root.google.protobuf.StringValue.encode(message.title, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
-            if (message.description != null && Object.hasOwnProperty.call(message, "description"))
-                $root.google.protobuf.StringValue.encode(message.description, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
             if (message.drawing != null && Object.hasOwnProperty.call(message, "drawing"))
-                $root.google.protobuf.StringValue.encode(message.drawing, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
-            if (message.colorId != null && Object.hasOwnProperty.call(message, "colorId"))
-                $root.google.protobuf.StringValue.encode(message.colorId, writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
+                $root.google.protobuf.StringValue.encode(message.drawing, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+            if (message.colorCode != null && Object.hasOwnProperty.call(message, "colorCode"))
+                $root.google.protobuf.StringValue.encode(message.colorCode, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
             return writer;
         };
 
@@ -791,13 +735,10 @@ export const hiqidashi = $root.hiqidashi = (() => {
                     message.title = $root.google.protobuf.StringValue.decode(reader, reader.uint32());
                     break;
                 case 3:
-                    message.description = $root.google.protobuf.StringValue.decode(reader, reader.uint32());
-                    break;
-                case 4:
                     message.drawing = $root.google.protobuf.StringValue.decode(reader, reader.uint32());
                     break;
-                case 5:
-                    message.colorId = $root.google.protobuf.StringValue.decode(reader, reader.uint32());
+                case 4:
+                    message.colorCode = $root.google.protobuf.StringValue.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -842,20 +783,15 @@ export const hiqidashi = $root.hiqidashi = (() => {
                 if (error)
                     return "title." + error;
             }
-            if (message.description != null && message.hasOwnProperty("description")) {
-                let error = $root.google.protobuf.StringValue.verify(message.description);
-                if (error)
-                    return "description." + error;
-            }
             if (message.drawing != null && message.hasOwnProperty("drawing")) {
                 let error = $root.google.protobuf.StringValue.verify(message.drawing);
                 if (error)
                     return "drawing." + error;
             }
-            if (message.colorId != null && message.hasOwnProperty("colorId")) {
-                let error = $root.google.protobuf.StringValue.verify(message.colorId);
+            if (message.colorCode != null && message.hasOwnProperty("colorCode")) {
+                let error = $root.google.protobuf.StringValue.verify(message.colorCode);
                 if (error)
-                    return "colorId." + error;
+                    return "colorCode." + error;
             }
             return null;
         };
@@ -879,20 +815,15 @@ export const hiqidashi = $root.hiqidashi = (() => {
                     throw TypeError(".hiqidashi.WsEditHiqidashi.title: object expected");
                 message.title = $root.google.protobuf.StringValue.fromObject(object.title);
             }
-            if (object.description != null) {
-                if (typeof object.description !== "object")
-                    throw TypeError(".hiqidashi.WsEditHiqidashi.description: object expected");
-                message.description = $root.google.protobuf.StringValue.fromObject(object.description);
-            }
             if (object.drawing != null) {
                 if (typeof object.drawing !== "object")
                     throw TypeError(".hiqidashi.WsEditHiqidashi.drawing: object expected");
                 message.drawing = $root.google.protobuf.StringValue.fromObject(object.drawing);
             }
-            if (object.colorId != null) {
-                if (typeof object.colorId !== "object")
-                    throw TypeError(".hiqidashi.WsEditHiqidashi.colorId: object expected");
-                message.colorId = $root.google.protobuf.StringValue.fromObject(object.colorId);
+            if (object.colorCode != null) {
+                if (typeof object.colorCode !== "object")
+                    throw TypeError(".hiqidashi.WsEditHiqidashi.colorCode: object expected");
+                message.colorCode = $root.google.protobuf.StringValue.fromObject(object.colorCode);
             }
             return message;
         };
@@ -913,20 +844,17 @@ export const hiqidashi = $root.hiqidashi = (() => {
             if (options.defaults) {
                 object.id = "";
                 object.title = null;
-                object.description = null;
                 object.drawing = null;
-                object.colorId = null;
+                object.colorCode = null;
             }
             if (message.id != null && message.hasOwnProperty("id"))
                 object.id = message.id;
             if (message.title != null && message.hasOwnProperty("title"))
                 object.title = $root.google.protobuf.StringValue.toObject(message.title, options);
-            if (message.description != null && message.hasOwnProperty("description"))
-                object.description = $root.google.protobuf.StringValue.toObject(message.description, options);
             if (message.drawing != null && message.hasOwnProperty("drawing"))
                 object.drawing = $root.google.protobuf.StringValue.toObject(message.drawing, options);
-            if (message.colorId != null && message.hasOwnProperty("colorId"))
-                object.colorId = $root.google.protobuf.StringValue.toObject(message.colorId, options);
+            if (message.colorCode != null && message.hasOwnProperty("colorCode"))
+                object.colorCode = $root.google.protobuf.StringValue.toObject(message.colorCode, options);
             return object;
         };
 
@@ -1138,13 +1066,12 @@ export const hiqidashi = $root.hiqidashi = (() => {
          * @memberof hiqidashi
          * @interface IHiqidashi
          * @property {string|null} [id] Hiqidashi id
-         * @property {string|null} [parentId] Hiqidashi parentId
+         * @property {string|null} [creatorId] Hiqidashi creatorId
+         * @property {google.protobuf.IStringValue|null} [parentId] Hiqidashi parentId
          * @property {string|null} [title] Hiqidashi title
          * @property {string|null} [description] Hiqidashi description
          * @property {google.protobuf.IStringValue|null} [drawing] Hiqidashi drawing
-         * @property {string|null} [colorId] Hiqidashi colorId
-         * @property {string|null} [createdAt] Hiqidashi createdAt
-         * @property {string|null} [updatedAt] Hiqidashi updatedAt
+         * @property {string|null} [colorCode] Hiqidashi colorCode
          */
 
         /**
@@ -1171,12 +1098,20 @@ export const hiqidashi = $root.hiqidashi = (() => {
         Hiqidashi.prototype.id = "";
 
         /**
-         * Hiqidashi parentId.
-         * @member {string} parentId
+         * Hiqidashi creatorId.
+         * @member {string} creatorId
          * @memberof hiqidashi.Hiqidashi
          * @instance
          */
-        Hiqidashi.prototype.parentId = "";
+        Hiqidashi.prototype.creatorId = "";
+
+        /**
+         * Hiqidashi parentId.
+         * @member {google.protobuf.IStringValue|null|undefined} parentId
+         * @memberof hiqidashi.Hiqidashi
+         * @instance
+         */
+        Hiqidashi.prototype.parentId = null;
 
         /**
          * Hiqidashi title.
@@ -1203,28 +1138,12 @@ export const hiqidashi = $root.hiqidashi = (() => {
         Hiqidashi.prototype.drawing = null;
 
         /**
-         * Hiqidashi colorId.
-         * @member {string} colorId
+         * Hiqidashi colorCode.
+         * @member {string} colorCode
          * @memberof hiqidashi.Hiqidashi
          * @instance
          */
-        Hiqidashi.prototype.colorId = "";
-
-        /**
-         * Hiqidashi createdAt.
-         * @member {string} createdAt
-         * @memberof hiqidashi.Hiqidashi
-         * @instance
-         */
-        Hiqidashi.prototype.createdAt = "";
-
-        /**
-         * Hiqidashi updatedAt.
-         * @member {string} updatedAt
-         * @memberof hiqidashi.Hiqidashi
-         * @instance
-         */
-        Hiqidashi.prototype.updatedAt = "";
+        Hiqidashi.prototype.colorCode = "";
 
         /**
          * Creates a new Hiqidashi instance using the specified properties.
@@ -1252,20 +1171,18 @@ export const hiqidashi = $root.hiqidashi = (() => {
                 writer = $Writer.create();
             if (message.id != null && Object.hasOwnProperty.call(message, "id"))
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            if (message.creatorId != null && Object.hasOwnProperty.call(message, "creatorId"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.creatorId);
             if (message.parentId != null && Object.hasOwnProperty.call(message, "parentId"))
-                writer.uint32(/* id 2, wireType 2 =*/18).string(message.parentId);
+                $root.google.protobuf.StringValue.encode(message.parentId, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
             if (message.title != null && Object.hasOwnProperty.call(message, "title"))
-                writer.uint32(/* id 3, wireType 2 =*/26).string(message.title);
+                writer.uint32(/* id 4, wireType 2 =*/34).string(message.title);
             if (message.description != null && Object.hasOwnProperty.call(message, "description"))
-                writer.uint32(/* id 4, wireType 2 =*/34).string(message.description);
+                writer.uint32(/* id 5, wireType 2 =*/42).string(message.description);
             if (message.drawing != null && Object.hasOwnProperty.call(message, "drawing"))
-                $root.google.protobuf.StringValue.encode(message.drawing, writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
-            if (message.colorId != null && Object.hasOwnProperty.call(message, "colorId"))
-                writer.uint32(/* id 6, wireType 2 =*/50).string(message.colorId);
-            if (message.createdAt != null && Object.hasOwnProperty.call(message, "createdAt"))
-                writer.uint32(/* id 7, wireType 2 =*/58).string(message.createdAt);
-            if (message.updatedAt != null && Object.hasOwnProperty.call(message, "updatedAt"))
-                writer.uint32(/* id 8, wireType 2 =*/66).string(message.updatedAt);
+                $root.google.protobuf.StringValue.encode(message.drawing, writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
+            if (message.colorCode != null && Object.hasOwnProperty.call(message, "colorCode"))
+                writer.uint32(/* id 7, wireType 2 =*/58).string(message.colorCode);
             return writer;
         };
 
@@ -1304,25 +1221,22 @@ export const hiqidashi = $root.hiqidashi = (() => {
                     message.id = reader.string();
                     break;
                 case 2:
-                    message.parentId = reader.string();
+                    message.creatorId = reader.string();
                     break;
                 case 3:
-                    message.title = reader.string();
+                    message.parentId = $root.google.protobuf.StringValue.decode(reader, reader.uint32());
                     break;
                 case 4:
-                    message.description = reader.string();
+                    message.title = reader.string();
                     break;
                 case 5:
-                    message.drawing = $root.google.protobuf.StringValue.decode(reader, reader.uint32());
+                    message.description = reader.string();
                     break;
                 case 6:
-                    message.colorId = reader.string();
+                    message.drawing = $root.google.protobuf.StringValue.decode(reader, reader.uint32());
                     break;
                 case 7:
-                    message.createdAt = reader.string();
-                    break;
-                case 8:
-                    message.updatedAt = reader.string();
+                    message.colorCode = reader.string();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -1362,9 +1276,14 @@ export const hiqidashi = $root.hiqidashi = (() => {
             if (message.id != null && message.hasOwnProperty("id"))
                 if (!$util.isString(message.id))
                     return "id: string expected";
-            if (message.parentId != null && message.hasOwnProperty("parentId"))
-                if (!$util.isString(message.parentId))
-                    return "parentId: string expected";
+            if (message.creatorId != null && message.hasOwnProperty("creatorId"))
+                if (!$util.isString(message.creatorId))
+                    return "creatorId: string expected";
+            if (message.parentId != null && message.hasOwnProperty("parentId")) {
+                let error = $root.google.protobuf.StringValue.verify(message.parentId);
+                if (error)
+                    return "parentId." + error;
+            }
             if (message.title != null && message.hasOwnProperty("title"))
                 if (!$util.isString(message.title))
                     return "title: string expected";
@@ -1376,15 +1295,9 @@ export const hiqidashi = $root.hiqidashi = (() => {
                 if (error)
                     return "drawing." + error;
             }
-            if (message.colorId != null && message.hasOwnProperty("colorId"))
-                if (!$util.isString(message.colorId))
-                    return "colorId: string expected";
-            if (message.createdAt != null && message.hasOwnProperty("createdAt"))
-                if (!$util.isString(message.createdAt))
-                    return "createdAt: string expected";
-            if (message.updatedAt != null && message.hasOwnProperty("updatedAt"))
-                if (!$util.isString(message.updatedAt))
-                    return "updatedAt: string expected";
+            if (message.colorCode != null && message.hasOwnProperty("colorCode"))
+                if (!$util.isString(message.colorCode))
+                    return "colorCode: string expected";
             return null;
         };
 
@@ -1402,8 +1315,13 @@ export const hiqidashi = $root.hiqidashi = (() => {
             let message = new $root.hiqidashi.Hiqidashi();
             if (object.id != null)
                 message.id = String(object.id);
-            if (object.parentId != null)
-                message.parentId = String(object.parentId);
+            if (object.creatorId != null)
+                message.creatorId = String(object.creatorId);
+            if (object.parentId != null) {
+                if (typeof object.parentId !== "object")
+                    throw TypeError(".hiqidashi.Hiqidashi.parentId: object expected");
+                message.parentId = $root.google.protobuf.StringValue.fromObject(object.parentId);
+            }
             if (object.title != null)
                 message.title = String(object.title);
             if (object.description != null)
@@ -1413,12 +1331,8 @@ export const hiqidashi = $root.hiqidashi = (() => {
                     throw TypeError(".hiqidashi.Hiqidashi.drawing: object expected");
                 message.drawing = $root.google.protobuf.StringValue.fromObject(object.drawing);
             }
-            if (object.colorId != null)
-                message.colorId = String(object.colorId);
-            if (object.createdAt != null)
-                message.createdAt = String(object.createdAt);
-            if (object.updatedAt != null)
-                message.updatedAt = String(object.updatedAt);
+            if (object.colorCode != null)
+                message.colorCode = String(object.colorCode);
             return message;
         };
 
@@ -1437,30 +1351,27 @@ export const hiqidashi = $root.hiqidashi = (() => {
             let object = {};
             if (options.defaults) {
                 object.id = "";
-                object.parentId = "";
+                object.creatorId = "";
+                object.parentId = null;
                 object.title = "";
                 object.description = "";
                 object.drawing = null;
-                object.colorId = "";
-                object.createdAt = "";
-                object.updatedAt = "";
+                object.colorCode = "";
             }
             if (message.id != null && message.hasOwnProperty("id"))
                 object.id = message.id;
+            if (message.creatorId != null && message.hasOwnProperty("creatorId"))
+                object.creatorId = message.creatorId;
             if (message.parentId != null && message.hasOwnProperty("parentId"))
-                object.parentId = message.parentId;
+                object.parentId = $root.google.protobuf.StringValue.toObject(message.parentId, options);
             if (message.title != null && message.hasOwnProperty("title"))
                 object.title = message.title;
             if (message.description != null && message.hasOwnProperty("description"))
                 object.description = message.description;
             if (message.drawing != null && message.hasOwnProperty("drawing"))
                 object.drawing = $root.google.protobuf.StringValue.toObject(message.drawing, options);
-            if (message.colorId != null && message.hasOwnProperty("colorId"))
-                object.colorId = message.colorId;
-            if (message.createdAt != null && message.hasOwnProperty("createdAt"))
-                object.createdAt = message.createdAt;
-            if (message.updatedAt != null && message.hasOwnProperty("updatedAt"))
-                object.updatedAt = message.updatedAt;
+            if (message.colorCode != null && message.hasOwnProperty("colorCode"))
+                object.colorCode = message.colorCode;
             return object;
         };
 

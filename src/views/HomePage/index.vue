@@ -61,6 +61,7 @@
 import { computed, defineComponent, onMounted, Ref, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
+import { heya } from '/@/lib/apis/pb/rest/heyas'
 import * as heyasApi from '/@/lib/apis/heyas'
 import * as usersApi from '/@/lib/apis/users'
 import HeyaCard from './components/HeyaCard.vue'
@@ -74,40 +75,7 @@ export default defineComponent({
     const userMe = { id: 'hoge2', name: 'hoge2' }
 
     // computed で検知されるように ref にする
-    const heyasData = ref([
-      {
-        id: 'abcs',
-        title: 'タイトル長いよながい長いながいTitle',
-        creatorId: 'nananananananananaganaganaganaga',
-        creatorName: 'nananananananananaganaganaganaga',
-        createdAt: '2022/01/02',
-        updatedAt: '2022/02/02',
-      },
-      {
-        id: 'uajs',
-        title: 'タイトル2',
-        creatorId: 'hoge2',
-        creatorName: 'hoge2',
-        createdAt: '2022/01/01',
-        updatedAt: '2022/02/02',
-      },
-      {
-        id: 'uajass',
-        title: 'タイトル3',
-        creatorId: 'hoge3',
-        creatorName: 'hoge3',
-        createdAt: '2022/01/01',
-        updatedAt: '2022/02/02',
-      },
-      {
-        id: 'uajsddk',
-        title: 'タイトル5',
-        creatorId: 'hoge5',
-        creatorName: 'hoge5',
-        createdAt: '2022/01/03',
-        updatedAt: '2022/01/03',
-      },
-    ])
+    const heyasData: Ref<heya.IHeya[]> = ref([])
     const favoriteHeyas: Ref<Set<string>> = ref(new Set()) // お気に入りのヘヤの id を持つ set
 
     const sortKey: Ref<'更新日時順' | '作成日時順'> = ref('更新日時順')
@@ -160,22 +128,27 @@ export default defineComponent({
     // 実際に表示するデータ
     const displayHeyasData = computed(() => {
       if (searchText.value.trim().length > 0) {
-        return heyasData.value.filter((heya) => {
-          if (!heya.title) {
-            return false
-          }
-
-          return searchText.value
+        return heyasData.value.filter((heya) => 
+          searchText.value
             .split(/\s+/i)
             .filter((str) => str.length > 0)
-            .some((str) => heya.title.indexOf(str) >= 0)
-        })
+            .some((str) => {
+              if (!heya.title) {
+                return false
+              }
+              return heya.title.indexOf(str) >= 0
+            })
+        )
       }
 
       if (displayHeyasFlag.value === 'favorite') {
-        return heyasData.value.filter((heya) =>
-          favoriteHeyas.value.has(heya.id)
-        )
+        return heyasData.value.filter((heya) => {
+          if (!heya.id) {
+            return false
+          }
+
+          return favoriteHeyas.value.has(heya.id)
+        })
       } else if (displayHeyasFlag.value === 'owner') {
         return heyasData.value.filter((heya) => heya.creatorId === userMe.id)
       }
@@ -194,7 +167,7 @@ export default defineComponent({
     }
 
     const deleteHeya = async (heyaId: string) => {
-      /* try {
+      try {
         await heyasApi.deleteHeya(heyaId)
         heyasData.value = heyasData.value.filter((heya) => heya.id !== heyaId)
         favoriteHeyas.value.delete(heyaId)
@@ -205,7 +178,7 @@ export default defineComponent({
           customClass: 'home-page-error-message',
         })
         console.log(error)
-      } */
+      }
     }
 
     const router = useRouter()
@@ -226,10 +199,19 @@ export default defineComponent({
       }
     }
 
-    /* const setHeyasData = async () => {
+    const setHeyasData = async () => {
       try {
         const res = await heyasApi.getHeyas()
-        heyasData.value = res.heya
+
+        if (!res.heyas || !res.heyas.heyas) {
+          ElMessage({
+            message: 'ヘヤの情報の取得に失敗しました',
+            type: 'error',
+          })
+          return
+        }
+
+        heyasData.value = res.heyas.heyas
       } catch (error) {
         ElMessage({
           message: `エラーが発生しました\n${error}`,
@@ -238,7 +220,7 @@ export default defineComponent({
         })
         console.log(error)
       }
-    } */
+    }
 
     const setFavoriteHeyasId = async () => {
       try {
@@ -255,7 +237,7 @@ export default defineComponent({
     }
 
     onMounted(async () => {
-      // await setHeyasData()
+      await setHeyasData()
       await setFavoriteHeyasId()
     })
 
