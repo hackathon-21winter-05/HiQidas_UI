@@ -13,7 +13,8 @@
         {{ isExpanded ? 'expand_less' : 'expand_more' }}
       </span>
       <h3 class="hiqidashi-title" @click="toggleExpanded">
-        {{ hiqidashi.title }}
+        <!-- eslint-disable-next-line no-irregular-whitespace -->
+        {{ hiqidashi.title || '　' }}
       </h3>
       <el-dropdown trigger="click">
         <span class="material-icons right-button"> more_horiz </span>
@@ -34,7 +35,10 @@
       </el-dropdown>
     </div>
     <div v-show="isExpanded">
-      <hi-qidashi-editor :description="hiqidashi.description" />
+      <hi-qidashi-editor
+        :description="hiqidashi.description"
+        :hiqidashi-id="hiqidashi.id"
+      />
     </div>
     <div class="avatar-container">
       <div v-for="(user, index) in users" :key="user" class="avatars">
@@ -52,7 +56,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, PropType, ref } from 'vue'
+import { computed, defineComponent, PropType, ref } from 'vue'
 import HiQidashiEditor from '/@/components/HiQidashiEditor/index.vue'
 import { HiqidashiTree } from '/@/lib/hiqidashiTree'
 import { getRandomColor } from '/@/lib/utils'
@@ -76,7 +80,11 @@ export default defineComponent({
       changeMode(props.hiqidashi.id, 'edit')
     }
 
-    const isExpanded = ref(false)
+    const expanded = localStorage.getItem(
+      `hiqidashi-expand-${props.hiqidashi.id}`
+    )
+
+    const isExpanded = ref(expanded === 'true' ? true : false)
 
     const openDeleteDialog = () => {
       store.deleteId = props.hiqidashi.id
@@ -92,10 +100,6 @@ export default defineComponent({
       }
     }
 
-    onMounted(() => {
-      setFocus()
-    })
-
     const color = computed(() => props.hiqidashi.colorCode)
 
     const openColorPicker = () => {
@@ -107,6 +111,10 @@ export default defineComponent({
         elRef.value.scrollIntoView({ block: 'center', inline: 'center' })
       }
       isExpanded.value = !isExpanded.value
+      localStorage.setItem(
+        `hiqidashi-expand-${props.hiqidashi.id}`,
+        isExpanded.value ? 'true' : 'false'
+      )
     }
 
     const isRootHiqidashi = computed(

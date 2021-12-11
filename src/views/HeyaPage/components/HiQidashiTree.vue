@@ -39,19 +39,19 @@
             :class="i === 0 ? 'vertical-top-line' : 'vertical-line'"
           />
           <div class="next-tree">
-            <div class="array-body" />
-            <div class="array-head" />
+            <div class="arrow-body" />
+            <div class="arrow-head" />
             <hi-qidashi-tree :tree="child" />
           </div>
         </div>
         <div class="new-tree-container">
           <div class="vertical-bottom-line" />
           <div class="next-tree">
-            <div class="array-body" />
-            <div class="array-head" />
+            <div class="arrow-body" />
+            <div class="arrow-head" />
             <div class="add-button-long" @click="createChild">
               <div class="plus-vertical-line" />
-              <div class="plus-horizonal-line" />
+              <div class="plus-horizontal-line" />
             </div>
           </div>
         </div>
@@ -82,14 +82,17 @@ export default defineComponent({
   setup(props) {
     const { heyaStore: store, createNewHiqidashi } = useHeyaStore()
 
-    const isExpanded = ref(true)
-
     const createChild = () => {
       createNewHiqidashi(props.tree.id)
     }
 
     const diamondRef = ref<HTMLElement>()
 
+    const expanded = localStorage.getItem(
+      `hiqidashi-tree-expanded-${props.tree.id}`
+    )
+
+    const isExpanded = ref(expanded === 'false' ? false : true)
     const color = computed(() => props.tree.colorCode)
 
     const toggleExpand = () => {
@@ -97,6 +100,10 @@ export default defineComponent({
       if (diamondRef.value) {
         diamondRef.value.scrollIntoView({ block: 'center', inline: 'center' })
       }
+      localStorage.setItem(
+        `hiqidashi-tree-expanded-${props.tree.id}`,
+        isExpanded.value ? 'true' : 'false'
+      )
     }
 
     return {

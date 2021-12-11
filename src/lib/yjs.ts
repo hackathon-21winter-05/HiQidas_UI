@@ -1,13 +1,24 @@
 import * as Y from 'yjs'
-import { useHeyaStore } from '/@/providers/heya'
 
-export const addYdocEventListener = (ydoc: Y.Doc) => {
-  const { heyaStore: store } = useHeyaStore()
-  if (!store.webSocket) {
-    console.error('No websocket connection')
+export const addYdocEventListener = (ydoc: Y.Doc, id: string) => {
+  if (id === '') {
+    return
+  }
+  const ws = new WebSocket(
+    (location.protocol === 'https:' ? 'wss' : 'ws') +
+      `://${location.host}/api/ws/yjs/${id}`
+  )
+  ws.binaryType = 'arraybuffer'
+
+  ws.onopen = () => {
+    console.log('ws open')
   }
 
-  ydoc.on('update', () => {
-    // ws でsendする
+  ydoc.on('update', (update: Uint8Array) => {
+    ws.send(update)
   })
+
+  ws.onmessage = (event: MessageEvent) => {
+    Y.applyUpdate(ydoc, new Uint8Array(event.data))
+  }
 }

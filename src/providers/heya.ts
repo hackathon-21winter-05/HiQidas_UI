@@ -95,6 +95,7 @@ export const useHeyaStoreBase = () => {
     heyaStore.hiqidashiTree.title = hiqidashi.title
     heyaStore.hiqidashiTree.description = hiqidashi.description
     heyaStore.hiqidashiTree.colorCode = hiqidashi.colorCode
+    heyaStore.hiqidashiTree.mode = hiqidashi.mode
 
     setHiqidashiMap(heyaStore.hiqidashiTree)
   }
@@ -268,7 +269,10 @@ export const useHeyaStoreFromWS = () => {
     resetHeya,
   } = useHeyaStoreBase()
 
-  const setHiqidashi = (hiqidashi: Hiqidashi) => {
+  const setHiqidashi = (
+    hiqidashi: Hiqidashi,
+    mode?: 'normal' | 'init' | 'edit'
+  ) => {
     const { id, title, description, colorCode, parentId, creatorId } = hiqidashi
 
     const hiqidashiTree: HiqidashiTree = {
@@ -279,9 +283,11 @@ export const useHeyaStoreFromWS = () => {
       title,
       description,
       colorCode,
-      mode: 'normal',
+      mode: 'init',
     }
-    // TODO: ここでmode判断でよさそう
+    if (mode) {
+      hiqidashiTree.mode = mode
+    }
 
     if (!parentId) {
       createFirstHiqidashi('', hiqidashiTree)
