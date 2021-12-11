@@ -201,7 +201,8 @@ export default defineComponent({
       } catch (error) {
         ElMessage({
           message: `エラーが発生しました\n${error}`,
-          type: 'warning',
+          type: 'error',
+          customClass: 'home-page-error-message',
         })
         console.log(error)
       } */
@@ -218,7 +219,8 @@ export default defineComponent({
       } catch (error) {
         ElMessage({
           message: `エラーが発生しました\n${error}`,
-          type: 'warning',
+          type: 'error',
+          customClass: 'home-page-error-message',
         })
         console.log(error)
       }
@@ -231,7 +233,8 @@ export default defineComponent({
       } catch (error) {
         ElMessage({
           message: `エラーが発生しました\n${error}`,
-          type: 'warning',
+          type: 'error',
+          customClass: 'home-page-error-message',
         })
         console.log(error)
       }
@@ -244,7 +247,8 @@ export default defineComponent({
       } catch (error) {
         ElMessage({
           message: `エラーが発生しました\n${error}`,
-          type: 'warning',
+          type: 'error',
+          customClass: 'home-page-error-message',
         })
         console.log(error)
       }
@@ -271,6 +275,14 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss">
+.home-page-error-message {
+  p.el-message__content {
+    white-space: pre-line;
+  }
+}
+</style>
 
 <style lang="scss" scoped>
 .home {
