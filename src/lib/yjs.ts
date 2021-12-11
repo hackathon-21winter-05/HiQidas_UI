@@ -7,7 +7,7 @@ export const addYdocEventListener = (ydoc: Y.Doc) => {
     console.error('No websocket connection')
   }
 
-  ydoc.on('update', (update: Uint8Array) => {
+  ydoc.on('update', () => {
     // ws でsendする
   })
 }

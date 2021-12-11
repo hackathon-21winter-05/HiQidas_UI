@@ -65,6 +65,7 @@ const genDir = path.resolve(__dirname, '../', 'src/lib/pb')
     '--plugin=./node_modules/.bin/protoc-gen-ts_proto',
     '--ts_proto_out=./src/lib/pb',
     `./protobuf/${getRestOrWs(url)}/${getFileName(url)}.proto`,
+    `--ts_proto_opt=esModuleInterop=true`,
   ])
 
   for (const cmd of generateCmds) {

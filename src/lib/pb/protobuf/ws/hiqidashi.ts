@@ -1,6 +1,6 @@
 /* eslint-disable */
-import { util, configure, Writer, Reader } from "protobufjs/minimal";
-import * as Long from "long";
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 import { StringValue } from "../../google/protobuf/wrappers";
 
 export const protobufPackage = "hiqidashi";
@@ -42,15 +42,18 @@ export interface Hiqidashi {
 const baseWsSendHiqidashi: object = {};
 
 export const WsSendHiqidashi = {
-  encode(message: WsSendHiqidashi, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: WsSendHiqidashi,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.hiqidashi !== undefined) {
       Hiqidashi.encode(message.hiqidashi, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): WsSendHiqidashi {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): WsSendHiqidashi {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseWsSendHiqidashi } as WsSendHiqidashi;
     while (reader.pos < end) {
@@ -100,15 +103,18 @@ export const WsSendHiqidashi = {
 const baseWsSendHiqidashis: object = {};
 
 export const WsSendHiqidashis = {
-  encode(message: WsSendHiqidashis, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: WsSendHiqidashis,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.hiqidashis) {
       Hiqidashi.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): WsSendHiqidashis {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): WsSendHiqidashis {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseWsSendHiqidashis } as WsSendHiqidashis;
     message.hiqidashis = [];
@@ -159,15 +165,18 @@ export const WsSendHiqidashis = {
 const baseWsCreateHiqidashi: object = { parentId: "" };
 
 export const WsCreateHiqidashi = {
-  encode(message: WsCreateHiqidashi, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: WsCreateHiqidashi,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.parentId !== "") {
       writer.uint32(10).string(message.parentId);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): WsCreateHiqidashi {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): WsCreateHiqidashi {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseWsCreateHiqidashi } as WsCreateHiqidashi;
     while (reader.pos < end) {
@@ -211,7 +220,10 @@ export const WsCreateHiqidashi = {
 const baseWsEditHiqidashi: object = { id: "" };
 
 export const WsEditHiqidashi = {
-  encode(message: WsEditHiqidashi, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: WsEditHiqidashi,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
@@ -236,8 +248,8 @@ export const WsEditHiqidashi = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): WsEditHiqidashi {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): WsEditHiqidashi {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseWsEditHiqidashi } as WsEditHiqidashi;
     while (reader.pos < end) {
@@ -306,15 +318,18 @@ export const WsEditHiqidashi = {
 const baseWsDeleteHiqidashi: object = { id: "" };
 
 export const WsDeleteHiqidashi = {
-  encode(message: WsDeleteHiqidashi, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: WsDeleteHiqidashi,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): WsDeleteHiqidashi {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): WsDeleteHiqidashi {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseWsDeleteHiqidashi } as WsDeleteHiqidashi;
     while (reader.pos < end) {
@@ -362,7 +377,10 @@ const baseHiqidashi: object = {
 };
 
 export const Hiqidashi = {
-  encode(message: Hiqidashi, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: Hiqidashi,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
@@ -393,8 +411,8 @@ export const Hiqidashi = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Hiqidashi {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): Hiqidashi {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseHiqidashi } as Hiqidashi;
     while (reader.pos < end) {
@@ -515,9 +533,7 @@ export type Exact<P, I extends P> = P extends Builtin
         never
       >;
 
-// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
-// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
-if (util.Long !== Long) {
-  util.Long = Long as any;
-  configure();
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
 }

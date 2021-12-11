@@ -1,7 +1,8 @@
-import { oauth } from '/@/lib/apis/pb/rest/oauth'
+import {
+  GetOauthCallbackResponse,
+  PostOauthCodeRequest,
+} from '/@/lib/pb/protobuf/rest/oauth'
 import axios from 'axios'
-
-const { GetOauthCallbackResponse, PostOauthCodeRequest } = oauth
 
 export const getOAuthCallback = async () => {
   const res = await axios.get('/api/oauth/callback', {
@@ -14,7 +15,7 @@ export const getOAuthCallback = async () => {
 }
 
 export const postOAuthCode = async (code: string) => {
-  const req = PostOauthCodeRequest.create({ code })
+  const req = PostOauthCodeRequest.fromJSON({ code })
   const buffer = PostOauthCodeRequest.encode(req).finish()
 
   await axios.post('/api/oauth/code', new Uint8Array(buffer))

@@ -1,7 +1,5 @@
-import { hiqidashi } from '/@/lib/apis/pb/ws/ws'
+import { WsHeyaData } from '/@/lib/pb/protobuf/ws/ws'
 import { useHeyaStoreFromWS } from '/@/providers/heya'
-
-const { WsHeyaData } = hiqidashi
 
 export const connectWS = (heyaId: string) => {
   const { setHiqidashi, editHiqidashi, deleteHiqidashi } = useHeyaStoreFromWS()
@@ -13,61 +11,48 @@ export const connectWS = (heyaId: string) => {
   ws.onmessage = (event) => {
     const data = WsHeyaData.decode(new Uint8Array(event.data))
 
-    // TODO: 実装
-    switch (data.payload) {
-      case 'sendHiqidashi': {
-        const hiqidashi = data.sendHiqidashi?.hiqidashi
-        if (!hiqidashi) {
-          throw new Error('invalid response')
-        }
-        setHiqidashi(hiqidashi)
-        break
+    if (data.sendHiqidashi) {
+      const hiqidashi = data.sendHiqidashi?.hiqidashi
+      if (!hiqidashi) {
+        throw new Error('invalid response')
       }
-      case 'sendHiqidashis': {
-        const hiqidashis = data.sendHiqidashis?.hiqidashis
-        if (!hiqidashis) {
-          throw new Error('invalid response')
-        }
-        hiqidashis.forEach(setHiqidashi)
-
-        break
+      setHiqidashi(hiqidashi)
+    } else if (data.sendHiqidashis) {
+      const hiqidashis = data.sendHiqidashis?.hiqidashis
+      if (!hiqidashis) {
+        throw new Error('invalid response')
       }
-      case 'editHiqidashi': {
-        const hiqidashi = data.editHiqidashi
-        if (!hiqidashi) {
-          throw new Error('invalid response')
-        }
-        editHiqidashi(hiqidashi)
-        break
+      hiqidashis.forEach(setHiqidashi)
+    } else if (data.editHiqidashi) {
+      const hiqidashi = data.editHiqidashi
+      if (!hiqidashi) {
+        throw new Error('invalid response')
       }
-      case 'deleteHiqidashi': {
-        const id = data.deleteHiqidashi?.id
-        if (!id) {
-          throw new Error('invalid response')
-        }
-        deleteHiqidashi(id)
-        break
+      editHiqidashi(hiqidashi)
+    } else if (data.deleteHiqidashi) {
+      const id = data.deleteHiqidashi?.id
+      if (!id) {
+        throw new Error('invalid response')
       }
-      case 'error': {
-        throw new Error('error occured')
-      }
-      default: {
-        throw new Error('unknown payload')
-      }
+      deleteHiqidashi(id)
+    } else if (data.error) {
+      throw new Error('error occured')
+    } else {
+      throw new Error('unknown payload')
     }
   }
   return ws
 }
 
 export const sendDeleteHiqidashiMessage = (ws: WebSocket, id: string) => {
-  const data = WsHeyaData.create({ deleteHiqidashi: { id } })
+  const data = WsHeyaData.fromJSON({ deleteHiqidashi: { id } })
 
   const buffer = WsHeyaData.encode(data).finish()
   ws.send(new Uint8Array(buffer))
 }
 
 export const sendCreateHiqidashiMessage = (ws: WebSocket, parentId: string) => {
-  const data = WsHeyaData.create({
+  const data = WsHeyaData.fromJSON({
     createHiqidashi: {
       parentId,
     },
@@ -89,12 +74,9 @@ export const sendEditHiqidashiMessage = (
   id: string,
   val: EditValue
 ) => {
-  const d: hiqidashi.IWsEditHiqidashi = { id }
-  if (val.title) d.title = { value: val.title }
-  if (val.drawing) d.drawing = { value: val.drawing }
-  if (val.colorCode) d.colorCode = { value: val.colorCode }
+  const d = { id, ...val }
 
-  const data = WsHeyaData.create({ editHiqidashi: d })
+  const data = WsHeyaData.fromJSON({ editHiqidashi: d })
 
   const buffer = WsHeyaData.encode(data).finish()
   ws.send(new Uint8Array(buffer))

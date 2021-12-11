@@ -1,4 +1,4 @@
-import { hiqidashi } from '/@/lib/apis/pb/ws/hiqidashi'
+import { Hiqidashi } from '/@/lib/pb/protobuf/ws/hiqidashi'
 
 export type HiqidashiTree = {
   children: HiqidashiTree[]
@@ -11,23 +11,23 @@ export type HiqidashiTree = {
   mode: 'normal' | 'edit' | 'init'
 }
 
-export const constructHiqidashiTree = (hiqidashis: hiqidashi.Hiqidashi[]) => {
-  const childrenMap = new Map<string, hiqidashi.Hiqidashi[]>()
+export const constructHiqidashiTree = (hiqidashis: Hiqidashi[]) => {
+  const childrenMap = new Map<string, Hiqidashi[]>()
 
   hiqidashis.forEach((hiqidashi) => {
-    if (!hiqidashi.parentId?.value) {
+    if (!hiqidashi.parentId) {
       return
     }
-    if (childrenMap.has(hiqidashi.parentId.value)) {
-      childrenMap.get(hiqidashi.parentId.value)?.push(hiqidashi)
+    if (childrenMap.has(hiqidashi.parentId)) {
+      childrenMap.get(hiqidashi.parentId)?.push(hiqidashi)
     } else {
-      childrenMap.set(hiqidashi.parentId.value, [hiqidashi])
+      childrenMap.set(hiqidashi.parentId, [hiqidashi])
     }
   })
 
   const makeHiqidashiTreeRecursive = (
     parentId: string,
-    root: hiqidashi.Hiqidashi
+    root: Hiqidashi
   ): HiqidashiTree => {
     const children = childrenMap.get(root.id) ?? []
 

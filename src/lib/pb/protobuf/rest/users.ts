@@ -1,6 +1,6 @@
 /* eslint-disable */
-import { util, configure, Writer, Reader } from "protobufjs/minimal";
-import * as Long from "long";
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 import { Heyas } from "../../protobuf/rest/heyas";
 
 export const protobufPackage = "users";
@@ -47,15 +47,18 @@ export interface Users {
 const baseGetUsersResponse: object = { userId: "" };
 
 export const GetUsersResponse = {
-  encode(message: GetUsersResponse, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: GetUsersResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.userId) {
       writer.uint32(10).string(v!);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): GetUsersResponse {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): GetUsersResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseGetUsersResponse } as GetUsersResponse;
     message.userId = [];
@@ -101,15 +104,18 @@ export const GetUsersResponse = {
 const basePostUsersRequest: object = { name: "" };
 
 export const PostUsersRequest = {
-  encode(message: PostUsersRequest, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: PostUsersRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): PostUsersRequest {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): PostUsersRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...basePostUsersRequest } as PostUsersRequest;
     while (reader.pos < end) {
@@ -155,16 +161,19 @@ const baseGetUsersUserIdResponse: object = {};
 export const GetUsersUserIdResponse = {
   encode(
     message: GetUsersUserIdResponse,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.user !== undefined) {
       User.encode(message.user, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): GetUsersUserIdResponse {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): GetUsersUserIdResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseGetUsersUserIdResponse } as GetUsersUserIdResponse;
     while (reader.pos < end) {
@@ -214,16 +223,16 @@ const baseGetUsersMeResponse: object = {};
 export const GetUsersMeResponse = {
   encode(
     message: GetUsersMeResponse,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.me !== undefined) {
       User.encode(message.me, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): GetUsersMeResponse {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): GetUsersMeResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseGetUsersMeResponse } as GetUsersMeResponse;
     while (reader.pos < end) {
@@ -273,16 +282,16 @@ const baseGetUsersMeFavorites: object = { favoriteHeyaId: "" };
 export const GetUsersMeFavorites = {
   encode(
     message: GetUsersMeFavorites,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.favoriteHeyaId) {
       writer.uint32(10).string(v!);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): GetUsersMeFavorites {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): GetUsersMeFavorites {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseGetUsersMeFavorites } as GetUsersMeFavorites;
     message.favoriteHeyaId = [];
@@ -332,16 +341,19 @@ const baseGetUsersMeHeyasResponse: object = {};
 export const GetUsersMeHeyasResponse = {
   encode(
     message: GetUsersMeHeyasResponse,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.heyas !== undefined) {
       Heyas.encode(message.heyas, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): GetUsersMeHeyasResponse {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): GetUsersMeHeyasResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGetUsersMeHeyasResponse,
@@ -395,7 +407,7 @@ export const GetUsersMeHeyasResponse = {
 const baseUser: object = { id: "", name: "" };
 
 export const User = {
-  encode(message: User, writer: Writer = Writer.create()): Writer {
+  encode(message: User, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
@@ -405,8 +417,8 @@ export const User = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): User {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): User {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseUser } as User;
     while (reader.pos < end) {
@@ -455,15 +467,15 @@ export const User = {
 const baseUsers: object = {};
 
 export const Users = {
-  encode(message: Users, writer: Writer = Writer.create()): Writer {
+  encode(message: Users, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.users) {
       User.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Users {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): Users {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseUsers } as Users;
     message.users = [];
@@ -531,9 +543,7 @@ export type Exact<P, I extends P> = P extends Builtin
         never
       >;
 
-// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
-// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
-if (util.Long !== Long) {
-  util.Long = Long as any;
-  configure();
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
 }

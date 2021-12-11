@@ -1,6 +1,6 @@
 import { inject, InjectionKey, provide, reactive } from 'vue'
 import { HiqidashiTree } from '/@/lib/hiqidashiTree'
-import { hiqidashi } from '/@/lib/apis/pb/ws/ws'
+import { Hiqidashi, WsEditHiqidashi } from '/@/lib/pb/protobuf/ws/hiqidashi'
 import {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   connectWS, // TODO: remove ↑
@@ -291,7 +291,7 @@ export const useHeyaStoreFromWS = () => {
     deleteHiqidashi,
   } = useHeyaStoreBase()
 
-  const setHiqidashi = (hiqidashi: hiqidashi.IHiqidashi) => {
+  const setHiqidashi = (hiqidashi: Hiqidashi) => {
     const { id, title, description, colorCode, parentId, creatorId } = hiqidashi
     if (
       typeof id !== 'string' ||
@@ -322,14 +322,14 @@ export const useHeyaStoreFromWS = () => {
       createNewHiqidashi(parentId, hiqidashiTree)
     }
   }
-  const editHiqidashi = (hiqidashi: hiqidashi.IWsEditHiqidashi) => {
+  const editHiqidashi = (hiqidashi: WsEditHiqidashi) => {
     const tree = heyaStore.hiqidashiMap.get(hiqidashi.id ?? '')
     if (!tree) {
       throw new Error('invalid hiqidashi id')
     }
 
-    tree.title = hiqidashi.title?.value ?? tree.title
-    tree.colorCode = hiqidashi.colorCode?.value ?? tree.colorCode
+    tree.title = hiqidashi.title ?? tree.title
+    tree.colorCode = hiqidashi.colorCode ?? tree.colorCode
   }
 
   return {
