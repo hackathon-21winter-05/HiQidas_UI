@@ -45,14 +45,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, PropType } from 'vue'
 import { useRouter } from 'vue-router'
+import { Heya } from '/@/lib/pb/protobuf/rest/heyas'
 
 export default defineComponent({
   name: 'HeyaCard',
   props: {
     heyaData: {
-      type: Object,
+      type: Object as PropType<Heya>,
       required: true,
     },
     isStared: {
