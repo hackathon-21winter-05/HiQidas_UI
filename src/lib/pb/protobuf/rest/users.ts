@@ -15,6 +15,11 @@ export interface PostUsersRequest {
   name: string;
 }
 
+/** POST /users レスポンス */
+export interface PostUsersResponse {
+  user: User | undefined;
+}
+
 /** GET /users/{userId} ユーザーの詳細情報を取得 */
 export interface GetUsersUserIdResponse {
   user: User | undefined;
@@ -26,7 +31,7 @@ export interface GetUsersMeResponse {
 }
 
 /** GET /users/me/favorites 自分のお気に入りシートの取得 */
-export interface GetUsersMeFavorites {
+export interface GetUsersMeFavoritesRequest {
   favoriteHeyaId: string[];
 }
 
@@ -38,6 +43,7 @@ export interface GetUsersMeHeyasResponse {
 export interface User {
   id: string;
   name: string;
+  iconFileId: string;
 }
 
 export interface Users {
@@ -152,6 +158,65 @@ export const PostUsersRequest = {
   ): PostUsersRequest {
     const message = { ...basePostUsersRequest } as PostUsersRequest;
     message.name = object.name ?? "";
+    return message;
+  },
+};
+
+const basePostUsersResponse: object = {};
+
+export const PostUsersResponse = {
+  encode(
+    message: PostUsersResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.user !== undefined) {
+      User.encode(message.user, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): PostUsersResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...basePostUsersResponse } as PostUsersResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.user = User.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): PostUsersResponse {
+    const message = { ...basePostUsersResponse } as PostUsersResponse;
+    message.user =
+      object.user !== undefined && object.user !== null
+        ? User.fromJSON(object.user)
+        : undefined;
+    return message;
+  },
+
+  toJSON(message: PostUsersResponse): unknown {
+    const obj: any = {};
+    message.user !== undefined &&
+      (obj.user = message.user ? User.toJSON(message.user) : undefined);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<PostUsersResponse>, I>>(
+    object: I
+  ): PostUsersResponse {
+    const message = { ...basePostUsersResponse } as PostUsersResponse;
+    message.user =
+      object.user !== undefined && object.user !== null
+        ? User.fromPartial(object.user)
+        : undefined;
     return message;
   },
 };
@@ -277,11 +342,11 @@ export const GetUsersMeResponse = {
   },
 };
 
-const baseGetUsersMeFavorites: object = { favoriteHeyaId: "" };
+const baseGetUsersMeFavoritesRequest: object = { favoriteHeyaId: "" };
 
-export const GetUsersMeFavorites = {
+export const GetUsersMeFavoritesRequest = {
   encode(
-    message: GetUsersMeFavorites,
+    message: GetUsersMeFavoritesRequest,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     for (const v of message.favoriteHeyaId) {
@@ -290,10 +355,15 @@ export const GetUsersMeFavorites = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): GetUsersMeFavorites {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): GetUsersMeFavoritesRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseGetUsersMeFavorites } as GetUsersMeFavorites;
+    const message = {
+      ...baseGetUsersMeFavoritesRequest,
+    } as GetUsersMeFavoritesRequest;
     message.favoriteHeyaId = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -309,15 +379,17 @@ export const GetUsersMeFavorites = {
     return message;
   },
 
-  fromJSON(object: any): GetUsersMeFavorites {
-    const message = { ...baseGetUsersMeFavorites } as GetUsersMeFavorites;
+  fromJSON(object: any): GetUsersMeFavoritesRequest {
+    const message = {
+      ...baseGetUsersMeFavoritesRequest,
+    } as GetUsersMeFavoritesRequest;
     message.favoriteHeyaId = (object.favoriteHeyaId ?? []).map((e: any) =>
       String(e)
     );
     return message;
   },
 
-  toJSON(message: GetUsersMeFavorites): unknown {
+  toJSON(message: GetUsersMeFavoritesRequest): unknown {
     const obj: any = {};
     if (message.favoriteHeyaId) {
       obj.favoriteHeyaId = message.favoriteHeyaId.map((e) => e);
@@ -327,10 +399,12 @@ export const GetUsersMeFavorites = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<GetUsersMeFavorites>, I>>(
+  fromPartial<I extends Exact<DeepPartial<GetUsersMeFavoritesRequest>, I>>(
     object: I
-  ): GetUsersMeFavorites {
-    const message = { ...baseGetUsersMeFavorites } as GetUsersMeFavorites;
+  ): GetUsersMeFavoritesRequest {
+    const message = {
+      ...baseGetUsersMeFavoritesRequest,
+    } as GetUsersMeFavoritesRequest;
     message.favoriteHeyaId = object.favoriteHeyaId?.map((e) => e) || [];
     return message;
   },
@@ -404,7 +478,7 @@ export const GetUsersMeHeyasResponse = {
   },
 };
 
-const baseUser: object = { id: "", name: "" };
+const baseUser: object = { id: "", name: "", iconFileId: "" };
 
 export const User = {
   encode(message: User, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
@@ -413,6 +487,9 @@ export const User = {
     }
     if (message.name !== "") {
       writer.uint32(18).string(message.name);
+    }
+    if (message.iconFileId !== "") {
+      writer.uint32(26).string(message.iconFileId);
     }
     return writer;
   },
@@ -430,6 +507,9 @@ export const User = {
         case 2:
           message.name = reader.string();
           break;
+        case 3:
+          message.iconFileId = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -446,6 +526,10 @@ export const User = {
       object.name !== undefined && object.name !== null
         ? String(object.name)
         : "";
+    message.iconFileId =
+      object.iconFileId !== undefined && object.iconFileId !== null
+        ? String(object.iconFileId)
+        : "";
     return message;
   },
 
@@ -453,6 +537,7 @@ export const User = {
     const obj: any = {};
     message.id !== undefined && (obj.id = message.id);
     message.name !== undefined && (obj.name = message.name);
+    message.iconFileId !== undefined && (obj.iconFileId = message.iconFileId);
     return obj;
   },
 
@@ -460,6 +545,7 @@ export const User = {
     const message = { ...baseUser } as User;
     message.id = object.id ?? "";
     message.name = object.name ?? "";
+    message.iconFileId = object.iconFileId ?? "";
     return message;
   },
 };
