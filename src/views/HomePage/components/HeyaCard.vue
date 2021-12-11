@@ -45,8 +45,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType } from 'vue'
+import { defineComponent, ref, PropType, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { getUserById } from '/@/lib/apis/users'
 import { Heya } from '/@/lib/pb/protobuf/rest/heyas'
 
 export default defineComponent({
@@ -92,6 +93,17 @@ export default defineComponent({
       isStaredRef.value = !isStaredRef.value
       context.emit('star-changed', !props.isStared, props.heyaData.id)
     }
+
+    const creatorName = ref('')
+    onMounted(async () => {
+      const creatorData = await getUserById(props.heyaData.creatorId)
+
+      if (!creatorData || !creatorData.id) {
+        return
+      }
+
+      creatorName.value = creatorData.id
+    })
 
     return {
       ...props,
