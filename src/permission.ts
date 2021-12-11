@@ -11,6 +11,7 @@ router.beforeEach(async (to, _, next) => {
       await axios.get('/api/users/me', {
         responseType: 'arraybuffer',
       })
+      next()
     } catch (error) {
       ElMessage({
         message: `エラーが発生しました\n${error}`,
