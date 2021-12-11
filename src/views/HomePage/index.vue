@@ -160,9 +160,11 @@ export default defineComponent({
       if (isStared) {
         // TODO: お気に入り追加の api 叩く
         favoriteHeyas.value.add(heyaId)
+        localStorage.setItem('HiQidas', JSON.stringify(favoriteHeyas.value))
       } else {
         // TODO: お気に入り削除の api 叩く
         favoriteHeyas.value.delete(heyaId)
+        localStorage.setItem('HiQidas', JSON.stringify(favoriteHeyas.value))
       }
     }
 
@@ -237,6 +239,11 @@ export default defineComponent({
     }
 
     onMounted(async () => {
+      const localData = localStorage.getItem('HiQidas')
+      if (localData) {
+        favoriteHeyas.value = JSON.parse(localData)
+      }
+
       await setHeyasData()
       await setFavoriteHeyasId()
     })
