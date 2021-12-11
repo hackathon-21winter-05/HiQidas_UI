@@ -1,16 +1,26 @@
-import { hiqidashi } from '/@/lib/apis/pb/ws/hiqidashi'
+import { Hiqidashi } from '/@/lib/pb/protobuf/ws/hiqidashi'
 
 export type HiqidashiTree = {
   children: HiqidashiTree[]
   id: string
+  parentId: string
   title: string
+  creatorId: string
   description: string
+  colorCode: string
+  mode: 'normal' | 'edit' | 'init'
 }
 
-export const constructHiqidashiTree = (hiqidashis: hiqidashi.Hiqidashi[]) => {
-  const childrenMap = new Map<string, hiqidashi.Hiqidashi[]>()
+export const constructHiqidashiTree = (
+  hiqidashis: Hiqidashi[],
+  setHiqidashi: (h: Hiqidashi) => void
+) => {
+  const childrenMap = new Map<string, Hiqidashi[]>()
 
   hiqidashis.forEach((hiqidashi) => {
+    if (!hiqidashi.parentId) {
+      return
+    }
     if (childrenMap.has(hiqidashi.parentId)) {
       childrenMap.get(hiqidashi.parentId)?.push(hiqidashi)
     } else {
@@ -18,24 +28,22 @@ export const constructHiqidashiTree = (hiqidashis: hiqidashi.Hiqidashi[]) => {
     }
   })
 
-  const makeHiqidashiTreeRecursive = (
-    root: hiqidashi.Hiqidashi
-  ): HiqidashiTree => {
+  const makeHiqidashiTreeRecursive = (root: Hiqidashi) => {
     const children = childrenMap.get(root.id) ?? []
 
-    return {
-      children: children.map((child) => makeHiqidashiTreeRecursive(child)),
-      id: root.id,
-      title: root.title,
-      description: root.description,
-    }
+    children.forEach((child) => {
+      setHiqidashi(child)
+      makeHiqidashiTreeRecursive(child)
+    })
   }
 
   const rootHiqidashis = hiqidashis.filter((hiqidashi) => !hiqidashi.parentId)
   if (rootHiqidashis.length !== 1) {
     throw new Error()
   }
-  const rootHiqidashi = rootHiqidashis[0]
+  const root = rootHiqidashis[0]
 
-  return makeHiqidashiTreeRecursive(rootHiqidashi)
+  setHiqidashi(root)
+
+  makeHiqidashiTreeRecursive(root)
 }
