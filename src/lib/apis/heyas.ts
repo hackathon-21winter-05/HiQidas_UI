@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { heya } from '/@/lib/apis/pb/rest/heyas'
+import * as heya from '/@/lib/pb/protobuf/rest/heyas'
 
 export const getHeyas = async () => {
   const res = await axios.get('/api/heyas')
@@ -10,7 +10,7 @@ export const getHeyas = async () => {
 }
 
 export const createHeya = async (title: string, description: string) => {
-  const req = heya.PostHeyasRequest.create({
+  const req = heya.PostHeyasRequest.fromJSON({
     title: title,
     description: description,
   })
@@ -28,7 +28,7 @@ export const editHeyaData = async (
   newTitle: string,
   newDescription: string
 ) => {
-  const req = heya.PutHeyasHeyaIdRequest.create({
+  const req = heya.PutHeyasHeyaIdRequest.fromJSON({
     title: newTitle,
     description: newDescription,
   })

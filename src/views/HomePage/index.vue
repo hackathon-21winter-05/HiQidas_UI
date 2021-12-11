@@ -61,7 +61,7 @@
 import { computed, defineComponent, onMounted, Ref, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { heya } from '/@/lib/apis/pb/rest/heyas'
+import { Heya } from '/@/lib/pb/protobuf/rest/heyas'
 import * as heyasApi from '/@/lib/apis/heyas'
 import HeyaCard from './components/HeyaCard.vue'
 
@@ -74,7 +74,7 @@ export default defineComponent({
     const userMe = { id: 'hoge2', name: 'hoge2' }
 
     // computed で検知されるように ref にする
-    const heyasData: Ref<heya.IHeya[]> = ref([])
+    const heyasData: Ref<Heya[]> = ref([])
     const favoriteHeyas: Ref<Set<string>> = ref(new Set()) // お気に入りのヘヤの id を持つ set
 
     const sortKey: Ref<'更新日時順' | '作成日時順'> = ref('更新日時順')
