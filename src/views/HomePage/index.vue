@@ -57,7 +57,9 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, Ref, ref } from 'vue'
+import { computed, defineComponent, onMounted, Ref, ref } from 'vue'
+import { users } from '/@/lib/apis/pb/rest/users'
+import { useMe } from '/@/providers/me'
 import HeyaCard from './components/HeyaCard.vue'
 
 export default defineComponent({
@@ -66,7 +68,7 @@ export default defineComponent({
     HeyaCard,
   },
   setup() {
-    const userMe = { id: 'hoge2', name: 'hoge2' }
+    let userMe: users.User | null = null
 
     // TODO: api 叩いて取得する・表示する分フィルターかける 表示分は getter にするのが良さそう？
     const heyasData = [
@@ -158,7 +160,7 @@ export default defineComponent({
       if (displayHeyasFlag.value === 'favorite') {
         return heyasData.filter((heya) => favoriteHeyas.value.has(heya.id))
       } else if (displayHeyasFlag.value === 'owner') {
-        return heyasData.filter((heya) => heya.creatorId === userMe.id)
+        return heyasData.filter((heya) => heya.creatorId === userMe?.id)
       }
 
       return heyasData
@@ -180,6 +182,11 @@ export default defineComponent({
       // TODO: 新しいヘヤ作成
       console.log('create')
     }
+
+    onMounted(async () => {
+      const res = await useMe()
+      userMe = res.me
+    })
 
     return {
       displayHeyasData,

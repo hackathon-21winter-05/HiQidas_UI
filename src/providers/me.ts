@@ -25,7 +25,7 @@ export const useMe = async () => {
     const data = users.GetUsersMeResponse.decode(res.data)
 
     if (!data.me) {
-      location.pathname = '/login'
+      throw new Error('Not logged in.')
     }
 
     oauthRedirect()

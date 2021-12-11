@@ -27,6 +27,7 @@ const publicRoutes: Array<RouteRecordRaw> = [
     name: 'LoginPage',
     component: () =>
       import(/* webpackChunkName: "login" */ '/@/views/LoginPage/index.vue'),
+    meta: { isPublic: true },
   },
   {
     path: '/register',
@@ -35,6 +36,7 @@ const publicRoutes: Array<RouteRecordRaw> = [
       import(
         /* webpackChunkName: "register" */ '/@/views/RegisterPage/index.vue'
       ),
+    meta: { isPublic: true },
   },
 ]
 
