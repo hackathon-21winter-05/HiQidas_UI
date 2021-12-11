@@ -40,6 +40,7 @@ const systemRoutes: Array<RouteRecordRaw> = [
     name: 'OAuthPage',
     component: () =>
       import(/* webpackChunkName: "oauth" */ '/@/views/OAuthPage/index.vue'),
+    meta: { isPublic: true },
   },
 ]
 
