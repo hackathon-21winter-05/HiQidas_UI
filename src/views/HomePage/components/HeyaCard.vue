@@ -116,6 +116,7 @@ export default defineComponent({
       isStaredRef,
       createdAt,
       updatedAt,
+      creatorName,
       showDialog,
       goToHeyaPage,
       deleteHeya,
