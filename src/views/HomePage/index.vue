@@ -197,6 +197,14 @@ export default defineComponent({
 })
 </script>
 
+<style lang="scss">
+.heya-search-input {
+  .el-input__inner {
+    border-radius: 50px;
+  }
+}
+</style>
+
 <style lang="scss" scoped>
 .home {
   height: 100%;
