@@ -50,6 +50,7 @@
           :heya-data="heyaData"
           :is-stared="favoriteHeyas.has(heyaData.id)"
           @star-changed="changeStar"
+          @heya-deleted="deleteHeya"
         />
       </div>
     </div>
@@ -57,7 +58,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, Ref, ref } from 'vue'
+import { computed, defineComponent, onMounted, Ref, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
+import { Heya } from '/@/lib/pb/protobuf/rest/heyas'
+import * as heyasApi from '/@/lib/apis/heyas'
 import HeyaCard from './components/HeyaCard.vue'
 
 export default defineComponent({
@@ -68,42 +73,9 @@ export default defineComponent({
   setup() {
     const userMe = { id: 'hoge2', name: 'hoge2' }
 
-    // TODO: api 叩いて取得する・表示する分フィルターかける 表示分は getter にするのが良さそう？
-    const heyasData = [
-      {
-        id: 'abcs',
-        title: 'タイトル長いよながい長いながいTitle',
-        creatorId: 'nananananananananaganaganaganaga',
-        creatorName: 'nananananananananaganaganaganaga',
-        createdAt: '2022/01/02',
-        updatedAt: '2022/02/02',
-      },
-      {
-        id: 'uajs',
-        title: 'タイトル2',
-        creatorId: 'hoge2',
-        creatorName: 'hoge2',
-        createdAt: '2022/01/01',
-        updatedAt: '2022/02/02',
-      },
-      {
-        id: 'uajass',
-        title: 'タイトル3',
-        creatorId: 'hoge3',
-        creatorName: 'hoge3',
-        createdAt: '2022/01/01',
-        updatedAt: '2022/02/02',
-      },
-      {
-        id: 'uajsddk',
-        title: 'タイトル5',
-        creatorId: 'hoge5',
-        creatorName: 'hoge5',
-        createdAt: '2022/01/03',
-        updatedAt: '2022/01/03',
-      },
-    ]
-    const favoriteHeyas = ref(new Set(['uajass', 'uajs'])) // お気に入りのヘヤの id を持つ set
+    // computed で検知されるように ref にする
+    const heyasData: Ref<Heya[]> = ref([])
+    const favoriteHeyas: Ref<Set<string>> = ref(new Set()) // お気に入りのヘヤの id を持つ set
 
     const sortKey: Ref<'更新日時順' | '作成日時順'> = ref('更新日時順')
     const sortOrder: Ref<'降順' | '昇順'> = ref('降順')
@@ -112,7 +84,11 @@ export default defineComponent({
         sortKey.value === '更新日時順' ? '作成日時順' : '更新日時順'
 
       if (sortKey.value === '更新日時順') {
-        heyasData.sort((a, b) => {
+        heyasData.value.sort((a, b) => {
+          if (!a.updatedAt || !b.updatedAt) {
+            return 0
+          }
+
           if (a.updatedAt < b.updatedAt) {
             return -1
           }
@@ -122,7 +98,11 @@ export default defineComponent({
           return 0
         })
       } else {
-        heyasData.sort((a, b) => {
+        heyasData.value.sort((a, b) => {
+          if (!a.createdAt || !b.createdAt) {
+            return 0
+          }
+
           if (a.createdAt < b.createdAt) {
             return -1
           }
@@ -134,7 +114,7 @@ export default defineComponent({
       }
     }
     const changeSortOrder = () => {
-      heyasData.reverse()
+      heyasData.value.reverse()
       sortOrder.value = sortOrder.value === '降順' ? '昇順' : '降順'
     }
 
@@ -147,39 +127,126 @@ export default defineComponent({
     // 実際に表示するデータ
     const displayHeyasData = computed(() => {
       if (searchText.value.trim().length > 0) {
-        return heyasData.filter((heya) =>
+        return heyasData.value.filter((heya) =>
           searchText.value
             .split(/\s+/i)
             .filter((str) => str.length > 0)
-            .some((str) => heya.title.indexOf(str) >= 0)
+            .some((str) => {
+              if (!heya.title) {
+                return false
+              }
+              return heya.title.indexOf(str) >= 0
+            })
         )
       }
 
       if (displayHeyasFlag.value === 'favorite') {
-        return heyasData.filter((heya) => favoriteHeyas.value.has(heya.id))
+        return heyasData.value.filter((heya) => {
+          if (!heya.id) {
+            return false
+          }
+
+          return favoriteHeyas.value.has(heya.id)
+        })
       } else if (displayHeyasFlag.value === 'owner') {
-        return heyasData.filter((heya) => heya.creatorId === userMe.id)
+        return heyasData.value.filter((heya) => heya.creatorId === userMe.id)
       }
 
-      return heyasData
+      return heyasData.value
     })
 
     const changeStar = (isStared: boolean, heyaId: string) => {
       if (isStared) {
-        favoriteHeyas.value.add(heyaId)
-        console.log(heyaId, ' stared!', favoriteHeyas.value)
         // TODO: お気に入り追加の api 叩く
+        favoriteHeyas.value.add(heyaId)
+        localStorage.setItem('HiQidas', JSON.stringify(favoriteHeyas.value))
       } else {
-        favoriteHeyas.value.delete(heyaId)
-        console.log(heyaId, ' unstared!', favoriteHeyas.value)
         // TODO: お気に入り削除の api 叩く
+        favoriteHeyas.value.delete(heyaId)
+        localStorage.setItem('HiQidas', JSON.stringify(favoriteHeyas.value))
       }
     }
 
-    const createNewHeya = () => {
-      // TODO: 新しいヘヤ作成
-      console.log('create')
+    const deleteHeya = async (heyaId: string) => {
+      try {
+        await heyasApi.deleteHeya(heyaId)
+        heyasData.value = heyasData.value.filter((heya) => heya.id !== heyaId)
+        favoriteHeyas.value.delete(heyaId)
+      } catch (error) {
+        ElMessage({
+          message: `エラーが発生しました\n${error}`,
+          type: 'error',
+          customClass: 'home-page-error-message',
+        })
+        console.log(error)
+      }
     }
+
+    const router = useRouter()
+    const createNewHeya = async () => {
+      try {
+        const newHeya = await heyasApi.createHeya('新しいヘヤ', '')
+        router.push({
+          name: 'HeyaPage',
+          params: { id: newHeya.heya?.id },
+        })
+      } catch (error) {
+        ElMessage({
+          message: `エラーが発生しました\n${error}`,
+          type: 'error',
+          customClass: 'home-page-error-message',
+        })
+        console.log(error)
+      }
+    }
+
+    const setHeyasData = async () => {
+      try {
+        const res = await heyasApi.getHeyas()
+
+        if (!res.heyas || !res.heyas.heyas) {
+          ElMessage({
+            message: 'ヘヤの情報の取得に失敗しました',
+            type: 'error',
+          })
+          return
+        }
+
+        heyasData.value = res.heyas.heyas
+      } catch (error) {
+        ElMessage({
+          message: `エラーが発生しました\n${error}`,
+          type: 'error',
+          customClass: 'home-page-error-message',
+        })
+        console.log(error)
+      }
+    }
+
+    // TODO: お気に入り管理をサーバーが実装したらコメントアウト外す
+    /* const setFavoriteHeyasId = async () => {
+      try {
+        const res = await usersApi.getFavoriteHeyasId()
+        favoriteHeyas.value = new Set(res.favoriteHeyaId)
+      } catch (error) {
+        ElMessage({
+          message: `エラーが発生しました\n${error}`,
+          type: 'error',
+          customClass: 'home-page-error-message',
+        })
+        console.log(error)
+      }
+    } */
+
+    onMounted(async () => {
+      const localData = localStorage.getItem('HiQidas')
+      if (localData) {
+        favoriteHeyas.value = JSON.parse(localData)
+      }
+
+      await setHeyasData()
+      // await setFavoriteHeyasId()
+    })
 
     return {
       displayHeyasData,
@@ -191,6 +258,7 @@ export default defineComponent({
       changeSortKey,
       changeSortOrder,
       changeStar,
+      deleteHeya,
       createNewHeya,
     }
   },
@@ -201,6 +269,14 @@ export default defineComponent({
 .heya-search-input {
   .el-input__inner {
     border-radius: 50px;
+  }
+}
+</style>
+
+<style lang="scss">
+.home-page-error-message {
+  p.el-message__content {
+    white-space: pre-line;
   }
 }
 </style>

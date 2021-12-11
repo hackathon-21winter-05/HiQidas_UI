@@ -9,7 +9,10 @@ import { useEditor, EditorContent } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import Highlight from '@tiptap/extension-highlight'
 import Typography from '@tiptap/extension-typography'
+import Collaboration from '@tiptap/extension-collaboration'
+import * as Y from 'yjs'
 import MenuBar from './MenuBar.vue'
+import { addYdocEventListener } from '/@/lib/yjs'
 
 export default defineComponent({
   name: 'HiQidashiEditor',
@@ -24,15 +27,26 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const ydoc = new Y.Doc()
     const editor = useEditor({
       content: props.description,
-      extensions: [StarterKit, Highlight, Typography],
+      extensions: [
+        StarterKit.configure({
+          history: false,
+        }),
+        Highlight,
+        Typography,
+        Collaboration.configure({
+          document: ydoc,
+        }),
+      ],
     })
 
     const mounted = ref(false)
     onMounted(() => {
       mounted.value = true
     })
+    addYdocEventListener(ydoc)
 
     return { editor, mounted }
   },

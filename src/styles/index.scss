@@ -39,3 +39,17 @@ body {
     border-color: #c41168;
   }
 }
+
+.hiqidashi-input {
+  .el-input__inner {
+    border-radius: 0px;
+    border-color: transparent;
+    &:focus {
+      border-color: transparent;
+    }
+  }
+}
+
+.material-icons {
+  user-select: none;
+}

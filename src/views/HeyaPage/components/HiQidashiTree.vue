@@ -1,98 +1,113 @@
 <template>
   <div class="tree-container">
     <div class="hiqidashi-content">
-      <hi-qidashi :hiqidashi="tree" :color="color" />
+      <hi-qidashi-input
+        v-if="tree.mode === 'init' || tree.mode === 'edit'"
+        :tree="tree"
+      />
+      <hi-qidashi v-else :hiqidashi="tree" :color="color" />
       <div v-if="tree.children.length === 0" class="no-child-container">
-        <div class="diamond" />
-        <div class="array-body" />
-        <div class="array-head" />
+        <div class="small-diamond" />
+        <div class="arrow-body" />
+        <div class="arrow-head" />
         <div class="add-button" @click="createChild">
           <div class="plus-vertical-line" />
-          <div class="plus-horizonal-line" />
+          <div class="plus-horizontal-line" />
         </div>
       </div>
       <div v-else class="arrow-container">
-        <div class="diamond" @click="toggleExpand" />
-        <div v-show="isExpanded" class="dotline" />
-        <div v-show="!isExpanded" class="array-body" />
-        <div v-show="!isExpanded" class="array-head" />
-        <div v-show="!isExpanded" class="children-count">
-          {{ tree.children.length }}
-        </div>
+        <div ref="diamondRef" class="diamond" @click="toggleExpand" />
+        <div v-if="isExpanded" class="dotline" />
+        <template v-else>
+          <div class="arrow-body" />
+          <div class="arrow-head" />
+          <div class="children-count">
+            {{ tree.children.length }}
+          </div>
+        </template>
       </div>
     </div>
-    <div
-      v-if="tree.children.length !== 0"
-      v-show="isExpanded"
-      class="vertical-line"
-    />
-    <div
-      v-if="tree.children.length !== 0"
-      v-show="isExpanded"
-      class="next-trees"
-    >
-      <div v-for="child in tree.children" :key="child.id" class="next-tree">
-        <div class="array-body" />
-        <div class="array-head" />
-        <hi-qidashi-tree
-          :tree="child"
-          :create-new-hiqidashi="createNewHiqidashi"
-        />
-      </div>
-      <div class="next-tree">
-        <div class="array-body" />
-        <div class="array-head" />
-        <div class="add-button-long" @click="createChild">
-          <div class="plus-vertical-line" />
-          <div class="plus-horizonal-line" />
+    <template v-if="tree.children.length !== 0">
+      <div v-show="isExpanded" class="next-trees">
+        <div
+          v-for="(child, i) in tree.children"
+          :key="child.id"
+          class="next-tree-container"
+        >
+          <div
+            v-show="isExpanded"
+            :class="i === 0 ? 'vertical-top-line' : 'vertical-line'"
+          />
+          <div class="next-tree">
+            <div class="array-body" />
+            <div class="array-head" />
+            <hi-qidashi-tree :tree="child" />
+          </div>
+        </div>
+        <div class="new-tree-container">
+          <div class="vertical-bottom-line" />
+          <div class="next-tree">
+            <div class="array-body" />
+            <div class="array-head" />
+            <div class="add-button-long" @click="createChild">
+              <div class="plus-vertical-line" />
+              <div class="plus-horizonal-line" />
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive, ref } from 'vue'
+import { computed, defineComponent, PropType, ref } from 'vue'
 import { HiqidashiTree } from '/@/lib/hiqidashiTree'
+import HiQidashiInput from './HiQidashiInput.vue'
 import HiQidashi from './HiQidashi.vue'
+import { useHeyaStore } from '/@/providers/heya'
 
 export default defineComponent({
   name: 'HiQidashiTree',
   components: {
     HiQidashi,
+    HiQidashiInput,
   },
   props: {
     tree: {
       type: Object as PropType<HiqidashiTree>,
       required: true,
     },
-    createNewHiqidashi: {
-      type: Function as PropType<
-        (parentId: string, tree: HiqidashiTree) => void
-      >,
-      required: true,
-    },
   },
   setup(props) {
+    const { heyaStore: store, createNewHiqidashi } = useHeyaStore()
+
     const isExpanded = ref(true)
 
     const createChild = () => {
-      props.createNewHiqidashi(
-        props.tree.id,
-        reactive({
-          children: [],
-          id: Math.random().toString(32).substring(2),
-          title: 'title',
-          description: '',
-        })
-      )
+      createNewHiqidashi(props.tree.id)
     }
 
-    const toggleExpand = () => (isExpanded.value = !isExpanded.value)
+    const diamondRef = ref<HTMLElement>()
 
-    const color = '#' + Math.floor(Math.random() * 16777215).toString(16)
+    const color = computed(() => props.tree.colorCode)
 
-    return { ...props, createChild, color, isExpanded, toggleExpand }
+    const toggleExpand = () => {
+      isExpanded.value = !isExpanded.value
+      if (diamondRef.value) {
+        diamondRef.value.scrollIntoView({ block: 'center', inline: 'center' })
+      }
+    }
+
+    return {
+      ...props,
+      store,
+      color,
+      isExpanded,
+      toggleExpand,
+      createChild,
+      diamondRef,
+    }
   },
 })
 </script>
@@ -109,12 +124,6 @@ export default defineComponent({
       display: flex;
       align-items: center;
       justify-content: center;
-      .diamond {
-        background-color: v-bind(color);
-        width: 9px;
-        height: 9px;
-        transform: rotate(45deg);
-      }
     }
     .add-button {
       position: relative;
@@ -123,6 +132,12 @@ export default defineComponent({
       height: 36px;
       border-radius: 50%;
     }
+  }
+  .small-diamond {
+    background-color: v-bind(color);
+    width: 9px;
+    height: 9px;
+    transform: rotate(45deg);
   }
   .arrow-container {
     display: flex;
@@ -136,7 +151,7 @@ export default defineComponent({
     }
 
     .dotline {
-      width: 24px;
+      width: 40px;
       border-bottom: 4px dotted v-bind(color);
     }
 
@@ -157,6 +172,25 @@ export default defineComponent({
     min-width: 3px;
     min-height: 100%;
   }
+  .vertical-top-line {
+    background-color: v-bind(color);
+    min-width: 3px;
+    height: 50%;
+  }
+  .vertical-bottom-line {
+    background-color: v-bind(color);
+    min-width: 3px;
+    height: 50%;
+  }
+
+  .next-tree-container {
+    display: flex;
+  }
+  .new-tree-container {
+    display: flex;
+    align-items: flex-end;
+  }
+
   .plus-vertical-line {
     position: absolute;
     width: 4px;
@@ -166,7 +200,7 @@ export default defineComponent({
     background-color: white;
   }
 
-  .plus-horizonal-line {
+  .plus-horizontal-line {
     position: absolute;
     width: 18px;
     height: 4px;
@@ -187,19 +221,21 @@ export default defineComponent({
   .next-trees {
     display: flex;
     flex-direction: column-reverse;
+    justify-content: space-around;
 
     .next-tree {
       display: flex;
       align-items: center;
+      margin-left: -3px;
     }
   }
-  .array-body {
+  .arrow-body {
     background-color: v-bind(color);
     height: 3px;
-    min-width: 20px;
+    min-width: 40px;
   }
 
-  .array-head {
+  .arrow-head {
     width: 0;
     height: 0;
     border-left: 10px solid v-bind(color);

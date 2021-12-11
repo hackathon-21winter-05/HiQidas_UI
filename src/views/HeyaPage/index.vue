@@ -2,85 +2,54 @@
   <div class="heya">
     <div class="navbar">
       <router-link to="/" class="title"><h1>HiQidas</h1></router-link>
-      <span class="heya-name">Heya Name</span>
+      <span class="heya-name">{{ tree.title }}</span>
     </div>
-
     <div class="heya-main">
-      <hi-qidashi-tree
-        :tree="hiqidashiTree"
-        :create-new-hiqidashi="createNewHiqidashi"
-      />
+      <div class="heya-container">
+        <preload-icons />
+        <color-picker-container v-if="colorPickingId" />
+        <delete-dialog />
+
+        <hi-qidashi-input
+          v-if="tree.mode === 'init'"
+          :first="true"
+          :tree="tree"
+        />
+        <hi-qidashi-tree v-else :tree="tree" />
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
+import { computed, defineComponent } from 'vue'
 import HiQidashiTree from './components/HiQidashiTree.vue'
-import { hiqidashi } from '/@/lib/apis/pb/ws/hiqidashi'
-import { constructHiqidashiTree, HiqidashiTree } from '/@/lib/hiqidashiTree'
+import HiQidashiInput from './components/HiQidashiInput.vue'
+import PreloadIcons from './components/PreloadIcons.vue'
+import DeleteDialog from './components/DeleteDialog.vue'
+import ColorPickerContainer from './components/ColorPickerContainer.vue'
+import { useHeyaStore } from '/@/providers/heya'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'HeyaPage',
   components: {
     HiQidashiTree,
+    HiQidashiInput,
+    DeleteDialog,
+    PreloadIcons,
+    ColorPickerContainer,
   },
   setup() {
-    const hiqidashis = [
-      new hiqidashi.Hiqidashi({
-        id: '1',
-        parentId: null,
-        title: 'title',
-        description: 'description',
-      }),
-      new hiqidashi.Hiqidashi({
-        id: '2',
-        parentId: '1',
-        title: 'title',
-        description: 'description',
-      }),
-      new hiqidashi.Hiqidashi({
-        id: '3',
-        parentId: '1',
-        title: 'title',
-        description: 'description',
-      }),
-      new hiqidashi.Hiqidashi({
-        id: '4',
-        parentId: '2',
-        title: 'title',
-        description: 'description',
-      }),
-      new hiqidashi.Hiqidashi({
-        id: '5',
-        parentId: '2',
-        title: 'title',
-        description: 'description',
-      }),
-    ]
+    const { heyaStore: store, connectHeya, createNewHiqidashi } = useHeyaStore()
+    const route = useRoute()
+    const heyaId = route.params.id.toLocaleString()
+    connectHeya(heyaId)
 
-    const hiqidashiTree = reactive(constructHiqidashiTree(hiqidashis))
+    const tree = computed(() => store.hiqidashiTree)
+    const colorPickingId = computed(() => store.colorPickingId)
 
-    const hiqidashiMap = new Map<string, HiqidashiTree>()
-    const setHiqidashiMap = (tree: HiqidashiTree) => {
-      hiqidashiMap.set(tree.id, tree)
-      tree.children.forEach(setHiqidashiMap)
-    }
-
-    setHiqidashiMap(hiqidashiTree)
-
-    const createNewHiqidashi = (parentId: string, hiqidashi: HiqidashiTree) => {
-      const parent = hiqidashiMap.get(parentId)
-
-      if (!parent) {
-        throw new Error(`parentId ${parentId} not found.`)
-      }
-
-      parent.children.push(hiqidashi)
-      hiqidashiMap.set(hiqidashi.id, hiqidashi)
-    }
-
-    return { hiqidashiTree, createNewHiqidashi }
+    return { tree, createNewHiqidashi, colorPickingId }
   },
 })
 </script>
@@ -116,6 +85,10 @@ export default defineComponent({
   .heya-main {
     overflow: auto;
     grid-row: 2;
+  }
+  .heya-container {
+    padding: 50%;
+    display: inline-block;
   }
 }
 </style>
