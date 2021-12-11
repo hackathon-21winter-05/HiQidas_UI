@@ -128,7 +128,7 @@ export default defineComponent({
     // 実際に表示するデータ
     const displayHeyasData = computed(() => {
       if (searchText.value.trim().length > 0) {
-        return heyasData.value.filter((heya) => 
+        return heyasData.value.filter((heya) =>
           searchText.value
             .split(/\s+/i)
             .filter((str) => str.length > 0)
