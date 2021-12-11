@@ -20,8 +20,9 @@ body {
   height: 100%;
 }
 
-.title {
-  color: #9b3131;
+.logo {
+  width: 128px;
+  padding: 8px;
 }
 
 .ProseMirror {
@@ -48,6 +49,10 @@ body {
       border-color: transparent;
     }
   }
+}
+
+p.el-message__content {
+  white-space: pre-line;
 }
 
 .material-icons {

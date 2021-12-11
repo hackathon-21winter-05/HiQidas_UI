@@ -1,5 +1,4 @@
 import { inject, InjectionKey, provide, reactive } from 'vue'
-import { getOAuthCallback } from '/@/lib/apis/oauth'
 import { User } from '/@/lib/pb/protobuf/rest/users'
 import { getMe } from '/@/lib/apis/users'
 
@@ -27,13 +26,10 @@ export const useMe = () => {
           me.name = fetchedMe.name
         }
       })
-      .catch(() => oauthRedirect())
+      .catch(() => {
+        throw new Error('Not logged in.')
+      })
   }
 
   return { me }
-}
-
-const oauthRedirect = async () => {
-  const { uri } = await getOAuthCallback()
-  location.href = uri
 }

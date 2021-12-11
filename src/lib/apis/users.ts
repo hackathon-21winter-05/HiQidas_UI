@@ -10,6 +10,15 @@ export const getMe = async () => {
   return users.GetUsersMeResponse.decode(new Uint8Array(res.data)).me
 }
 
+export const createUser = async (name: string) => {
+  const req = users.PostUsersRequest.fromJSON({ name: name })
+  const buffer = users.PostUsersRequest.encode(req).finish()
+
+  await axios.post('/api/users', new Uint8Array(buffer), {
+    responseType: 'arraybuffer',
+  })
+}
+
 export const getUserById = async (userId: string) => {
   const res = await axios.get(`/api/users/${userId}`, {
     responseType: 'arraybuffer',

@@ -104,11 +104,11 @@ export default defineComponent({
     onMounted(async () => {
       const creatorData = await getUserById(props.heyaData.creatorId)
 
-      if (!creatorData || !creatorData.id) {
+      if (!creatorData || !creatorData.name) {
         return
       }
 
-      creatorName.value = creatorData.id
+      creatorName.value = creatorData.name
     })
 
     return {

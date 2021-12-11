@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 
-const routes: Array<RouteRecordRaw> = [
+/**
+  ログイン済みユーザーなら誰でも閲覧可能なルート
+ */
+const internalConstantRoutes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'HomePage',
@@ -13,6 +16,25 @@ const routes: Array<RouteRecordRaw> = [
     component: () =>
       import(/* webpackChunkName: "about" */ '/@/views/HeyaPage/index.vue'),
   },
+]
+
+/**
+  未ログインのユーザーからも閲覧可能なルート
+*/
+const publicRoutes: Array<RouteRecordRaw> = [
+  {
+    path: '/login',
+    name: 'LoginPage',
+    component: () =>
+      import(/* webpackChunkName: "login" */ '/@/views/LoginPage/index.vue'),
+    meta: { isPublic: true },
+  },
+]
+
+/**
+  その他必要なルート
+ */
+const systemRoutes: Array<RouteRecordRaw> = [
   {
     path: '/oauth',
     name: 'OAuthPage',
@@ -20,6 +42,11 @@ const routes: Array<RouteRecordRaw> = [
       import(/* webpackChunkName: "oauth" */ '/@/views/OAuthPage/index.vue'),
   },
 ]
+
+export const routes: Array<RouteRecordRaw> = internalConstantRoutes.concat(
+  publicRoutes,
+  systemRoutes
+)
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
