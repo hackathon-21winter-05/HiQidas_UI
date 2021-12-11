@@ -48,6 +48,11 @@ export interface GetHeyasHeyaIdUsersResponse {
   userId: string[];
 }
 
+/** PUT /heyas/{heyaID}/favorite ヘヤのお気に入りを変更 */
+export interface PutHeyasUserIdFavoriteRequest {
+  isFavorite: boolean;
+}
+
 export interface Heya {
   id: string;
   title: string;
@@ -573,6 +578,70 @@ export const GetHeyasHeyaIdUsersResponse = {
       ...baseGetHeyasHeyaIdUsersResponse,
     } as GetHeyasHeyaIdUsersResponse;
     message.userId = object.userId?.map((e) => e) || [];
+    return message;
+  },
+};
+
+const basePutHeyasUserIdFavoriteRequest: object = { isFavorite: false };
+
+export const PutHeyasUserIdFavoriteRequest = {
+  encode(
+    message: PutHeyasUserIdFavoriteRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.isFavorite === true) {
+      writer.uint32(8).bool(message.isFavorite);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): PutHeyasUserIdFavoriteRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...basePutHeyasUserIdFavoriteRequest,
+    } as PutHeyasUserIdFavoriteRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.isFavorite = reader.bool();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): PutHeyasUserIdFavoriteRequest {
+    const message = {
+      ...basePutHeyasUserIdFavoriteRequest,
+    } as PutHeyasUserIdFavoriteRequest;
+    message.isFavorite =
+      object.isFavorite !== undefined && object.isFavorite !== null
+        ? Boolean(object.isFavorite)
+        : false;
+    return message;
+  },
+
+  toJSON(message: PutHeyasUserIdFavoriteRequest): unknown {
+    const obj: any = {};
+    message.isFavorite !== undefined && (obj.isFavorite = message.isFavorite);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<PutHeyasUserIdFavoriteRequest>, I>>(
+    object: I
+  ): PutHeyasUserIdFavoriteRequest {
+    const message = {
+      ...basePutHeyasUserIdFavoriteRequest,
+    } as PutHeyasUserIdFavoriteRequest;
+    message.isFavorite = object.isFavorite ?? false;
     return message;
   },
 };
