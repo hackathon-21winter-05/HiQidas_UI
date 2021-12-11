@@ -10,7 +10,6 @@ import {
 } from '/@/lib/apis/ws'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useMe } from '/@/providers/me'
-import { getRandomColor } from '/@/lib/utils'
 
 export interface HeyaStore {
   heyaId: string
@@ -160,8 +159,7 @@ export const useHeyaStoreBase = () => {
 
 // Vue側から使う
 export const useHeyaStore = () => {
-  const { heyaStore, resetHeya, deleteHiqidashi, createNewHiqidashi } =
-    useHeyaStoreBase()
+  const { heyaStore, resetHeya } = useHeyaStoreBase()
 
   const connectHeya = (heyaId: string) => {
     if (heyaStore.heyaId === heyaId) {
@@ -187,7 +185,7 @@ export const useHeyaStore = () => {
   }
 
   const deleteHiqidashiAndSend = () => {
-    deleteHiqidashi(heyaStore.deleteId)
+    // 実際に削除されるのはWebSocketを受け取ったとき
 
     if (!heyaStore.webSocket) {
       console.error('WebSocket not connected')
