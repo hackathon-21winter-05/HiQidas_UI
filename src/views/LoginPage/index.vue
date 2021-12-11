@@ -68,7 +68,6 @@ export default defineComponent({
         ElMessage({
           message: `エラーが発生しました\n${error}`,
           type: 'error',
-          customClass: 'login-page-error-message',
         })
         console.log(error)
       }
@@ -85,14 +84,7 @@ export default defineComponent({
     border: none;
   }
 }
-
-.login-page-error-message {
-  p.el-message__content {
-    white-space: pre-line;
-  }
-}
 </style>
->
 
 <style lang="scss" scoped>
 .login-container {

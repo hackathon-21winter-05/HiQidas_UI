@@ -51,6 +51,10 @@ body {
   }
 }
 
+p.el-message__content {
+  white-space: pre-line;
+}
+
 .material-icons {
   user-select: none;
 }

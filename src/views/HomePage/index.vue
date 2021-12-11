@@ -176,7 +176,6 @@ export default defineComponent({
         ElMessage({
           message: `エラーが発生しました\n${error}`,
           type: 'error',
-          customClass: 'home-page-error-message',
         })
         console.log(error)
       }
@@ -194,7 +193,6 @@ export default defineComponent({
         ElMessage({
           message: `エラーが発生しました\n${error}`,
           type: 'error',
-          customClass: 'home-page-error-message',
         })
         console.log(error)
       }
@@ -217,7 +215,6 @@ export default defineComponent({
         ElMessage({
           message: `エラーが発生しました\n${error}`,
           type: 'error',
-          customClass: 'home-page-error-message',
         })
         console.log(error)
       }
@@ -232,7 +229,6 @@ export default defineComponent({
         ElMessage({
           message: `エラーが発生しました\n${error}`,
           type: 'error',
-          customClass: 'home-page-error-message',
         })
         console.log(error)
       }
@@ -269,12 +265,6 @@ export default defineComponent({
 .heya-search-input {
   .el-input__inner {
     border-radius: 50px;
-  }
-}
-
-.home-page-error-message {
-  p.el-message__content {
-    white-space: pre-line;
   }
 }
 </style>
