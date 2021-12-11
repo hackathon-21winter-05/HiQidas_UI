@@ -1,6 +1,7 @@
 import { inject, InjectionKey, provide, reactive } from 'vue'
 import { getOAuthCallback } from '/@/lib/apis/oauth'
 import { User } from '/@/lib/pb/protobuf/rest/users'
+import { getMe } from '/@/lib/apis/users'
 
 type Me = User
 
@@ -19,9 +20,14 @@ export const useMe = () => {
   }
 
   if (me.id === '') {
-    // TODO: ここでmeを取得→失敗したらredirect
-
-    oauthRedirect()
+    getMe()
+      .then((fetchedMe) => {
+        if (fetchedMe) {
+          me.id = fetchedMe.id
+          me.name = fetchedMe.name
+        }
+      })
+      .catch(() => oauthRedirect())
   }
 
   return { me }

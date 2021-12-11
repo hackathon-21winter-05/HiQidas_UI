@@ -25,6 +25,10 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    hiqidashiId: {
+      type: String,
+      required: true,
+    },
   },
   setup(props) {
     const ydoc = new Y.Doc()
@@ -46,7 +50,7 @@ export default defineComponent({
     onMounted(() => {
       mounted.value = true
     })
-    addYdocEventListener(ydoc)
+    addYdocEventListener(ydoc, props.hiqidashiId)
 
     return { editor, mounted }
   },

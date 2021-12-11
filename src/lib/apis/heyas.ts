@@ -2,7 +2,7 @@ import axios from 'axios'
 import * as heya from '/@/lib/pb/protobuf/rest/heyas'
 
 export const getHeyas = async () => {
-  const res = await axios.get('/api/heyas')
+  const res = await axios.get('/api/heyas', { responseType: 'arraybuffer' })
 
   const data = heya.GetHeyasResponse.decode(new Uint8Array(res.data))
 
@@ -16,7 +16,9 @@ export const createHeya = async (title: string, description: string) => {
   })
   const buffer = heya.PostHeyasRequest.encode(req).finish()
 
-  const res = await axios.post('/api/heyas', new Uint8Array(buffer))
+  const res = await axios.post('/api/heyas', new Uint8Array(buffer), {
+    responseType: 'arraybuffer',
+  })
 
   const data = heya.PostHeyasResponse.decode(new Uint8Array(res.data))
 
@@ -38,5 +40,5 @@ export const editHeyaData = async (
 }
 
 export const deleteHeya = async (heyaId: string) => {
-  await axios.delete(`/api/heyas/${heyaId}`)
+  await axios.delete(`/api/${heyaId}`)
 }

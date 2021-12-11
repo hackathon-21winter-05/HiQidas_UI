@@ -6,7 +6,7 @@
 
     <div class="card-navbar">
       <span class="left-content owner-data">
-        owner: @{{ heyaData.creatorName }}
+        owner: @{{ heyaData.creatorId }}
       </span>
       <span
         class="material-icons navbar-button right-content"
