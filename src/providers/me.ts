@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { inject, InjectionKey, provide, reactive } from 'vue'
 import { getOAuthCallback } from '/@/lib/apis/oauth'
 import { users } from '/@/lib/apis/pb/rest/users'
@@ -12,7 +13,7 @@ export const provideMe = () => {
   provide(meSymbol, createMe())
 }
 
-export const useMe = () => {
+export const useMe = async () => {
   const me = inject(meSymbol)
   if (!me) {
     throw new Error('useMe() called without provider.')
@@ -20,6 +21,12 @@ export const useMe = () => {
 
   if (me.id === '') {
     // TODO: ここでmeを取得→失敗したらredirect
+    const res = await axios.get('/api/users/me')
+    const data = users.GetUsersMeResponse.decode(res.data)
+
+    if (!data.me) {
+      location.pathname = '/login'
+    }
 
     oauthRedirect()
   }
