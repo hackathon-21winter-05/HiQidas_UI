@@ -16,3 +16,10 @@ export const getRandomColor = () => {
 }
 
 export const getDefaultColors = () => defaultColors.map((color) => `#${color}`)
+
+export const formatDate = (date: Date) => {
+  const year = date.getFullYear()
+  const month = date.getMonth() + 1
+  const day = date.getDate()
+  return `${year}/${month}/${day}`
+}
