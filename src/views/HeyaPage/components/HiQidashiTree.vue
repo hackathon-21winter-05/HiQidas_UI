@@ -82,14 +82,17 @@ export default defineComponent({
   setup(props) {
     const { heyaStore: store, createNewHiqidashi } = useHeyaStore()
 
-    const isExpanded = ref(true)
-
     const createChild = () => {
       createNewHiqidashi(props.tree.id)
     }
 
     const diamondRef = ref<HTMLElement>()
 
+    const expanded = localStorage.getItem(
+      `hiqidashi-tree-expanded-${props.tree.id}`
+    )
+
+    const isExpanded = ref(expanded === 'false' ? false : true)
     const color = computed(() => props.tree.colorCode)
 
     const toggleExpand = () => {
@@ -97,6 +100,10 @@ export default defineComponent({
       if (diamondRef.value) {
         diamondRef.value.scrollIntoView({ block: 'center', inline: 'center' })
       }
+      localStorage.setItem(
+        `hiqidashi-tree-expanded-${props.tree.id}`,
+        isExpanded.value ? 'true' : 'false'
+      )
     }
 
     return {

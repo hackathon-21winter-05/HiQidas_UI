@@ -56,7 +56,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, PropType, ref } from 'vue'
+import { computed, defineComponent, PropType, ref } from 'vue'
 import HiQidashiEditor from '/@/components/HiQidashiEditor/index.vue'
 import { HiqidashiTree } from '/@/lib/hiqidashiTree'
 import { getRandomColor } from '/@/lib/utils'
@@ -114,9 +114,6 @@ export default defineComponent({
       localStorage.setItem(
         `hiqidashi-expand-${props.hiqidashi.id}`,
         isExpanded.value ? 'true' : 'false'
-      )
-      console.log(
-        localStorage.getItem(`hiqidashi-expand-${props.hiqidashi.id}`)
       )
     }
 
