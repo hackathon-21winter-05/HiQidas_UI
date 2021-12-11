@@ -30,17 +30,17 @@ export default defineComponent({
     } = useHeyaStore()
 
     const hiqidashi = getHiqidashiById(store.colorPickingId)
-    const color = computed(() => hiqidashi.colorId)
+    const color = computed(() => hiqidashi.colorCode)
 
     const colors = getDefaultColors()
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const changeColor = (val: any) => {
-      hiqidashi.colorId = val.hex
+      hiqidashi.colorCode = val.hex
     }
 
     const closeColorPicker = () => {
-      changeHiqidashi(store.colorPickingId, { colorId: color.value })
+      changeHiqidashi(store.colorPickingId, { colorCode: color.value })
 
       store.colorPickingId = ''
     }

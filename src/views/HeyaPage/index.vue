@@ -2,20 +2,20 @@
   <div class="heya">
     <div class="navbar">
       <router-link to="/" class="title"><h1>HiQidas</h1></router-link>
-      <span class="heya-name">Heya Name</span>
+      <span class="heya-name">{{ tree.title }}</span>
     </div>
     <div class="heya-main">
       <div class="heya-container">
         <preload-icons />
-        <color-picker-container v-if="store.colorPickingId" />
+        <color-picker-container v-if="colorPickingId" />
         <delete-dialog />
 
         <hi-qidashi-input
-          v-if="isInputOpen"
+          v-if="tree.mode === 'init'"
           :first="true"
-          :tree="store.hiqidashiTree"
+          :tree="tree"
         />
-        <hi-qidashi-tree v-else :tree="store.hiqidashiTree" />
+        <hi-qidashi-tree v-else :tree="tree" />
       </div>
     </div>
   </div>
@@ -41,21 +41,15 @@ export default defineComponent({
     ColorPickerContainer,
   },
   setup() {
-    const {
-      heyaStore: store,
-      connectHeya,
-      createNewHiqidashi,
-      isInputOpenedById,
-    } = useHeyaStore()
+    const { heyaStore: store, connectHeya, createNewHiqidashi } = useHeyaStore()
     const route = useRoute()
     const heyaId = route.params.id.toLocaleString()
     connectHeya(heyaId)
 
-    const isInputOpen = computed(() =>
-      isInputOpenedById(store.hiqidashiTree.id)
-    )
+    const tree = computed(() => store.hiqidashiTree)
+    const colorPickingId = computed(() => store.colorPickingId)
 
-    return { store, createNewHiqidashi, isInputOpen }
+    return { tree, createNewHiqidashi, colorPickingId }
   },
 })
 </script>

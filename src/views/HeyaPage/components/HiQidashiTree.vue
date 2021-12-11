@@ -1,7 +1,11 @@
 <template>
   <div class="tree-container">
     <div class="hiqidashi-content">
-      <hi-qidashi :hiqidashi="tree" :color="color" />
+      <hi-qidashi-input
+        v-if="tree.mode === 'init' || tree.mode === 'edit'"
+        :tree="tree"
+      />
+      <hi-qidashi v-else :hiqidashi="tree" :color="color" />
       <div v-if="tree.children.length === 0" class="no-child-container">
         <div class="small-diamond" />
         <div class="arrow-body" />
@@ -11,9 +15,8 @@
           <div class="plus-horizontal-line" />
         </div>
       </div>
-      <div v-else class="arrow-container" @click="toggleExpand">
-        <div v-if="isExpanded" class="diamond" />
-        <div v-else class="small-diamond" />
+      <div v-else class="arrow-container">
+        <div ref="diamondRef" class="diamond" @click="toggleExpand" />
         <div v-if="isExpanded" class="dotline" />
         <template v-else>
           <div class="arrow-body" />
@@ -25,23 +28,31 @@
       </div>
     </div>
     <template v-if="tree.children.length !== 0">
-      <div v-show="isExpanded" class="vertical-line" />
       <div v-show="isExpanded" class="next-trees">
-        <div v-for="child in tree.children" :key="child.id" class="next-tree">
-          <div class="arrow-body" />
-          <div class="arrow-head" />
-          <hi-qidashi-input
-            v-if="isInputOpened(child.id) === true"
-            :tree="child"
+        <div
+          v-for="(child, i) in tree.children"
+          :key="child.id"
+          class="next-tree-container"
+        >
+          <div
+            v-show="isExpanded"
+            :class="i === 0 ? 'vertical-top-line' : 'vertical-line'"
           />
-          <hi-qidashi-tree v-else :tree="child" />
+          <div class="next-tree">
+            <div class="array-body" />
+            <div class="array-head" />
+            <hi-qidashi-tree :tree="child" />
+          </div>
         </div>
-        <div class="next-tree">
-          <div class="arrow-body" />
-          <div class="arrow-head" />
-          <div class="add-button-long" @click="createChild">
-            <div class="plus-vertical-line" />
-            <div class="plus-horizontal-line" />
+        <div class="new-tree-container">
+          <div class="vertical-bottom-line" />
+          <div class="next-tree">
+            <div class="array-body" />
+            <div class="array-head" />
+            <div class="add-button-long" @click="createChild">
+              <div class="plus-vertical-line" />
+              <div class="plus-horizonal-line" />
+            </div>
           </div>
         </div>
       </div>
@@ -69,11 +80,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const {
-      heyaStore: store,
-      createNewHiqidashi,
-      isInputOpenedById,
-    } = useHeyaStore()
+    const { heyaStore: store, createNewHiqidashi } = useHeyaStore()
 
     const isExpanded = ref(true)
 
@@ -81,11 +88,16 @@ export default defineComponent({
       createNewHiqidashi(props.tree.id)
     }
 
-    const isInputOpened = (id: string) => isInputOpenedById(id)
+    const diamondRef = ref<HTMLElement>()
 
-    const color = computed(() => props.tree.colorId)
+    const color = computed(() => props.tree.colorCode)
 
-    const toggleExpand = () => (isExpanded.value = !isExpanded.value)
+    const toggleExpand = () => {
+      isExpanded.value = !isExpanded.value
+      if (diamondRef.value) {
+        diamondRef.value.scrollIntoView({ block: 'center', inline: 'center' })
+      }
+    }
 
     return {
       ...props,
@@ -94,7 +106,7 @@ export default defineComponent({
       isExpanded,
       toggleExpand,
       createChild,
-      isInputOpened,
+      diamondRef,
     }
   },
 })
@@ -160,6 +172,25 @@ export default defineComponent({
     min-width: 3px;
     min-height: 100%;
   }
+  .vertical-top-line {
+    background-color: v-bind(color);
+    min-width: 3px;
+    height: 50%;
+  }
+  .vertical-bottom-line {
+    background-color: v-bind(color);
+    min-width: 3px;
+    height: 50%;
+  }
+
+  .next-tree-container {
+    display: flex;
+  }
+  .new-tree-container {
+    display: flex;
+    align-items: flex-end;
+  }
+
   .plus-vertical-line {
     position: absolute;
     width: 4px;
@@ -190,10 +221,12 @@ export default defineComponent({
   .next-trees {
     display: flex;
     flex-direction: column-reverse;
+    justify-content: space-around;
 
     .next-tree {
       display: flex;
       align-items: center;
+      margin-left: -3px;
     }
   }
   .arrow-body {

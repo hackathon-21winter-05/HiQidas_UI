@@ -4,17 +4,27 @@
       :ref="setRef"
       v-model="input"
       :placeholder="placeHolder"
+      autocomplete="off"
       @keyup.enter="inputFinish"
       @keyup.esc="inputAbort"
     />
+    <div class="buttons">
+      <el-button size="medium" @click="inputAbort">キャンセル</el-button>
+      <el-button
+        size="medium"
+        color="#c87b7b"
+        class="button2"
+        @click="inputFinish"
+        >{{ tree.mode === 'init' ? '作成' : '更新する' }}</el-button
+      >
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { ElInput } from 'element-plus'
-import { defineComponent, onMounted, PropType, ref } from 'vue'
+import { computed, defineComponent, onMounted, PropType, ref } from 'vue'
 import { HiqidashiTree } from '/@/lib/hiqidashiTree'
-import { getRandomColor } from '/@/lib/utils'
 import { useHeyaStore } from '/@/providers/heya'
 
 export default defineComponent({
@@ -30,26 +40,24 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { deleteInputTitleId, changeHiqidashi } = useHeyaStore()
+    const { changeHiqidashi, changeMode } = useHeyaStore()
 
     const placeHolder = props.first
       ? 'ヘヤの名前を入力'
       : 'ヒキダシの名前を入力'
 
-    const input = ref('')
+    const input = ref(props.tree.title)
 
     const inputFinish = () => {
-      console.log(input.value)
       changeHiqidashi(props.tree.id, {
         title: input.value,
-        colorId: getRandomColor(),
       })
 
-      deleteInputTitleId(props.tree.id)
+      changeMode(props.tree.id, 'normal')
     }
 
     const inputAbort = () => {
-      deleteInputTitleId(props.tree.id)
+      changeMode(props.tree.id, 'normal')
     }
 
     const setRef = (el: InstanceType<typeof ElInput>) => {
@@ -63,7 +71,9 @@ export default defineComponent({
       }
     })
 
-    return { input, inputFinish, inputAbort, setRef, elRef, placeHolder }
+    const color = computed(() => props.tree.colorCode)
+
+    return { input, inputFinish, inputAbort, setRef, elRef, placeHolder, color }
   },
 })
 </script>
@@ -74,9 +84,21 @@ export default defineComponent({
   width: 306px;
   background-color: #ffffff;
   border-radius: 6px;
+  border: 2px solid v-bind(color);
   transition: 0.3s height ease-in-out;
   margin: 8px 6px;
   display: flex;
-  align-items: center;
+  flex-flow: column;
+  justify-content: center;
+
+  .buttons {
+    display: flex;
+    margin: 5px 10px;
+    justify-content: space-between;
+
+    .button2 {
+      color: white;
+    }
+  }
 }
 </style>

@@ -3,8 +3,9 @@
 const axios = require('axios')
 const fs = require('fs').promises
 const path = require('path')
-const pbjs = require('protobufjs/cli').pbjs
-const pbts = require('protobufjs/cli').pbts
+const { exec } = require('child_process')
+const { promisify } = require('util')
+const execPromise = promisify(exec)
 
 // いい感じに取得できるかも
 const PROTO_PATH = [
@@ -35,12 +36,10 @@ const downloadFile = async (url) => {
 
   // importがなんかうまくいかないのでreplace
   // 時間があったらどうにかする
-  const re = /import "protobuf\/.*?\/([^/]+)";/g
-  const replaced = res.data.replaceAll(re, (_, p) => `import "${p}";`)
 
   await fs.writeFile(
     `${protoDir}/${getRestOrWs(url)}/${getFileName(url)}.proto`,
-    replaced
+    res.data
   )
 }
 
@@ -51,46 +50,27 @@ const makeDir = async (path) => {
 }
 
 const protoDir = path.resolve(__dirname, '../', 'protobuf')
-const jsDir = path.resolve(__dirname, '../', 'src/lib/apis/pb')
+const genDir = path.resolve(__dirname, '../', 'src/lib/pb')
 
 ;(async () => {
-  await makeDir(`${jsDir}/rest`)
-  await makeDir(`${jsDir}/ws`)
   await makeDir(`${protoDir}/rest`)
   await makeDir(`${protoDir}/ws`)
-
+  await makeDir(genDir)
   for (const url of PROTO_PATH) {
     await downloadFile(url)
   }
 
-  for (const url of PROTO_PATH) {
-    // .js の生成
-    pbjs.main(
-      [
-        '-t',
-        'static-module',
-        '-w',
-        'es6',
-        '-o',
-        `${jsDir}/${getRestOrWs(url)}/${getFileName(url)}.js`,
-        `${protoDir}/${getRestOrWs(url)}/${getFileName(url)}.proto`,
-      ],
-      (err) => {
-        if (err) throw err
-      }
-    )
+  const generateCmds = PROTO_PATH.map((url) => [
+    'protoc',
+    '--plugin=./node_modules/.bin/protoc-gen-ts_proto',
+    '--ts_proto_out=./src/lib/pb',
+    `./protobuf/${getRestOrWs(url)}/${getFileName(url)}.proto`,
+    `--ts_proto_opt=esModuleInterop=true`,
+  ])
 
-    // .d.ts の生成
-    pbts.main(
-      [
-        '-o',
-        `${jsDir}/${getRestOrWs(url)}/${getFileName(url)}.d.ts`,
-        `${jsDir}/${getRestOrWs(url)}/${getFileName(url)}.js`,
-      ],
-      (err) => {
-        if (err) throw err
-      }
-    )
+  for (const cmd of generateCmds) {
+    await execPromise(cmd.join(' '))
   }
+
   await fs.rm(protoDir, { recursive: true })
 })()
