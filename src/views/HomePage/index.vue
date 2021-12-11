@@ -266,6 +266,14 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+.heya-search-input {
+  .el-input__inner {
+    border-radius: 50px;
+  }
+}
+</style>
+
+<style lang="scss">
 .home-page-error-message {
   p.el-message__content {
     white-space: pre-line;
