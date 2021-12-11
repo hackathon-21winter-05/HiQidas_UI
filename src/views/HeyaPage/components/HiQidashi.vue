@@ -13,7 +13,8 @@
         {{ isExpanded ? 'expand_less' : 'expand_more' }}
       </span>
       <h3 class="hiqidashi-title" @click="toggleExpanded">
-        {{ hiqidashi.title }}
+        <!-- eslint-disable-next-line no-irregular-whitespace -->
+        {{ hiqidashi.title || '　' }}
       </h3>
       <el-dropdown trigger="click">
         <span class="material-icons right-button"> more_horiz </span>
