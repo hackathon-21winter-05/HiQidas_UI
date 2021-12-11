@@ -56,7 +56,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, PropType, ref } from 'vue'
+import { computed, defineComponent, PropType, ref } from 'vue'
 import HiQidashiEditor from '/@/components/HiQidashiEditor/index.vue'
 import { HiqidashiTree } from '/@/lib/hiqidashiTree'
 import { getRandomColor } from '/@/lib/utils'
@@ -95,10 +95,6 @@ export default defineComponent({
         elRef.value.scrollIntoView({ block: 'center', inline: 'center' })
       }
     }
-
-    onMounted(() => {
-      setFocus()
-    })
 
     const color = computed(() => props.hiqidashi.colorCode)
 
