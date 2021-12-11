@@ -8,13 +8,13 @@
         <div class="arrow-head" />
         <div class="add-button" @click="createChild">
           <div class="plus-vertical-line" />
-          <div class="plus-horizonal-line" />
+          <div class="plus-horizontal-line" />
         </div>
       </div>
       <div v-else class="arrow-container" @click="toggleExpand">
         <div v-if="isExpanded" class="diamond" />
         <div v-else class="small-diamond" />
-        <div v-if="isExpanded" class="dotline"/>
+        <div v-if="isExpanded" class="dotline" />
         <template v-else>
           <div class="arrow-body" />
           <div class="arrow-head" />
@@ -41,7 +41,7 @@
           <div class="arrow-head" />
           <div class="add-button-long" @click="createChild">
             <div class="plus-vertical-line" />
-            <div class="plus-horizonal-line" />
+            <div class="plus-horizontal-line" />
           </div>
         </div>
       </div>
@@ -158,7 +158,7 @@ export default defineComponent({
   .vertical-line {
     background-color: v-bind(color);
     min-width: 3px;
-    min-height: 100% ;
+    min-height: 100%;
   }
   .plus-vertical-line {
     position: absolute;
@@ -169,7 +169,7 @@ export default defineComponent({
     background-color: white;
   }
 
-  .plus-horizonal-line {
+  .plus-horizontal-line {
     position: absolute;
     width: 18px;
     height: 4px;
