@@ -7,22 +7,17 @@ router.beforeEach(async (to, _, next) => {
     // 未ログインでも閲覧可なページ
     next()
   } else {
-    const res = await axios.get('/api/users/me', {
-      responseType: 'arraybuffer',
-    })
-    if (res.status === 401) {
+    try {
+      await axios.get('/api/users/me', {
+        responseType: 'arraybuffer',
+      })
+    } catch (error) {
       ElMessage({
-        message: `ログインしてください`,
+        message: `エラーが発生しました\n${error}`,
         type: 'error',
       })
-      // 未ログインの場合、ログインページにリダイレクト
+      console.log(error)
       next(`/login?redirect=${to.path}`)
-    } else {
-      ElMessage({
-        message: `エラーが発生しました\n${res}`,
-        type: 'error',
-      })
-      console.log(res)
     }
   }
 })
