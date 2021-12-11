@@ -40,6 +40,7 @@
         :hiqidashi-id="hiqidashi.id"
       />
     </div>
+    <!--
     <div class="avatar-container">
       <div v-for="(user, index) in users" :key="user" class="avatars">
         <el-avatar
@@ -52,6 +53,7 @@
         <div class="diamond" :style="`background-color: ${colors[index]}`" />
       </div>
     </div>
+    -->
   </div>
 </template>
 

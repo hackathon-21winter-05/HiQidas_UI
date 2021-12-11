@@ -271,7 +271,7 @@ export const useHeyaStoreFromWS = () => {
 
   const setHiqidashi = (
     hiqidashi: Hiqidashi,
-    mode?: 'normal' | 'init' | 'edit'
+    mode: 'normal' | 'init' | 'edit'
   ) => {
     const { id, title, description, colorCode, parentId, creatorId } = hiqidashi
 
@@ -283,10 +283,7 @@ export const useHeyaStoreFromWS = () => {
       title,
       description,
       colorCode,
-      mode: 'init',
-    }
-    if (mode) {
-      hiqidashiTree.mode = mode
+      mode,
     }
 
     if (!parentId) {
