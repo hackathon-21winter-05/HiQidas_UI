@@ -4,7 +4,10 @@ import { useHeyaStoreFromWS } from '/@/providers/heya'
 export const connectWS = (heyaId: string) => {
   const { setHiqidashi, editHiqidashi, deleteHiqidashi, setHiqidashis } =
     useHeyaStoreFromWS()
-  const ws = new WebSocket(`wss://hiqidas.trap.games/api/ws/heya/${heyaId}`)
+  const ws = new WebSocket(
+    (location.protocol === 'https:' ? 'wss' : 'ws') +
+      `://${location.host}/api/ws/heya/${heyaId}`
+  )
   ws.binaryType = 'arraybuffer'
   ws.onopen = () => {
     console.log('ws open')
@@ -12,8 +15,6 @@ export const connectWS = (heyaId: string) => {
 
   ws.onmessage = (event) => {
     const data = WsHeyaData.decode(new Uint8Array(event.data))
-
-    console.log(data)
 
     if (data.sendHiqidashi) {
       const hiqidashi = data.sendHiqidashi?.hiqidashi

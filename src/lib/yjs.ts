@@ -4,7 +4,10 @@ export const addYdocEventListener = (ydoc: Y.Doc, id: string) => {
   if (id === '') {
     return
   }
-  const ws = new WebSocket(`wss://hiqidas.trap.games/api/ws/yjs/${id}`)
+  const ws = new WebSocket(
+    (location.protocol === 'https:' ? 'wss' : 'ws') +
+      `://${location.host}/api/ws/yjs/${id}`
+  )
   ws.binaryType = 'arraybuffer'
 
   ws.onopen = () => {

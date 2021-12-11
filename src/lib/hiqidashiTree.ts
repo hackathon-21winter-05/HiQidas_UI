@@ -13,7 +13,7 @@ export type HiqidashiTree = {
 
 export const constructHiqidashiTree = (
   hiqidashis: Hiqidashi[],
-  setHiqidashi: (h: Hiqidashi) => void
+  setHiqidashi: (h: Hiqidashi, s: 'normal') => void
 ) => {
   const childrenMap = new Map<string, Hiqidashi[]>()
 
@@ -32,7 +32,7 @@ export const constructHiqidashiTree = (
     const children = childrenMap.get(root.id) ?? []
 
     children.forEach((child) => {
-      setHiqidashi(child)
+      setHiqidashi(child, 'normal')
       makeHiqidashiTreeRecursive(child)
     })
   }
@@ -43,7 +43,7 @@ export const constructHiqidashiTree = (
   }
   const root = rootHiqidashis[0]
 
-  setHiqidashi(root)
+  setHiqidashi(root, 'normal')
 
   makeHiqidashiTreeRecursive(root)
 }

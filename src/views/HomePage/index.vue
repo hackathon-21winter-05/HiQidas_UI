@@ -64,6 +64,7 @@ import { ElMessage } from 'element-plus'
 import { Heya } from '/@/lib/pb/protobuf/rest/heyas'
 import * as heyasApi from '/@/lib/apis/heyas'
 import HeyaCard from './components/HeyaCard.vue'
+import { useMe } from '/@/providers/me'
 
 export default defineComponent({
   name: 'HomePage',
@@ -71,6 +72,7 @@ export default defineComponent({
     HeyaCard,
   },
   setup() {
+    const { me } = useMe()
     const userMe = { id: 'hoge2', name: 'hoge2' }
 
     // computed で検知されるように ref にする
