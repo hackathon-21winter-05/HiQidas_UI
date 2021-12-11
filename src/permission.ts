@@ -9,6 +9,7 @@ router.beforeEach(async (to, _, next) => {
   } else {
     try {
       await useMe()
+      next()
     } catch (error) {
       if (error === 'Not logged in.') {
         ElMessage({
