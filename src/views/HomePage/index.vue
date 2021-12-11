@@ -58,12 +58,13 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, Ref, ref } from 'vue'
+import { computed, defineComponent, onMounted, reactive, Ref, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { Heya } from '/@/lib/pb/protobuf/rest/heyas'
 import * as heyasApi from '/@/lib/apis/heyas'
 import HeyaCard from './components/HeyaCard.vue'
+import { useMe } from '/@/providers/me'
 
 export default defineComponent({
   name: 'HomePage',
@@ -71,11 +72,11 @@ export default defineComponent({
     HeyaCard,
   },
   setup() {
-    const userMe = { id: 'hoge2', name: 'hoge2' }
+    const { me } = useMe()
 
     // computed で検知されるように ref にする
     const heyasData: Ref<Heya[]> = ref([])
-    const favoriteHeyas: Ref<Set<string>> = ref(new Set()) // お気に入りのヘヤの id を持つ set
+    const favoriteHeyas: Set<string> = reactive(new Set()) // お気に入りのヘヤの id を持つ set
 
     const sortKey: Ref<'更新日時順' | '作成日時順'> = ref('更新日時順')
     const sortOrder: Ref<'降順' | '昇順'> = ref('降順')
@@ -146,10 +147,10 @@ export default defineComponent({
             return false
           }
 
-          return favoriteHeyas.value.has(heya.id)
+          return favoriteHeyas.has(heya.id)
         })
       } else if (displayHeyasFlag.value === 'owner') {
-        return heyasData.value.filter((heya) => heya.creatorId === userMe.id)
+        return heyasData.value.filter((heya) => heya.creatorId === me.id)
       }
 
       return heyasData.value
@@ -158,12 +159,13 @@ export default defineComponent({
     const changeStar = (isStared: boolean, heyaId: string) => {
       if (isStared) {
         // TODO: お気に入り追加の api 叩く
-        favoriteHeyas.value.add(heyaId)
-        localStorage.setItem('HiQidas', JSON.stringify(favoriteHeyas.value))
+        favoriteHeyas.add(heyaId)
+        localStorage.setItem('HiQidas', Array.from(favoriteHeyas).join(','))
+        console.log(Array.from(favoriteHeyas).join(','))
       } else {
         // TODO: お気に入り削除の api 叩く
-        favoriteHeyas.value.delete(heyaId)
-        localStorage.setItem('HiQidas', JSON.stringify(favoriteHeyas.value))
+        favoriteHeyas.delete(heyaId)
+        localStorage.setItem('HiQidas', Array.from(favoriteHeyas).join(','))
       }
     }
 
@@ -171,7 +173,7 @@ export default defineComponent({
       try {
         await heyasApi.deleteHeya(heyaId)
         heyasData.value = heyasData.value.filter((heya) => heya.id !== heyaId)
-        favoriteHeyas.value.delete(heyaId)
+        favoriteHeyas.delete(heyaId)
       } catch (error) {
         ElMessage({
           message: `エラーが発生しました\n${error}`,
@@ -237,7 +239,8 @@ export default defineComponent({
     onMounted(async () => {
       const localData = localStorage.getItem('HiQidas')
       if (localData) {
-        favoriteHeyas.value = JSON.parse(localData)
+        const favs = localData.split(',')
+        favs.forEach((id) => favoriteHeyas.add(id))
       }
 
       await setHeyasData()
@@ -265,6 +268,7 @@ export default defineComponent({
 .heya-search-input {
   .el-input__inner {
     border-radius: 50px;
+    height: 28px;
   }
 }
 </style>
@@ -294,6 +298,12 @@ export default defineComponent({
       padding: 2px 20px;
       margin: 10px;
       cursor: pointer;
+      &:hover {
+        transform: scale(1.1);
+      }
+      &:active {
+        transform: scale(1);
+      }
     }
 
     .sidebar-text-button {
@@ -306,6 +316,9 @@ export default defineComponent({
       line-height: 3rem;
       color: #ffffff;
       cursor: pointer;
+      &:hover {
+        background-color: #9c5e5e;
+      }
     }
   }
 
@@ -332,7 +345,9 @@ export default defineComponent({
         background-color: #f3f3f3;
         color: #626262;
         cursor: pointer;
-
+        &:hover {
+          transform: scale(1.1);
+        }
         .add-icon {
           font-size: 48px;
         }
