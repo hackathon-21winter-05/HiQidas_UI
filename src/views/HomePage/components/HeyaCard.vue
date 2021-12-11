@@ -2,7 +2,6 @@
   <el-card shadow="never" class="heya-card">
     <el-card v-show="showDialog" class="heya-dialog">
       <div class="dialog-text" @click="deleteHeya">このヘヤを削除</div>
-      <div class="dialog-text" @click="editHeyaTitle">ヘヤの名前を変更</div>
     </el-card>
 
     <div class="card-navbar">
@@ -88,11 +87,6 @@ export default defineComponent({
       }
     }
 
-    const editHeyaTitle = () => {
-      // TODO: ヘヤのタイトル変更
-      console.log('edit')
-    }
-
     const emitStarChanged = () => {
       isStaredRef.value = !isStaredRef.value
       context.emit('star-changed', !props.isStared, props.heyaData.id)
@@ -104,7 +98,6 @@ export default defineComponent({
       showDialog,
       goToHeyaPage,
       deleteHeya,
-      editHeyaTitle,
       emitStarChanged,
     }
   },
