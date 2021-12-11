@@ -88,6 +88,9 @@ export default defineComponent({
       sortKey.value =
         sortKey.value === '更新日時順' ? '作成日時順' : '更新日時順'
       sortHeyas()
+      if (sortOrder.value === '昇順') {
+        heyasData.value.reverse()
+      }
     }
     const changeSortOrder = () => {
       sortOrder.value = sortOrder.value === '降順' ? '昇順' : '降順'
