@@ -35,10 +35,10 @@
 
       <div class="card-footer">
         <span class="left-content">作成日時</span>
-        <span class="right-content">{{ heyaData.createdAt }}</span>
+        <span class="right-content">{{ createdAt }}</span>
         <br />
         <span class="left-content">更新日時</span>
-        <span class="right-content">{{ heyaData.updatedAt }}</span>
+        <span class="right-content">{{ updatedAt }}</span>
       </div>
     </span>
   </el-card>
@@ -49,6 +49,7 @@ import { defineComponent, ref, PropType, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { getUserById } from '/@/lib/apis/users'
 import { Heya } from '/@/lib/pb/protobuf/rest/heyas'
+import { formatDate } from '/@/lib/utils'
 
 export default defineComponent({
   name: 'HeyaCard',
@@ -65,6 +66,13 @@ export default defineComponent({
   emits: ['star-changed', 'heya-deleted'],
   setup(props, context) {
     const isStaredRef = ref(props.isStared) // ref にしないと値変更時に再描画されない
+
+    const createdAt = ref(
+      props.heyaData.createdAt ? formatDate(props.heyaData.createdAt) : ''
+    )
+    const updatedAt = ref(
+      props.heyaData.updatedAt ? formatDate(props.heyaData.updatedAt) : ''
+    )
 
     const showDialog = ref(false)
     document.addEventListener('click', (event) => {
@@ -108,6 +116,8 @@ export default defineComponent({
     return {
       ...props,
       isStaredRef,
+      createdAt,
+      updatedAt,
       showDialog,
       goToHeyaPage,
       deleteHeya,
