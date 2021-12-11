@@ -5,9 +5,7 @@
     </el-card>
 
     <div class="card-navbar">
-      <span class="left-content owner-data">
-        owner: @{{ heyaData.creatorId }}
-      </span>
+      <span class="left-content owner-data"> owner: @{{ creatorName }} </span>
       <span
         class="material-icons navbar-button right-content"
         @click="showDialog = true"
