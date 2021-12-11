@@ -15,9 +15,7 @@
       <el-button @click="login">ログイン</el-button>
     </el-form> -->
 
-    <button class="login-button" @click="loginWithPortal">
-      traPortalでログイン
-    </button>
+    <button class="login-button" @click="loginWithTraq">traQでログイン</button>
 
     <div class="register-info">またはアカウントを作成</div>
 
@@ -37,6 +35,7 @@ import { defineComponent, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { createUser } from '/@/lib/apis/users'
+import { getOAuthCallback } from '/@/lib/apis/oauth'
 
 export default defineComponent({
   name: 'LoginPage',
@@ -54,8 +53,9 @@ export default defineComponent({
       console.log('logged in!', loginForm)
     } */
 
-    const loginWithPortal = () => {
-      location.href = `https://portal.trap.jp/login?redirect=https://${location.host}?redirect=${redirectQuery.value}`
+    const loginWithTraq = async () => {
+      const res = await getOAuthCallback()
+      location.href = res.uri
     }
 
     const router = useRouter()
@@ -74,7 +74,7 @@ export default defineComponent({
       }
     }
 
-    return { redirectQuery, name, loginWithPortal, createAccount }
+    return { redirectQuery, name, loginWithTraq, createAccount }
   },
 })
 </script>
