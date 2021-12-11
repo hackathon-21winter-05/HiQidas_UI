@@ -1,6 +1,9 @@
 <template>
   <div class="login-container">
-    <h1 class="title">HiQidas</h1>
+    <div class="login-logos">
+      <img class="icon" src="/hiqidas_icon.svg" />
+      <img class="logo" src="/@/assets/hiqidas_logo.svg" />
+    </div>
     <!-- TODO: ログインのエンドポイント生えたらフォーム作る -->
     <!-- <el-form ref="loginForm" :model="loginForm" label-position="top">
       <el-form-item label="ユーザーネーム">
@@ -103,6 +106,21 @@ export default defineComponent({
   left: 0;
   margin: auto;
 
+  .login-logos {
+    margin-bottom: 20px;
+
+    .icon {
+      width: 60px;
+      margin-right: 5px;
+    }
+
+    .logo {
+      height: 60px;
+      width: auto;
+      padding: 0;
+    }
+  }
+
   .login-button {
     width: 210px;
     max-width: 85%;
@@ -113,6 +131,7 @@ export default defineComponent({
     background-color: #3859ad;
     border: none;
     border-radius: 5px;
+    cursor: pointer;
   }
 
   .register-info {
@@ -126,6 +145,17 @@ export default defineComponent({
     max-width: 90%;
     margin: 10px auto;
     border: medium solid #adadad;
+
+    .create-account-button {
+      width: 100%;
+      color: #ffffff;
+      font-size: 16px;
+      line-height: 2rem;
+      background-color: #c87b7b;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
   }
 }
 </style>
