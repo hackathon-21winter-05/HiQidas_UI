@@ -81,7 +81,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .hiqidashi-input {
   height: 100px;
-  width: 250px;
+  width: 306px;
   background-color: #ffffff;
   border-radius: 6px;
   border: 2px solid v-bind(color);
