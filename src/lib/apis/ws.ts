@@ -1,9 +1,11 @@
 import { WsHeyaData } from '/@/lib/pb/protobuf/ws/ws'
 import { useHeyaStoreFromWS } from '/@/providers/heya'
+import { useMe } from '/@/providers/me'
 
 export const connectWS = (heyaId: string) => {
   const { setHiqidashi, editHiqidashi, deleteHiqidashi, setHiqidashis } =
     useHeyaStoreFromWS()
+  const { me } = useMe()
   const ws = new WebSocket(
     (location.protocol === 'https:' ? 'wss' : 'ws') +
       `://${location.host}/api/ws/heya/${heyaId}`
@@ -21,7 +23,8 @@ export const connectWS = (heyaId: string) => {
       if (!hiqidashi) {
         throw new Error('invalid response')
       }
-      setHiqidashi(hiqidashi)
+      if (me.id === hiqidashi.creatorId) setHiqidashi(hiqidashi, 'init')
+      else setHiqidashi(hiqidashi, 'normal')
     } else if (data.sendHiqidashis) {
       const hiqidashis = data.sendHiqidashis?.hiqidashis
       if (!hiqidashis) {

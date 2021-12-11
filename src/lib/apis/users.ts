@@ -18,3 +18,13 @@ export const createUser = async (name: string) => {
     responseType: 'arraybuffer',
   })
 }
+
+export const getUserById = async (userId: string) => {
+  const res = await axios.get(`/api/users/${userId}`, {
+    responseType: 'arraybuffer',
+  })
+
+  const data = users.GetUsersMeResponse.decode(new Uint8Array(res.data))
+
+  return data.me
+}
