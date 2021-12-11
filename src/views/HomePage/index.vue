@@ -73,7 +73,6 @@ export default defineComponent({
   },
   setup() {
     const { me } = useMe()
-    const userMe = { id: 'hoge2', name: 'hoge2' }
 
     // computed で検知されるように ref にする
     const heyasData: Ref<Heya[]> = ref([])
@@ -151,7 +150,7 @@ export default defineComponent({
           return favoriteHeyas.has(heya.id)
         })
       } else if (displayHeyasFlag.value === 'owner') {
-        return heyasData.value.filter((heya) => heya.creatorId === userMe.id)
+        return heyasData.value.filter((heya) => heya.creatorId === me.id)
       }
 
       return heyasData.value
