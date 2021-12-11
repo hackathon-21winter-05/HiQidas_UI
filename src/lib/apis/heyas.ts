@@ -40,5 +40,5 @@ export const editHeyaData = async (
 }
 
 export const deleteHeya = async (heyaId: string) => {
-  await axios.delete(`/api/${heyaId}`)
+  await axios.delete(`/api/heyas/${heyaId}`)
 }
