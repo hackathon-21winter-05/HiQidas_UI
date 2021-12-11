@@ -8,19 +8,19 @@
       <hi-qidashi v-else :hiqidashi="tree" :color="color" />
       <div v-if="tree.children.length === 0" class="no-child-container">
         <div class="small-diamond" />
-        <div class="array-body" />
-        <div class="array-head" />
+        <div class="arrow-body" />
+        <div class="arrow-head" />
         <div class="add-button" @click="createChild">
           <div class="plus-vertical-line" />
-          <div class="plus-horizonal-line" />
+          <div class="plus-horizontal-line" />
         </div>
       </div>
       <div v-else class="arrow-container">
         <div ref="diamondRef" class="diamond" @click="toggleExpand" />
         <div v-if="isExpanded" class="dotline" />
         <template v-else>
-          <div class="array-body" />
-          <div class="array-head" />
+          <div class="arrow-body" />
+          <div class="arrow-head" />
           <div class="children-count">
             {{ tree.children.length }}
           </div>
@@ -158,7 +158,7 @@ export default defineComponent({
     }
 
     .dotline {
-      width: 24px;
+      width: 40px;
       border-bottom: 4px dotted v-bind(color);
     }
 
@@ -207,7 +207,7 @@ export default defineComponent({
     background-color: white;
   }
 
-  .plus-horizonal-line {
+  .plus-horizontal-line {
     position: absolute;
     width: 18px;
     height: 4px;
@@ -236,13 +236,13 @@ export default defineComponent({
       margin-left: -3px;
     }
   }
-  .array-body {
+  .arrow-body {
     background-color: v-bind(color);
     height: 3px;
-    min-width: 20px;
+    min-width: 40px;
   }
 
-  .array-head {
+  .arrow-head {
     width: 0;
     height: 0;
     border-left: 10px solid v-bind(color);
