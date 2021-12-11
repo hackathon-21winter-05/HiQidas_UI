@@ -1,7 +1,9 @@
 <template>
   <div class="heya">
     <div class="navbar">
-      <router-link to="/" class="title"><h1>HiQidas</h1></router-link>
+      <router-link to="/">
+        <img class="logo" src="/@/assets/hiqidas_logo.svg" />
+      </router-link>
       <span class="heya-name">{{ tree.title }}</span>
     </div>
     <div class="heya-main">
@@ -67,8 +69,7 @@ export default defineComponent({
     grid-row: 1;
     background-color: #c87b7b;
 
-    .title {
-      text-decoration: none;
+    .logo {
       float: left;
       margin-left: 10px;
     }

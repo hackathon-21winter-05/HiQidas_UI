@@ -280,10 +280,6 @@ export default defineComponent({
 </style>
 
 <style lang="scss" scoped>
-.logo {
-  width: 128px;
-  padding: 8px;
-}
 .home {
   height: 100%;
   overflow: hidden;

@@ -88,7 +88,8 @@ export default defineComponent({
     white-space: pre-line;
   }
 }
-</style>>
+</style>
+>
 
 <style lang="scss" scoped>
 .login-container {
