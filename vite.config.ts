@@ -4,7 +4,7 @@ import VuePlugin from '@vitejs/plugin-vue'
 
 const srcPath = path.resolve(__dirname, './src').replace(/\\/g, '/')
 
-const DEV_SERVER_PROXY_HOST = 'http://localhost:7070'
+const DEV_SERVER_PROXY_HOST = 'https://hiqidas.trap.games/'
 
 export default defineConfig(() => ({
   resolve: {

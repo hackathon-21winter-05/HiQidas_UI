@@ -4,7 +4,7 @@ import { useHeyaStoreFromWS } from '/@/providers/heya'
 export const connectWS = (heyaId: string) => {
   const { setHiqidashi, editHiqidashi, deleteHiqidashi, setHiqidashis } =
     useHeyaStoreFromWS()
-  const ws = new WebSocket(`ws://localhost:7070/api/ws/heya/${heyaId}`)
+  const ws = new WebSocket(`wss://hiqidas.trap.games/api/ws/heya/${heyaId}`)
   ws.binaryType = 'arraybuffer'
   ws.onopen = () => {
     console.log('ws open')
