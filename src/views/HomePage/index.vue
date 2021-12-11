@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="sidebar">
-      <h1 class="title">HiQidas</h1>
+      <img class="logo" src="/@/assets/hiqidas_logo.svg" />
       <el-input
         v-model="searchText"
         placeholder="名前で検索"
@@ -282,6 +282,10 @@ export default defineComponent({
 </style>
 
 <style lang="scss" scoped>
+.logo {
+  width: 128px;
+  padding: 8px;
+}
 .home {
   height: 100%;
   overflow: hidden;
