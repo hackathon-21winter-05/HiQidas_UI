@@ -63,7 +63,6 @@ import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { heya } from '/@/lib/apis/pb/rest/heyas'
 import * as heyasApi from '/@/lib/apis/heyas'
-import * as usersApi from '/@/lib/apis/users'
 import HeyaCard from './components/HeyaCard.vue'
 
 export default defineComponent({
@@ -224,7 +223,8 @@ export default defineComponent({
       }
     }
 
-    const setFavoriteHeyasId = async () => {
+    // TODO: お気に入り管理をサーバーが実装したらコメントアウト外す
+    /* const setFavoriteHeyasId = async () => {
       try {
         const res = await usersApi.getFavoriteHeyasId()
         favoriteHeyas.value = new Set(res.favoriteHeyaId)
@@ -236,7 +236,7 @@ export default defineComponent({
         })
         console.log(error)
       }
-    }
+    } */
 
     onMounted(async () => {
       const localData = localStorage.getItem('HiQidas')
@@ -245,7 +245,7 @@ export default defineComponent({
       }
 
       await setHeyasData()
-      await setFavoriteHeyasId()
+      // await setFavoriteHeyasId()
     })
 
     return {
