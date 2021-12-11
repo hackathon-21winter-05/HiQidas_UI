@@ -34,7 +34,10 @@
       </el-dropdown>
     </div>
     <div v-show="isExpanded">
-      <hi-qidashi-editor :description="hiqidashi.description" />
+      <hi-qidashi-editor
+        :description="hiqidashi.description"
+        :hiqidashi-id="hiqidashi.id"
+      />
     </div>
     <div class="avatar-container">
       <div v-for="(user, index) in users" :key="user" class="avatars">
