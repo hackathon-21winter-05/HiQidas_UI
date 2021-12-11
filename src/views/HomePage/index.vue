@@ -24,18 +24,22 @@
       <div class="sidebar-text-button" @click="displayHeyasFlag = 'all'">
         すべてのヘヤ
       </div>
+      <!--
       <div class="sidebar-text-button" @click="displayHeyasFlag = 'isActive'">
         アクティブなヘヤ
       </div>
+      -->
       <div class="sidebar-text-button" @click="displayHeyasFlag = 'favorite'">
         お気に入りのヘヤ
       </div>
       <div class="sidebar-text-button" @click="displayHeyasFlag = 'owner'">
         管理人のヘヤ
       </div>
+      <!--
       <div class="sidebar-text-button" @click="displayHeyasFlag = 'recent'">
         最近訪れたヘヤ
       </div>
+      -->
     </div>
 
     <div class="home-main">
@@ -83,7 +87,16 @@ export default defineComponent({
     const changeSortKey = () => {
       sortKey.value =
         sortKey.value === '更新日時順' ? '作成日時順' : '更新日時順'
-
+      sortHeyas()
+    }
+    const changeSortOrder = () => {
+      sortOrder.value = sortOrder.value === '降順' ? '昇順' : '降順'
+      sortHeyas()
+      if (sortOrder.value === '昇順') {
+        heyasData.value.reverse()
+      }
+    }
+    const sortHeyas = () => {
       if (sortKey.value === '更新日時順') {
         heyasData.value.sort((a, b) => {
           if (!a.updatedAt || !b.updatedAt) {
@@ -113,10 +126,6 @@ export default defineComponent({
           return 0
         })
       }
-    }
-    const changeSortOrder = () => {
-      heyasData.value.reverse()
-      sortOrder.value = sortOrder.value === '降順' ? '昇順' : '降順'
     }
 
     const displayHeyasFlag: Ref<
