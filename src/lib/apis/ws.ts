@@ -2,14 +2,18 @@ import { WsHeyaData } from '/@/lib/pb/protobuf/ws/ws'
 import { useHeyaStoreFromWS } from '/@/providers/heya'
 
 export const connectWS = (heyaId: string) => {
-  const { setHiqidashi, editHiqidashi, deleteHiqidashi } = useHeyaStoreFromWS()
-  const ws = new WebSocket(`ws://api/ws/heya/${heyaId}`)
+  const { setHiqidashi, editHiqidashi, deleteHiqidashi, setHiqidashis } =
+    useHeyaStoreFromWS()
+  const ws = new WebSocket(`ws://localhost:7070/api/ws/heya/${heyaId}`)
+  ws.binaryType = 'arraybuffer'
   ws.onopen = () => {
     console.log('ws open')
   }
 
   ws.onmessage = (event) => {
     const data = WsHeyaData.decode(new Uint8Array(event.data))
+
+    console.log(data)
 
     if (data.sendHiqidashi) {
       const hiqidashi = data.sendHiqidashi?.hiqidashi
@@ -22,7 +26,7 @@ export const connectWS = (heyaId: string) => {
       if (!hiqidashis) {
         throw new Error('invalid response')
       }
-      hiqidashis.forEach(setHiqidashi)
+      setHiqidashis(hiqidashis)
     } else if (data.editHiqidashi) {
       const hiqidashi = data.editHiqidashi
       if (!hiqidashi) {
@@ -52,11 +56,14 @@ export const sendDeleteHiqidashiMessage = (ws: WebSocket, id: string) => {
 }
 
 export const sendCreateHiqidashiMessage = (ws: WebSocket, parentId: string) => {
+  console.log(parentId)
   const data = WsHeyaData.fromJSON({
     createHiqidashi: {
       parentId,
     },
   })
+
+  console.log(data)
 
   const buffer = WsHeyaData.encode(data).finish()
   ws.send(new Uint8Array(buffer))

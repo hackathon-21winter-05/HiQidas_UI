@@ -1,5 +1,5 @@
 import { inject, InjectionKey, provide, reactive } from 'vue'
-import { HiqidashiTree } from '/@/lib/hiqidashiTree'
+import { constructHiqidashiTree, HiqidashiTree } from '/@/lib/hiqidashiTree'
 import { Hiqidashi, WsEditHiqidashi } from '/@/lib/pb/protobuf/ws/hiqidashi'
 import {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -31,12 +31,12 @@ const createHeyaStore = () => {
     heyaId: '',
     hiqidashiTree: {
       children: [],
-      id: 'test',
+      id: '',
       parentId: '',
       creatorId: '',
-      title: 'first hiqidashi',
+      title: '',
       description: '',
-      colorCode: getRandomColor(),
+      colorCode: '',
       mode: 'init',
     },
     hiqidashiMap: new Map(),
@@ -45,7 +45,6 @@ const createHeyaStore = () => {
     deleteId: '',
     colorPickingId: '',
   })
-  store.hiqidashiMap.set(store.hiqidashiTree.id, store.hiqidashiTree)
   return store
 }
 
@@ -59,26 +58,21 @@ export const useHeyaStoreBase = () => {
   }
 
   const resetHeya = () => {
-    heyaStore.hiqidashiTree = reactive({
-      children: [],
-      id: 'test',
-      parentId: '',
-      creatorId: '',
-      title: '',
-      description: '',
-      colorCode: getRandomColor(),
-      mode: 'init',
-    })
-    heyaStore.hiqidashiMap = new Map()
+    heyaStore.hiqidashiTree.children = []
+
+    heyaStore.hiqidashiTree.id = ''
+    heyaStore.hiqidashiTree.parentId = ''
+    heyaStore.hiqidashiTree.creatorId = ''
+    heyaStore.hiqidashiTree.title = ''
+    heyaStore.hiqidashiTree.description = ''
+    heyaStore.hiqidashiTree.colorCode = ''
+    heyaStore.hiqidashiTree.mode = 'normal'
+
+    heyaStore.hiqidashiMap = reactive(new Map())
     heyaStore.lastFocusedId = ''
     heyaStore.deleteDialogVisible = false
     heyaStore.deleteId = ''
     heyaStore.colorPickingId = ''
-
-    heyaStore.hiqidashiMap.set(
-      heyaStore.hiqidashiTree.id,
-      heyaStore.hiqidashiTree
-    )
   }
 
   const setHiqidashiMap = (tree: HiqidashiTree) => {
@@ -160,6 +154,7 @@ export const useHeyaStoreBase = () => {
     createNewHiqidashi,
     createFirstHiqidashi,
     deleteHiqidashi,
+    setHiqidashiMap,
   }
 }
 
@@ -175,32 +170,15 @@ export const useHeyaStore = () => {
     resetHeya()
 
     heyaStore.heyaId = heyaId
-    // heyaStore.webSocket = connectWS(heyaId)
+    heyaStore.webSocket = connectWS(heyaId)
   }
 
   const createNewHiqidashiAndSend = (parentId: string) => {
     // ここではWS送信のみを行う
     // wsを受け取ったら実際のcreate
-    const { me } = useMe()
+    //const { me } = useMe()
 
     if (!heyaStore.webSocket) {
-      const id = Math.random().toString(32).substring(2)
-
-      // TODO: デバッグ用なので後で消す
-      createNewHiqidashi(
-        parentId,
-        reactive({
-          children: [],
-          id,
-          parentId,
-          creatorId: me.id,
-          title: '',
-          description: '',
-          colorCode: getRandomColor(),
-          mode: 'init',
-        })
-      )
-
       console.error('WebSocket not connected')
       return
     }
@@ -289,39 +267,36 @@ export const useHeyaStoreFromWS = () => {
     createNewHiqidashi,
     createFirstHiqidashi,
     deleteHiqidashi,
+    resetHeya,
   } = useHeyaStoreBase()
 
   const setHiqidashi = (hiqidashi: Hiqidashi) => {
     const { id, title, description, colorCode, parentId, creatorId } = hiqidashi
-    if (
-      typeof id !== 'string' ||
-      typeof title !== 'string' ||
-      typeof description !== 'string' ||
-      typeof colorCode !== 'string' ||
-      typeof parentId !== 'string' ||
-      typeof creatorId !== 'string'
-    ) {
-      throw new Error('invalid hiqidashi')
-    }
 
     const hiqidashiTree: HiqidashiTree = {
       children: [],
       id,
-      parentId,
+      parentId: parentId ?? '',
       creatorId,
       title,
       description,
       colorCode,
-      mode: 'init',
+      mode: 'normal',
     }
     // TODO: ここでmode判断でよさそう
 
-    if (hiqidashi.parentId === '') {
+    if (!parentId) {
       createFirstHiqidashi('', hiqidashiTree)
     } else {
       createNewHiqidashi(parentId, hiqidashiTree)
     }
   }
+
+  const setHiqidashis = (hiqidashis: Hiqidashi[]) => {
+    resetHeya()
+    constructHiqidashiTree(hiqidashis, setHiqidashi)
+  }
+
   const editHiqidashi = (hiqidashi: WsEditHiqidashi) => {
     const tree = heyaStore.hiqidashiMap.get(hiqidashi.id ?? '')
     if (!tree) {
@@ -337,5 +312,6 @@ export const useHeyaStoreFromWS = () => {
     setHiqidashi,
     editHiqidashi,
     deleteHiqidashi,
+    setHiqidashis,
   }
 }
