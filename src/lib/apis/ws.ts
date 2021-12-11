@@ -23,7 +23,7 @@ export const connectWS = (heyaId: string) => {
       if (!hiqidashi) {
         throw new Error('invalid response')
       }
-      if (me.id === hiqidashi.parentId) setHiqidashi(hiqidashi, 'init')
+      if (me.id === hiqidashi.creatorId) setHiqidashi(hiqidashi, 'init')
       else setHiqidashi(hiqidashi, 'normal')
     } else if (data.sendHiqidashis) {
       const hiqidashis = data.sendHiqidashis?.hiqidashis
