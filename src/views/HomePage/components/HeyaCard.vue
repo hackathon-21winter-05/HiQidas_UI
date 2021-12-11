@@ -2,7 +2,6 @@
   <el-card shadow="never" class="heya-card">
     <el-card v-show="showDialog" class="heya-dialog">
       <div class="dialog-text" @click="deleteHeya">このヘヤを削除</div>
-      <div class="dialog-text" @click="editHeyaTitle">ヘヤの名前を変更</div>
     </el-card>
 
     <div class="card-navbar">
@@ -46,14 +45,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, PropType } from 'vue'
 import { useRouter } from 'vue-router'
+import { Heya } from '/@/lib/pb/protobuf/rest/heyas'
 
 export default defineComponent({
   name: 'HeyaCard',
   props: {
     heyaData: {
-      type: Object,
+      type: Object as PropType<Heya>,
       required: true,
     },
     isStared: {
@@ -61,7 +61,7 @@ export default defineComponent({
       default: false,
     },
   },
-  emits: ['star-changed'],
+  emits: ['star-changed', 'heya-deleted'],
   setup(props, context) {
     const isStaredRef = ref(props.isStared) // ref にしないと値変更時に再描画されない
 
@@ -82,15 +82,10 @@ export default defineComponent({
       router.push({ name: 'HeyaPage', params: { id: heyaId } })
     }
 
-    const deleteHeya = () => {
+    const deleteHeya = async () => {
       if (window.confirm(`ヘヤ: "${props.heyaData.title}" を削除します。`)) {
-        // TODO: ヘヤの削除
+        context.emit('heya-deleted', props.heyaData.id)
       }
-    }
-
-    const editHeyaTitle = () => {
-      // TODO: ヘヤのタイトル変更
-      console.log('edit')
     }
 
     const emitStarChanged = () => {
@@ -104,7 +99,6 @@ export default defineComponent({
       showDialog,
       goToHeyaPage,
       deleteHeya,
-      editHeyaTitle,
       emitStarChanged,
     }
   },
