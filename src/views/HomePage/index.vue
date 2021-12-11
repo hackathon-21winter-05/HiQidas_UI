@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="sidebar">
-      <h1 class="title">HiQidas</h1>
+      <img class="logo" src="/@/assets/hiqidas_logo.svg" />
       <el-input
         v-model="searchText"
         placeholder="名前で検索"
@@ -272,6 +272,7 @@ export default defineComponent({
 .heya-search-input {
   .el-input__inner {
     border-radius: 50px;
+    height: 28px;
   }
 }
 </style>
@@ -285,6 +286,10 @@ export default defineComponent({
 </style>
 
 <style lang="scss" scoped>
+.logo {
+  width: 128px;
+  padding: 8px;
+}
 .home {
   height: 100%;
   overflow: hidden;
@@ -309,6 +314,12 @@ export default defineComponent({
       padding: 2px 20px;
       margin: 10px;
       cursor: pointer;
+      &:hover {
+        transform: scale(1.1);
+      }
+      &:active {
+        transform: scale(1);
+      }
     }
 
     .sidebar-text-button {
@@ -321,6 +332,9 @@ export default defineComponent({
       line-height: 3rem;
       color: #ffffff;
       cursor: pointer;
+      &:hover {
+        background-color: #9c5e5e;
+      }
     }
   }
 
@@ -347,7 +361,9 @@ export default defineComponent({
         background-color: #f3f3f3;
         color: #626262;
         cursor: pointer;
-
+        &:hover {
+          transform: scale(1.1);
+        }
         .add-icon {
           font-size: 48px;
         }
