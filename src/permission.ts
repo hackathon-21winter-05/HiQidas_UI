@@ -1,7 +1,7 @@
 import router from '/@/router'
 import { useMe } from '/@/providers/me'
 
-/* router.beforeEach(async (to, _, next) => {
+router.beforeEach(async (to, _, next) => {
   if (to.meta && to.meta?.isPublic) {
     // 未ログインでも閲覧可なページ
     next()
@@ -17,4 +17,4 @@ import { useMe } from '/@/providers/me'
       }
     }
   }
-}) */
+})

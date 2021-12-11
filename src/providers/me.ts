@@ -1,13 +1,13 @@
 import axios from 'axios'
 import { inject, InjectionKey, provide, reactive } from 'vue'
 import { getOAuthCallback } from '/@/lib/apis/oauth'
-import { User } from '/@/lib/pb/protobuf/rest/users'
+import * as users from '/@/lib/pb/protobuf/rest/users'
 
-type Me = User
+type Me = users.User
 
 const meSymbol: InjectionKey<Me> = Symbol()
 
-const createMe = () => reactive(User.fromJSON({}))
+const createMe = () => reactive(users.User.fromJSON({}))
 
 export const provideMe = () => {
   provide(meSymbol, createMe())

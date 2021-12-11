@@ -41,9 +41,9 @@ export default defineComponent({
   name: 'LoginPage',
   setup() {
     const route = useRoute()
-    const redirectQuery = ref(
-      !route.query.redirect ? '' : (route.query.redirect as string)
-    )
+    const redirectQuery = !route.query.redirect
+      ? ''
+      : (route.query.redirect as string)
 
     // TODO: ログインのエンドポイント生えたらコメントアウト外して書く
     /* const loginForm = reactive({ name: '', password: '' })
@@ -63,7 +63,7 @@ export default defineComponent({
     const createAccount = async () => {
       try {
         await createUser(name.value)
-        router.push({ path: redirectQuery.value })
+        router.push({ path: redirectQuery })
       } catch (error) {
         ElMessage({
           message: `エラーが発生しました\n${error}`,
@@ -74,7 +74,7 @@ export default defineComponent({
       }
     }
 
-    return { redirectQuery, name, loginWithTraq, createAccount }
+    return { name, loginWithTraq, createAccount }
   },
 })
 </script>
