@@ -24,7 +24,7 @@ export const useMe = async () => {
     const res = await axios.get('/api/users/me')
     const data = users.GetUsersMeResponse.decode(res.data)
 
-    if (!data.me) {
+    if (!data.me || !data.me.id) {
       throw new Error('Not logged in.')
     }
 
