@@ -32,8 +32,16 @@ export default defineComponent({
   },
   setup(props) {
     const ydoc = new Y.Doc()
+
+    if (props.description !== '') {
+      // TODO: Uint8Arrayがそのまま送られてくるようになったら変更
+      const state = Uint8Array.of(
+        ...props.description.split(',').map((str) => parseInt(str))
+      )
+      Y.applyUpdate(ydoc, new Uint8Array(state))
+    }
+
     const editor = useEditor({
-      content: props.description,
       extensions: [
         StarterKit.configure({
           history: false,
@@ -45,12 +53,12 @@ export default defineComponent({
         }),
       ],
     })
+    addYdocEventListener(ydoc, props.hiqidashiId)
 
     const mounted = ref(false)
     onMounted(() => {
       mounted.value = true
     })
-    addYdocEventListener(ydoc, props.hiqidashiId)
 
     return { editor, mounted }
   },
