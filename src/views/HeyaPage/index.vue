@@ -11,20 +11,21 @@
         <preload-icons />
         <color-picker-container v-if="colorPickingId" />
         <delete-dialog />
-
-        <hi-qidashi-input
-          v-if="tree.mode === 'init'"
-          :first="true"
-          :tree="tree"
-        />
-        <hi-qidashi-tree v-else :tree="tree" />
+        <div ref="elRef">
+          <hi-qidashi-input
+            v-if="tree.mode === 'init'"
+            :first="true"
+            :tree="tree"
+          />
+          <hi-qidashi-tree v-else :tree="tree" />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, onMounted, ref } from 'vue'
 import HiQidashiTree from './components/HiQidashiTree.vue'
 import HiQidashiInput from './components/HiQidashiInput.vue'
 import PreloadIcons from './components/PreloadIcons.vue'
@@ -51,7 +52,15 @@ export default defineComponent({
     const tree = computed(() => store.hiqidashiTree)
     const colorPickingId = computed(() => store.colorPickingId)
 
-    return { tree, createNewHiqidashi, colorPickingId }
+    const elRef = ref<HTMLElement>()
+
+    onMounted(() => {
+      if (elRef.value) {
+        elRef.value.scrollIntoView({ block: 'center', inline: 'center' })
+      }
+    })
+
+    return { tree, createNewHiqidashi, colorPickingId, elRef }
   },
 })
 </script>
